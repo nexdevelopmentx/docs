@@ -1,0 +1,32 @@
+---
+title: "Troubleshooting"
+description: "Set Config.General.debug = true and restart — F8 then prints the resolved framework and inventory bridge on resource start. Filter the F8 and server consoles for nex_shoulderpets."
+---
+
+Set `Config.General.debug = true` and restart — F8 then prints the resolved framework and inventory bridge on resource start. Filter the F8 and server consoles for `nex_shoulderpets`.
+
+## Common issues
+
+| Problem | Fix |
+| --- | --- |
+| **Pet doesn't spawn when I use the item (ox_inventory)** | You've set `consume = 0` on the item. Remove that line. In Lua `0` is truthy, so ox_inventory takes its consume branch and never calls the framework's `UseItem` hook the script listens on. See [Installation → ox_inventory](/nex-shoulderpets/installation#ox_inventory). |
+| **Pet floats off the shoulder / clips into the head** | The `attach` offsets are tuned per model. Tweak `pos` and `rot` in `Config.Pets[*].attach`. Start with the X axis (distance from neck), then yaw. See [Adding pets → Tuning the position](/nex-shoulderpets/adding-pets#tuning-the-position). |
+| **Menu won't open** | Check F8 for `nex_shoulderpets` errors. Make sure the resource started **after** your framework. Set `Config.General.debug = true` to see which bridge resolved. |
+| **Keybind doesn't work** | The keybind only registers the **first time** a player joins. Players can rebind it under F1 → Settings → Key Bindings → FiveM. The `/pet` slash command always works regardless. |
+| **Model doesn't load (pet doesn't appear)** | The model name in `Config.Pets[*].model` doesn't match a streamed `.ydr` filename. Confirm the streaming resource is started and the name matches exactly (no extension, lowercase). |
+| **Pet spawns but no particle effect** | Either the `particle` block is missing from the pet's config, or the dict/name pair is invalid. Check F8 for `particle dict not loaded`. Try one of the safe vanilla pairs listed in [Adding pets → Particle effect](/nex-shoulderpets/adding-pets#4-optional-particle-effect). |
+| **Animation doesn't play / falls back** | The configured `equip.anim.dict` couldn't be loaded. The client silently falls back to `mp_common/givetake1_a` (which is universally safe) so the pet still spawns. Try a different dict — see [Configuration → Animations](/nex-shoulderpets/configuration#animations) for confirmed-safe options. |
+| **"No framework detected"** | Set `Config.General.framework = 'standalone'` if you don't run one, or fix your `server.cfg` start order so the framework starts before `nex_shoulderpets`. |
+| **`/removepet` does nothing** | You're missing the ace. Run `add_ace group.admin command.removepet allow`. |
+
+## Before opening a support ticket
+
+Please include:
+
+1. Server console output filtered for `nex_shoulderpets`.
+2. F8 client console output filtered for `nex_shoulderpets`, with `Config.General.debug = true`.
+3. Your framework (ESX / QBCore / Qbox / standalone) and inventory.
+4. Which pet is affected, and the relevant `Config.Pets` entry.
+5. What you did and what you expected to happen.
+
+See [Support & contact](/general/support).

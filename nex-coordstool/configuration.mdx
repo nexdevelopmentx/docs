@@ -1,0 +1,63 @@
+---
+title: "Configuration"
+description: "Everything lives in lua/config.lua. Edit, then restart nex_coordstool."
+---
+
+Everything lives in `lua/config.lua`. Edit, then `restart nex_coordstool`.
+
+## Commands
+
+```lua
+Config.Commands = {
+    openMenu  = 'coordsx',   -- opens the saver menu
+    toggleHud = 'coordshud', -- toggles the live HUD
+    fixFocus  = 'mfix',      -- emergency NUI focus release
+}
+```
+
+Rename any of these if they clash with another resource. Lowercase, no leading slash.
+
+## HUD
+
+```lua
+Config.Hud = {
+    updateInterval = 150,   -- ms; lower = smoother, slightly more work
+    showOnStart    = false, -- show the HUD automatically when a player joins
+}
+```
+
+100–250 ms is a comfortable range. Set `showOnStart = true` if you mostly use the resource for live position tracking.
+
+## Precision
+
+```lua
+Config.Precision = 3   -- decimals; e.g. 3 → -1037.123, 4 → -1037.1234
+```
+
+Applies to both on-screen previews and copied values.
+
+## Chat notify
+
+Optional confirmation in chat after a coord is copied.
+
+```lua
+Config.ChatNotify = {
+    enabled = false,
+    message = '^7[^0coords^7] Copied to clipboard',
+}
+```
+
+Standard FiveM colour codes work in the message (`^0` black, `^7` white, etc.). The actual clipboard write happens in the UI — this is purely a confirmation.
+
+## Permissions
+
+All commands are open to everyone by default. To lock them down, add ACE rules in `server.cfg`:
+
+```
+add_ace group.admin command.coordsx allow
+add_ace group.admin command.coordshud allow
+remove_ace builtin.everyone command.coordsx
+remove_ace builtin.everyone command.coordshud
+```
+
+If you renamed any command in `Config.Commands`, use the new name in the ACE entries (`command.<your-name>`).

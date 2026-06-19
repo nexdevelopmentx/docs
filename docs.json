@@ -1,53 +1,220 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mintlify Starter Kit",
+  "name": "NEX Development",
   "colors": {
     "primary": "#16A34A",
-    "light": "#07C983",
+    "light": "#22C55E",
     "dark": "#15803D"
   },
   "favicon": "/favicon.svg",
+  "appearance": {
+    "default": "dark"
+  },
+  "logo": {
+    "light": "/logo/nex-logo.png",
+    "dark": "/logo/nex-logo.png"
+  },
   "navigation": {
     "pages": [
       {
-        "group": "Getting Started",
+        "group": "Get Started",
         "pages": [
           "index",
-          "quickstart"
+          "general/getting-started",
+          "general/faq",
+          "general/support"
+        ]
+      },
+      {
+        "group": "NEX Garage",
+        "pages": [
+          "nex-garage/overview",
+          "nex-garage/installation",
+          "nex-garage/configuration",
+          "nex-garage/troubleshooting"
+        ]
+      },
+      {
+        "group": "NEX Elevators",
+        "pages": [
+          "nex-elevators/overview",
+          "nex-elevators/installation",
+          "nex-elevators/configuration",
+          "nex-elevators/admin-panel"
+        ]
+      },
+      {
+        "group": "NEX DJ Booth",
+        "pages": [
+          "nex-djbooth/overview",
+          "nex-djbooth/installation",
+          "nex-djbooth/configuration",
+          "nex-djbooth/admin-panel",
+          "nex-djbooth/usage",
+          "nex-djbooth/commands",
+          "nex-djbooth/troubleshooting"
+        ]
+      },
+      {
+        "group": "NEX Hotels",
+        "pages": [
+          "nex-hotels/overview",
+          "nex-hotels/installation",
+          "nex-hotels/configuration",
+          "nex-hotels/admin-panel",
+          "nex-hotels/usage",
+          "nex-hotels/commands",
+          "nex-hotels/troubleshooting"
+        ]
+      },
+      {
+        "group": "NEX UI Pack",
+        "pages": [
+          "nex-uipack/overview",
+          "nex-uipack/installation",
+          "nex-uipack/troubleshooting"
+        ]
+      },
+      {
+        "group": "NEX Queue",
+        "pages": [
+          "nex-queue/overview",
+          "nex-queue/installation",
+          "nex-queue/discord-setup",
+          "nex-queue/configuration",
+          "nex-queue/themes",
+          "nex-queue/whitelist-and-priority",
+          "nex-queue/troubleshooting"
+        ]
+      },
+      {
+        "group": "NEX Crafting",
+        "pages": [
+          "nex-crafting/overview",
+          "nex-crafting/installation",
+          "nex-crafting/configuration",
+          "nex-crafting/creator-panel",
+          "nex-crafting/usage",
+          "nex-crafting/commands",
+          "nex-crafting/troubleshooting"
+        ]
+      },
+      {
+        "group": "NEX Item Whitelist",
+        "pages": [
+          "nex-itemwhitelist/overview",
+          "nex-itemwhitelist/installation",
+          "nex-itemwhitelist/configuration",
+          "nex-itemwhitelist/admin-menu",
+          "nex-itemwhitelist/commands",
+          "nex-itemwhitelist/troubleshooting"
+        ]
+      },
+      {
+        "group": "NEX Dealerships",
+        "pages": [
+          "nex-dealerships/overview",
+          "nex-dealerships/installation",
+          "nex-dealerships/configuration",
+          "nex-dealerships/dealerships",
+          "nex-dealerships/admin-panel",
+          "nex-dealerships/management",
+          "nex-dealerships/usage",
+          "nex-dealerships/commands",
+          "nex-dealerships/integrations",
+          "nex-dealerships/troubleshooting"
+        ]
+      },
+      {
+        "group": "NEX Coords Tool",
+        "pages": [
+          "nex-coordstool/overview",
+          "nex-coordstool/installation",
+          "nex-coordstool/configuration",
+          "nex-coordstool/usage",
+          "nex-coordstool/troubleshooting"
+        ]
+      },
+      {
+        "group": "NEX Loading Screen",
+        "pages": [
+          "nex-loadingscreen/overview",
+          "nex-loadingscreen/installation",
+          "nex-loadingscreen/configuration",
+          "nex-loadingscreen/music",
+          "nex-loadingscreen/troubleshooting"
+        ]
+      },
+      {
+        "group": "NEX Donator System",
+        "pages": [
+          "nex-donatorsystem/overview",
+          "nex-donatorsystem/installation",
+          "nex-donatorsystem/configuration",
+          "nex-donatorsystem/tebex-setup",
+          "nex-donatorsystem/admin-panel",
+          "nex-donatorsystem/usage",
+          "nex-donatorsystem/commands",
+          "nex-donatorsystem/troubleshooting"
+        ]
+      },
+      {
+        "group": "NEX Shoulder Pets",
+        "pages": [
+          "nex-shoulderpets/overview",
+          "nex-shoulderpets/installation",
+          "nex-shoulderpets/configuration",
+          "nex-shoulderpets/adding-pets",
+          "nex-shoulderpets/usage",
+          "nex-shoulderpets/commands",
+          "nex-shoulderpets/troubleshooting"
+        ]
+      },
+      {
+        "group": "NEX Crutch System",
+        "pages": [
+          "nex-crutchsystem/overview",
+          "nex-crutchsystem/installation",
+          "nex-crutchsystem/configuration",
+          "nex-crutchsystem/usage",
+          "nex-crutchsystem/commands",
+          "nex-crutchsystem/exports",
+          "nex-crutchsystem/troubleshooting"
+        ]
+      },
+      {
+        "group": "NEX Boss Menu",
+        "pages": [
+          "nex-bossmenu/overview",
+          "nex-bossmenu/installation",
+          "nex-bossmenu/configuration",
+          "nex-bossmenu/usage",
+          "nex-bossmenu/commands",
+          "nex-bossmenu/custom-frameworks",
+          "nex-bossmenu/troubleshooting"
+        ]
+      },
+      {
+        "group": "Changelog",
+        "pages": [
+          "changelog/overview",
+          "changelog/v1"
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    ]
   },
   "navbar": {
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "/general/support"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://app.mintlify.com"
+      "label": "Get started",
+      "href": "/general/getting-started"
     }
   },
   "contextual": {
@@ -61,12 +228,5 @@
       "cursor",
       "vscode"
     ]
-  },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
-    }
   }
 }

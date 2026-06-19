@@ -1,0 +1,44 @@
+---
+title: "Admin panel"
+description: "The admin panel is where you place and remove booths in-game. Open it with /djbooth and changes go live immediately."
+---
+
+The admin panel is where you place and remove booths in-game. Open it with `/djbooth` and changes go live immediately.
+
+## Opening the panel
+
+Run `/djbooth`. You need the `command.djbooth` ace permission:
+
+```
+add_ace group.admin command.djbooth allow
+```
+
+If `/djbooth` does nothing when you type it, you don't have permission yet.
+
+## Placing a booth
+
+1. Stand **exactly** where you want the booth's interaction point to be.
+2. Run `/djbooth` and click **Add booth**.
+3. Fill in the form:
+
+   * **Booth name** — shown in the booth's UI header (e.g. "Bahama Mamas Main Stage").
+   * **Job restriction** — `public` for everyone, or a job/gang name (e.g. `police`, `mechanic`, `ballas`).
+   * **Sound radius** — how far away the music can be heard, in metres (5–500).
+   * **Default volume** — 1–100. The volume players see when they open the booth.
+   * **Prop model** *(optional)* — a prop name like `prop_boombox_01`. Leave blank for no prop.
+
+4. Click **Create booth**.
+
+The booth appears for everyone instantly — no restart needed.
+
+## Removing a booth
+
+1. Open the panel with `/djbooth`.
+2. Click the trash icon next to the booth.
+3. Click **Confirm**.
+
+The booth is removed for everyone instantly, and any music playing at that booth stops.
+
+## Listing booths
+
+The main view of `/djbooth` shows every booth with its name, job, radius, default volume, and coordinates. Use this to check what's set up.

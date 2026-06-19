@@ -1,0 +1,48 @@
+---
+title: "Commands"
+description: "Commands and exports for NEX Shoulder Pets."
+---
+
+## Player
+
+| Command | Effect |
+| --- | --- |
+| `/pet` | Opens the pet menu. Rename via `Config.General.menuCommand`. |
+| `/spawnpet <petId>` | **Standalone mode only.** Summons a pet directly without going through an inventory. `<petId>` is the key in `Config.Pets`. |
+
+There's also a configurable keybind (default **P**) — see [Configuration](/nex-shoulderpets/configuration#general-behaviour).
+
+## Admin
+
+| Command | Effect |
+| --- | --- |
+| `/removepet <serverId>` | Force-removes the pet from another player. |
+
+`/removepet` is gated by the `command.removepet` ace permission. Grant it like any other ace:
+
+```
+add_ace group.admin command.removepet allow
+```
+
+The command name and ace check can both be renamed:
+
+```lua
+Config.General.adminWipeCommand = 'removepet'
+Config.General.adminAceCheck    = 'command.removepet'
+```
+
+Forced removal skips the unequip animation — the pet just disappears.
+
+## Examples
+
+Spawn a Shark Boi in standalone mode:
+
+```
+/spawnpet shark_boi
+```
+
+Yank player 42's pet:
+
+```
+/removepet 42
+```

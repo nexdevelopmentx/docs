@@ -1,0 +1,23 @@
+---
+title: "Troubleshooting"
+description: "If something's wrong, the first thing to do is enable Config.Debug = true and watch your server and F8 consoles."
+---
+
+If something's wrong, the first thing to do is enable `Config.Debug = true` and watch your server and F8 consoles.
+
+## Common issues
+
+| Problem | Fix |
+| ------- | --- |
+| Resource won't start | Make sure `oxmysql`, your framework, and `ox_lib` start **before** `nex_garages` in `server.cfg`, and that you imported the right SQL file. |
+| Garage blips not showing | `Config.ShowBlips = true` and check each garage in `Config.GarageLocations` has `blip.show = true`. |
+| "Framework not detected" | Your framework resource isn't running, or it starts after `nex_garages`. Try setting `Config.Framework` explicitly instead of `"auto"`. |
+| Vehicles spawn inside buildings or underground | Adjust the `spawn` coords for that garage in `config.lua` — bump `z` up by 0.5–1.0. |
+| Database errors on startup | You imported the wrong SQL file (or skipped it). Re-run the right one for your framework. |
+| TextUI prompts not appearing | `Config.DrawText` doesn't match an installed TextUI resource. Try `"ox_lib"` as a safe fallback. |
+| Transfers not working | Check `Config.EnableVehicleTransfers` / `EnableGarageTransfer` is `true`. The target player must be online; the vehicle must be stored, not spawned. |
+| "Not your vehicle" when storing | The vehicle isn't owned by that character in the DB. Use `/givevehicle` to properly register admin-spawned vehicles. |
+| Fuel not saving | `Config.FuelSystem` doesn't match your fuel script. Set it to the exact name. |
+| Vehicle keys not given on spawn | `Config.VehicleKeys` doesn't match your keys script. Set it to the exact name. |
+
+Still stuck? See [Support & contact](/general/support).

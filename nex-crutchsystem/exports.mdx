@@ -1,0 +1,74 @@
+---
+title: "Exports & events"
+description: "Public hooks for integrating other resources — ambulance jobs, custom HUDs, scripted incidents."
+---
+
+Public hooks for integrating other resources — ambulance jobs, custom HUDs, scripted incidents.
+
+Resource name is `nex_crutchsystem`.
+
+## Server exports
+
+| Export | Returns | Use case |
+| --- | --- | --- |
+| `ForceCrutch(target, durationSeconds?, label?)` | `boolean` | Force-equip a crutch on a player. `durationSeconds` defaults to `Config.ForceDuration`. `label` shows in the admin panel (default `'EMS'`). |
+| `ClearForce(target)` | `boolean` | Removes the force lock without unequipping. |
+| `RemoveCrutch(target)` | `boolean` | Clears the force lock **and** unequips the prop. |
+| `ListForced()` | `table[]` | Snapshot of every currently-forced player: `{ id, name, secondsLeft, sourceLabel }`. |
+| `IsPlayerCrutched(src)` | `boolean` | Is this player currently using a crutch (item-use or force). |
+| `PlayerHasCrutch(src)` | `boolean` | Alias of `IsPlayerCrutched`. |
+| `PlayerNearMedic(src)` | `boolean` | Is the player within any `Config.MedicLocations` radius. |
+| `useCrutch(source, item, slot, data)` | — | ox_inventory `server.export` target. Don't call directly. |
+
+## Client exports
+
+| Export | Returns | Use case |
+| --- | --- | --- |
+| `SetWalkStyle(walk)` | — | Sets the clip-set to restore after the crutch is unequipped. |
+| `IsUsingCrutch()` | `boolean` | Is the local player currently limping with a crutch. |
+| `IsForced()` | `boolean` | Is the local player under a force lock. |
+
+## Example — ambulance job auto-force after revive
+
+In your ambulance job's server script, after a successful revive:
+
+```lua
+exports.nex_crutchsystem:ForceCrutch(playerId, 600, 'EMS')
+```
+
+The patient gets a crutch for 10 minutes, can't manually unequip it, and shows up in `/crutchadmin` with `EMS` as the source label.
+
+## Example — read crutched state from another resource
+
+```lua
+if exports.nex_crutchsystem:IsPlayerCrutched(source) then
+    -- e.g. block running, disable sprint sound, halve max stamina
+end
+```
+
+## Example — restore a custom walk style after unequip
+
+Some scripts override `SetPedMovementClipset`. Tell the crutch system what to restore:
+
+```lua
+exports.nex_crutchsystem:SetWalkStyle('move_m@drunk@verydrunk')
+```
+
+The next time the crutch is unequipped, the player's clip-set is restored to that value instead of the default.
+
+## Net events
+
+Only the events you'd reasonably trigger from another resource are listed. Prefer the exports above — they also keep the server's `equipped[]` and `forcedPlayers[]` tracking tables in sync.
+
+### Server → client
+
+| Event | Args | Equivalent export |
+| --- | --- | --- |
+| `nex_crutchsystem:client:crutch` | — | toggle from inventory use |
+| `nex_crutchsystem:client:forceCrutch` | `duration?` | `ForceCrutch` |
+| `nex_crutchsystem:client:clearForce` | — | `ClearForce` |
+| `nex_crutchsystem:client:forceRemove` | — | `RemoveCrutch` |
+
+<Warning>
+  Calling `TriggerClientEvent('nex_crutchsystem:client:forceCrutch', src, 600)` will visually equip the crutch on the client, but won't register the player in the server-side tracking tables — `IsPlayerCrutched`, `ListForced`, and `/crutchadmin` won't know about them. Always use the `ForceCrutch` export for force locks initiated outside the resource.
+</Warning>

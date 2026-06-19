@@ -1,0 +1,81 @@
+---
+title: "Configuration"
+description: "Everything is in config.lua — your settings are preserved across updates."
+---
+
+Everything is in `config.lua` — your settings are preserved across updates.
+
+## General
+
+| Option | What it does | Default |
+| ------ | ------------ | ------- |
+| `Config.Framework` | `"auto"`, `"QBCore"`, `"Qbox"`, or `"ESX"`. Leave on `"auto"` unless you have a reason. | `"auto"` |
+| `Config.Debug` | Verbose console logging. | `false` |
+
+## Integrations
+
+Match these to whatever you actually have running. Set to `"none"` if you don't have one.
+
+| Option | Options |
+| ------ | ------- |
+| `Config.FuelSystem` | `"LegacyFuel"`, `"ps-fuel"`, `"ox_fuel"`, `"cdn-fuel"`, `"okokGasStation"`, `"Renewed"`, `"rcore_fuel"`, `"none"` |
+| `Config.VehicleKeys` | `"qb-vehiclekeys"`, `"qs-vehiclekeys"`, `"mk_vehiclekeys"`, `"wasabi_carlock"`, `"okokGarage"`, `"Renewed"`, `"t1ger_keys"`, `"tgiann-hotwire"`, `"none"` |
+| `Config.Notifications` | `"auto"`, `"default"`, `"okokNotify"`, `"ox_lib"`, `"ps-ui"` |
+| `Config.DrawText` | `"nex_textui"`, `"jg-textui"`, `"qb-DrawText"`, `"okokTextUI"`, `"ox_lib"`, `"ps-ui"` |
+
+## Behaviour
+
+| Option | What it does | Default |
+| ------ | ------------ | ------- |
+| `Config.ShowBlips` | Map blips for all garages. | `true` |
+| `Config.SaveVehicleDamage` | Save and restore engine/body/fuel between sessions. | `true` |
+| `Config.RestrictToGarage` | Players can only retrieve a vehicle from the garage they parked it at. | `true` |
+| `Config.RestrictVehicleType` | Cars only at car garages, boats only at docks, aircraft only at hangars. | `true` |
+| `Config.EnableVehicleTransfers` | Players can transfer vehicles to each other. | `true` |
+| `Config.EnableGarageTransfer` | Players can move vehicles between their own garages. | `true` |
+| `Config.GarageTransferCost` | Cost to move a vehicle to another garage. | `500` |
+| `Config.DefaultGarage` | Where `/givevehicle` puts new vehicles. | `"Legion Square"` |
+
+## Pre-configured garages
+
+| Name | Type | Location |
+| ---- | ---- | -------- |
+| Legion Square | Car | Downtown LS |
+| Grove Street | Car | South LS |
+| Sandy Shores | Car | Sandy Shores |
+| Paleto Bay | Car | Paleto Bay |
+| Beach Parking | Car | Vespucci Beach |
+| Mirror Park | Car | Mirror Park |
+| Airport | Car | LS Airport |
+| Boat Dock | Sea | LS Marina |
+| Sandy Shores Hangar | Air | Sandy Shores Airfield |
+| LS International Hangar | Air | LS Airport |
+
+## Adding your own garage
+
+Add an entry to `Config.GarageLocations`:
+
+```lua
+["My Garage"] = {
+    coords = vector3(215.0, -810.0, 30.7),
+    spawn = vector4(222.0, -803.0, 30.7, 150.0),
+    distance = 30,
+    type = "car",            -- "car", "sea", or "air"
+    blip = {
+        show = true,
+        sprite = 357,
+        color = 3,
+        scale = 0.7,
+        name = "My Garage",
+    },
+},
+```
+
+For multiple spawn points, use a table of `vector4`s for `spawn`.
+
+## Admin commands
+
+| Command | What it does |
+| ------- | ------------ |
+| `/givevehicle [playerId] [model]` | Gives a vehicle to a player, parked in `Config.DefaultGarage`. |
+| `/removevehicle [plate]` | Removes a vehicle from the database. |

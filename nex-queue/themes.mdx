@@ -1,0 +1,82 @@
+---
+title: "Themes"
+description: "NEX Queue ships with 8 ready-made Adaptive Card themes. They all show the same information (position, priority, time, tier) — the layout is what changes. Pick the one that matches your community's…"
+---
+
+NEX Queue ships with **8 ready-made Adaptive Card themes**. They all show the same information (position, priority, time, tier) — the layout is what changes. Pick the one that matches your community's look.
+
+## Switching themes
+
+Edit one line in `config.lua`:
+
+```lua
+Config.Interface.Theme = "compactbar"
+```
+
+Then restart the resource:
+
+```
+restart nex_queue
+```
+
+That's it — every player who joins from that point sees the new theme.
+
+## Available themes
+
+| Key | What it looks like |
+| --- | ------------------ |
+| `classic` | Centered server hero icon + 3-column metrics row (Position / Priority / Time). The original look. |
+| `banner` | Wide banner image as the focal point inside the card + centered emoji-bullet status. |
+| `factset` | "Connecting to *YourServer*" subhead with a tabular FactSet of key/value rows. Clean and information-dense. |
+| `boardingpass` | Styled like an airline ticket — Origin ✈ Destination header + flight-stat grid. |
+| `compactbar` | Avatar + name + inline buttons in a single row, then a bulleted list with right-aligned values. The most compact theme. |
+| `minimal` | "You are in the queue!" + 3 short text rows. Plain and fast. |
+| `centered` | Hero identity card — the player's name dominates, their position is shown bold below. |
+| `cards` | Three separated stat tiles (emphasis containers) — one for each metric. |
+
+<Info>
+  The wait-list button (when configured) appears on **every** theme — it opens an in-card panel listing the rest of the queue.
+</Info>
+
+## Hot-swap at runtime
+
+You can switch themes **without restarting** using the export. Useful for testing, events, or a "current vibe" rotation:
+
+```lua
+exports.nex_queue:SetNexActiveTheme("boardingpass")
+```
+
+Get the list of valid theme names:
+
+```lua
+local themes = exports.nex_queue:GetNexThemeList()
+-- { "classic", "banner", "factset", "boardingpass", "compactbar", "minimal", "centered", "cards" }
+```
+
+Check the currently active one:
+
+```lua
+local current = exports.nex_queue:GetNexActiveTheme()
+```
+
+Theme swaps take effect on the **next refresh** for every player already in the queue — by default that's within `Config.Server.RefreshRate` (1 second).
+
+## Tips for picking a theme
+
+* **Have a wide banner image you love?** → `banner` or `boardingpass`
+* **Want it to feel like a flight to your city?** → `boardingpass` (use the city name in `ServerShortName`)
+* **Want maximum info in minimum vertical space?** → `compactbar` or `factset`
+* **Want it to feel like a poster?** → `centered` or `cards`
+* **Want a "no-nonsense" terminal look?** → `minimal`
+* **Classic FiveM queue look?** → `classic`
+
+## Image sizing
+
+Every theme uses these two images:
+
+| Image | Recommended size |
+| ----- | ---------------- |
+| `BannerImage` | ~1500 × 500 PNG, &lt; 1 MB |
+| `ServerIcon` | ~128 × 128 PNG, transparent background |
+
+Host them on a reliable CDN. Discord-hosted image URLs work, but they may rate-limit if many players are connecting at once.

@@ -1,0 +1,32 @@
+---
+title: "Troubleshooting"
+description: "If something's wrong, run /djboothdebug in-game first — it prints exactly what the client thinks is going on. Then check your F8 console (filter for [nexdjbooth]) and your server console (same…"
+---
+
+If something's wrong, run `/djbooth_debug` in-game first — it prints exactly what the client thinks is going on. Then check your **F8** console (filter for `[nex_djbooth]`) and your **server console** (same filter).
+
+## Common issues
+
+| Problem | Fix |
+| ------- | --- |
+| No booths appear after `ensure` | Run `/djbooth_resync`. If still nothing, your database is empty — open `/djbooth` and add one. |
+| `DB query failed` in server console | You forgot to import `install.sql`. Do that and restart. |
+| `No framework detected` | Your framework resource isn't started, or it's loading after `nex_djbooth`. Fix `server.cfg` order. |
+| `/djbooth` does nothing | You don't have the ace permission. Run `add_ace group.admin command.djbooth allow`. |
+| Sound doesn't play for anyone | `xsound` isn't running, or the YouTube video is region-blocked / age-restricted / private. Try another video. |
+| Sound plays only for the person who queued it | You're outside the booth's sound radius, or your in-game volume is at 0. |
+| Wrong title shown | YouTube's response changed between requests. Re-queue the track. |
+| "Add booth" silently fails | Check your server console for a SQL error — most likely the table is missing or the MySQL user can't INSERT. |
+| Prop doesn't appear | The prop model name isn't a valid GTA prop. Try `prop_boombox_01` to confirm. |
+| Booth shows "Live" for a non-live video | The video reports no fixed duration. Re-queue or use a different video. |
+
+## Before opening a support ticket
+
+Please include:
+
+1. The output of `/djbooth_debug` from F8.
+2. Server console output filtered for `[nex_djbooth]`.
+3. Your framework (Qbox / QBCore / ESX) and version.
+4. What you did and what you expected to happen.
+
+See [Support & contact](/general/support).

@@ -1,0 +1,44 @@
+---
+title: "Installation"
+description: "How to install NEX DJ Booth on your FiveM server."
+---
+
+## Requirements
+
+* FiveM server
+* MySQL or MariaDB
+* One of: [`qbx_core`](https://github.com/Qbox-project/qbx_core), [`qb-core`](https://github.com/qbcore-framework/qb-core), or [`es_extended`](https://github.com/esx-framework/esx_core)
+* [`ox_lib`](https://github.com/overextended/ox_lib), [`ox_target`](https://github.com/overextended/ox_target), [`oxmysql`](https://github.com/overextended/oxmysql), and [`xsound`](https://github.com/Xogy/xsound)
+
+## Steps
+
+1. Drop the `nex_djbooth` folder into your resources, e.g. `resources/[djbooth]/nex_djbooth/`.
+
+2. Import the bundled `install.sql` into your database (it creates the `djbooth_locations` table).
+
+3. Add it to `server.cfg` **after** its dependencies:
+
+   ```
+   ensure ox_lib
+   ensure ox_target
+   ensure oxmysql
+   ensure xsound
+   ensure nex_djbooth
+   ```
+
+4. Grant access to the admin command:
+
+   ```
+   add_ace group.admin command.djbooth allow
+   ```
+
+5. Restart your server.
+
+That's it. Run `/djbooth` in-game to start adding booths.
+
+## Updating
+
+Your `shared/config.lua` is preserved across updates, and your booths in MySQL are preserved automatically.
+
+1. Replace the resource files with the new version.
+2. Restart the server.

@@ -1,0 +1,45 @@
+---
+title: "Usage"
+description: "Usage — NEX Coords Tool."
+---
+
+## Commands
+
+| Command | What it does |
+|---------|--------------|
+| `/coordsx` | Opens the saver menu at your current position. Click a button to copy + close. |
+| `/coordshud` | Toggles a small live HUD in the top-right showing your X / Y / Z / H. |
+| `/mfix` | Emergency release — frees your mouse if NUI focus ever desyncs. |
+
+Names are configurable from `Config.Commands` in `lua/config.lua` — see [Configuration](/nex-coordstool/configuration#commands).
+
+## Saving a coord
+
+1. Stand where you want the coordinate captured. Heading matters for `vector4`, so face the direction you want recorded.
+2. Run `/coordsx`. The menu fades in with the current X / Y / Z / H preview.
+3. Click the format you want. The menu closes itself, the clipboard is set, and your mouse is released.
+4. Paste straight into your script.
+
+## Output formats
+
+Click any of the five buttons to copy the active coordinate:
+
+| Button | Example output |
+|--------|----------------|
+| **JSON String** | `{"x":-1037.123,"y":-2737.518,"z":20.169,"h":327.45}` |
+| **Table Structure** | `{ ['x'] = -1037.123, ['y'] = -2737.518, ['z'] = 20.169, ['h'] = 327.45 }` |
+| **Standard** | `-1037.123, -2737.518, 20.169, 327.45` |
+| **Vector3** | `vector3(-1037.123, -2737.518, 20.169)` |
+| **Vector4** | `vector4(-1037.123, -2737.518, 20.169, 327.45)` |
+
+Decimal places follow `Config.Precision` (default `3`).
+
+## Live HUD
+
+Run `/coordshud` to toggle a small overlay in the top-right showing your current X / Y / Z / H, refreshing every `Config.Hud.updateInterval` ms. Run it again to hide it.
+
+To show the HUD automatically on join, set `Config.Hud.showOnStart = true`.
+
+## When the mouse won't release
+
+The menu releases NUI focus on close — but if anything ever desyncs (alt-tab during an animation, another resource grabs focus, etc.) run `/mfix` to force-release it.

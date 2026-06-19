@@ -1,0 +1,41 @@
+---
+title: "FAQ"
+description: "Frequently asked questions about NEX Development FiveM scripts."
+---
+
+## General
+
+### Which frameworks are supported?
+
+It depends on the script. Most support **QBCore, Qbox, and ESX**. Some also support **Ox Core**. Each script's **Installation** page lists exactly what it needs.
+
+### Will my settings be wiped when I update?
+
+No. Every config file (`config.lua` or `shared/config.lua`) is excluded from the escrow update — your settings carry over automatically.
+
+### Are NEX scripts escrowed?
+
+Yes — except for the config files, which are intentionally left open so you can edit them.
+
+## Setup
+
+### A script isn't starting — where do I look first?
+
+1. Check the server console for errors on the resource starting up.
+2. Make sure dependencies (`oxmysql`, `ox_lib`, your framework, etc.) are started **before** the NEX script in `server.cfg`.
+3. Confirm `Config.Framework` matches your actual core resource.
+4. Check the per-script **Troubleshooting** page.
+
+### Do NEX scripts work together?
+
+Yes. They're designed to coexist on the same server without stepping on each other.
+
+## Licensing
+
+### Can I edit the source?
+
+You can edit the config files freely. The rest of the source is escrowed (encrypted) per Tebex's standard model.
+
+### Can I redistribute modified versions?
+
+No. Resale or redistribution isn't allowed under the Tebex licence.
