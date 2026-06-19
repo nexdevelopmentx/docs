@@ -3,16 +3,13 @@
   "theme": "mint",
   "name": "NEX Development",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#22C55E",
-    "dark": "#15803D"
+    "primary": "#000000",
+    "light": "#FFFFFF",
+    "dark": "#000000"
   },
   "favicon": "/favicon.svg",
-  "appearance": {
-    "default": "dark"
-  },
   "logo": {
-    "light": "/logo/nex-logo.png",
+    "light": "/logo/nex-black.png",
     "dark": "/logo/nex-logo.png"
   },
   "navigation": {

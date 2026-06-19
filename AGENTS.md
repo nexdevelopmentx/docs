@@ -1,33 +1,35 @@
-> **First-time setup**: Customize this file for your project. Prompt the user to customize this file for their project.
-> For Mintlify product knowledge (components, configuration, writing standards),
-> install the Mintlify skill: `npx skills add https://mintlify.com/docs`
-
-# Documentation project instructions
+# NEX Development docs — project instructions
 
 ## About this project
 
-- This is a documentation site built on [Mintlify](https://mintlify.com)
-- Pages are MDX files with YAML frontmatter
-- Configuration lives in `docs.json`
-- Use the Mintlify MCP server, `https://mcp.mintlify.com`, to edit content and settings via MCP
-- Use the Mintlify docs MCP server, `https://www.mintlify.com/docs/mcp`, to query information about using Mintlify via MCP
+- Documentation for NEX Development's FiveM scripts.
+- Pages are MDX files with YAML frontmatter; one folder per script.
+- Navigation and site configuration live in `docs.json`.
+
+## Structure
+
+- One folder per resource (e.g. `nex-garage/`, `nex-queue/`), each with an
+  `overview` page plus pages like `installation`, `configuration`,
+  `troubleshooting`.
+- Shared pages live under `general/`; release notes under `changelog/`.
+- Internal links are root-relative and omit the file extension
+  (e.g. `/nex-garage/installation`).
 
 ## Terminology
 
-{/* Add product-specific terms and preferred usage */}
-{/* Example: Use "workspace" not "project", "member" not "user" */}
+- Refer to products by their full name: "NEX Garage", "NEX Queue", etc.
+- "Resource" or "script" for a FiveM resource; "framework" for QBCore / Qbox / ESX.
 
 ## Style preferences
 
-{/* Add any project-specific style rules below */}
+- Use active voice and second person ("you").
+- Keep sentences concise — one idea per sentence.
+- Use sentence case for headings.
+- Bold for UI elements: Click **Settings**.
+- Code formatting for file names, commands, paths, and config keys.
+- Use callouts (`<Info>`, `<Warning>`, `<Danger>`) for notes and cautions.
 
-- Use active voice and second person ("you")
-- Keep sentences concise — one idea per sentence
-- Use sentence case for headings
-- Bold for UI elements: Click **Settings**
-- Code formatting for file names, commands, paths, and code references
+## Branding
 
-## Content boundaries
-
-{/* Define what should and shouldn't be documented */}
-{/* Example: Don't document internal admin features */}
+- Colors are black (`#000000`) and white (`#FFFFFF`).
+- Logos: `logo/nex-black.png` (light mode), `logo/nex-logo.png` (dark mode).
