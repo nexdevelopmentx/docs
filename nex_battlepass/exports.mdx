@@ -1,0 +1,80 @@
+---
+title: "Exports"
+description: "Server and client exports for integrating other resources, and the database tables"
+---
+
+Resource name is `nex_battlepass`.
+
+## Server exports
+
+Use these to grant XP, push quest progress, and read a player's battle pass state from your own server scripts. `src` is the player's server id.
+
+```lua
+exports.nex_battlepass:AddXP(source, amount, 'reason')        -- grant XP
+exports.nex_battlepass:AddQuestProgress(source, questId, amount)
+exports.nex_battlepass:AddBuiltinProgress(source, 'killcount', 1)
+local level   = exports.nex_battlepass:GetLevel(source)
+local xp      = exports.nex_battlepass:GetXP(source)
+local premium = exports.nex_battlepass:IsPremium(source)
+```
+
+| Export | Signature | What it does |
+| --- | --- | --- |
+| `AddXP` | `AddXP(src, amount, sourceLabel?)` | Grants `amount` XP to the player. `sourceLabel` is an optional reason string for logs (defaults to `'export'`). Fires the level-up flow as needed. |
+| `AddQuestProgress` | `AddQuestProgress(src, questId, amount?)` | Adds progress to the quest with id `questId`. `amount` defaults to `1`. |
+| `AddBuiltinProgress` | `AddBuiltinProgress(src, builtinType, amount?)` | Adds progress to every quest using the built-in tracker `builtinType` (`playtime`, `killcount`, `swimdistance`, `rundistance`). `amount` defaults to `1`. |
+| `GetLevel` | `GetLevel(src)` → `number` | Returns the player's current level (`1` if no data). |
+| `GetXP` | `GetXP(src)` → `number` | Returns the player's total XP (`0` if no data). |
+| `IsPremium` | `IsPremium(src)` → `boolean` | Returns whether the player has an active premium pass. |
+| `ReloadLevels` | `ReloadLevels()` | Reloads levels/rewards from the DB after a direct database edit and live-refreshes open UIs — no restart needed. |
+
+## Client exports
+
+| Export | Signature | What it does |
+| --- | --- | --- |
+| `openBattlepass` | `openBattlepass()` | Opens the battle pass UI for the local player. |
+| `closeBattlepass` | `closeBattlepass()` | Closes the battle pass UI. |
+| `isOpen` | `isOpen()` → `boolean` | Returns whether the UI is currently open. |
+
+```lua
+-- open the battle pass from another resource (client side)
+exports.nex_battlepass:openBattlepass()
+```
+
+## Examples
+
+### Grant XP after a job
+
+```lua
+-- server side, after a player finishes a job
+exports.nex_battlepass:AddXP(source, 250, 'job:delivery')
+```
+
+### Gate content behind premium
+
+```lua
+-- server side
+if exports.nex_battlepass:IsPremium(source) then
+    -- give premium-only perk
+end
+```
+
+### Push custom quest progress
+
+```lua
+-- server side, when the player does the thing your custom quest tracks
+exports.nex_battlepass:AddQuestProgress(source, 'mission_5', 1)
+```
+
+See [Quests](/nex_battlepass/quests) for defining custom quests.
+
+## Database tables
+
+These are created automatically on first start — there is no SQL file to import.
+
+| Table | Holds |
+| --- | --- |
+| `nex_battlepass` | Player progress (XP, level, premium, claims) |
+| `nex_battlepass_levels` | Your levels and their Standard / Advanced rewards (managed via `/bpadmin`) |
+| `nex_battlepass_codes` | Single-use redemption codes (code mode) |
+| `nex_battlepass_redemptions` | Used Tebex transactions, so each can only be redeemed once |

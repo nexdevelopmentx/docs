@@ -1,0 +1,71 @@
+---
+title: "Usage"
+description: "Open the pole manager, place / edit / delete poles with built-in placement controls, and let players use the dance context menu."
+---
+
+## Opening the manager
+
+Open the pole manager with the command (admins only):
+
+```
+/poles
+```
+
+The command name comes from `Config.Command` (default `poles`). Non-admins who run it see a clean access-denied state. Access is gated by `AdminPermission` (a FiveM ace) or `AdminGroups` (your framework's admin groups), and is re-checked server-side on every write.
+
+## Placing a new pole
+
+1. In the manager, click **Place New Pole**.
+2. Fill in the **label**, confirm the **model**, and set the **job lock** first.
+   * The model is fixed to `prop_strip_pole_01`.
+   * Toggle **Spawn prop** off to create a dance spot only (no prop spawned) on a pole that is already part of the map. The dance animation still plays at the spot.
+   * If you enable the job lock, pick the required job from the dropdown.
+3. Click **Set Position**. The panel hides and the placement ghost appears.
+4. Aim where you want the pole — the translucent ghost follows your view. Rotate and adjust height as needed (see [Placement controls](#placement-controls)).
+5. Press `[G]` to lock it in place so you can walk around and inspect it.
+6. Press `Enter` (or left-click) to confirm the position.
+7. Back in the panel, click **Create** to save. The server validates and broadcasts the pole, and it spawns for everyone in real time.
+
+<Info>
+  Set the label, model and job lock before you click **Set Position** — those settings are filled in first, then you place the position.
+</Info>
+
+### Placement controls
+
+| Action | Key |
+|--------|-----|
+| Aim (ghost follows your view) | Look (mouse) |
+| Rotate | Mouse wheel (coarse, 15°) / ← → (fine) |
+| Raise / lower height | ↑ / ↓ arrows |
+| Lock in place / unlock follow | `[G]` |
+| Confirm | `Enter` / Left click |
+| Cancel | `Backspace` |
+
+<Info>
+  When you edit an existing pole, placement starts locked at the pole's saved spot, so it isn't moved until you press `[G]`. A ground disc marker (in your `UI.Accent` color) shows where the base will rest.
+</Info>
+
+## Editing a pole
+
+Click the pencil icon on a pole in the list to edit it. You can change the label, model, spawn-prop toggle and job lock, or click **Set Position** again to move and re-rotate it. Save to apply — the change syncs to all clients.
+
+## Deleting a pole
+
+Click the trash icon on a pole, then confirm in the dialog. The pole is removed from the database and despawned for everyone.
+
+<Warning>
+  Deleting a pole is permanent — it is removed from the `nex_poles` table. Use the confirmation step to avoid accidental deletes.
+</Warning>
+
+## Players: using a pole
+
+Any player (including non-admins) interacts with a placed pole through the target system to open the **dance context menu** (a custom NUI menu on the right side of the screen).
+
+* Pick one of the pole routines or lap dances. Pole routines play a synchronised scene anchored to the pole; lap dances loop in place where the player stands.
+* Press `[X]` (or the menu's Stop button) to stop dancing.
+
+The menu contents come from `Config.Dances` — see [Configuration](/nex_polecreator/configuration#dances).
+
+### Job lock behavior
+
+If a pole is job-locked, only players with the assigned job can interact with it; everyone else is blocked from opening the dance menu and sees a notification. Unlocked poles are usable by anyone. The job check uses the framework this resource detected (ESX / QBCore / QBox), and the authoritative job stored on a pole is validated server-side.

@@ -1,0 +1,81 @@
+---
+title: "Premium pass"
+description: "Tebex transaction verification, single-use redemption codes, and premium expiry"
+---
+
+Players activate premium with the **Upgrade Pass** button in the UI, entering a transaction or redeem ID. There are two redemption modes, chosen with `Config.Tebex.Enabled`.
+
+## Mode 1 — Tebex verification (recommended)
+
+Set `Config.Tebex.Enabled = true`. The player's **real Tebex transaction ID** is verified against the Tebex Plugin API, and each transaction can only be redeemed once.
+
+```lua
+Config.Tebex = {
+    Enabled = true,         -- verify against Tebex instead of local codes
+    RequireComplete = true, -- only accept payments whose status is Complete/paid
+    PackageIds = {7352503}, -- optional allow-list of package IDs ({} = any package)
+}
+```
+
+| Option | What it does | Default |
+| --- | --- | --- |
+| `Config.Tebex.Enabled` | `true` validates Tebex transactions | `true` |
+| `Config.Tebex.RequireComplete` | Only accept payments whose status is Complete/paid | `true` |
+| `Config.Tebex.PackageIds` | Allow-list of Tebex package IDs that grant premium. `{}` accepts any package. | `{7352503}` |
+
+### The Tebex secret key
+
+The secret key is read automatically from the **`sv_tebexSecret`** convar that Tebex sets when you link your server in the Tebex panel — so in most cases you don't configure anything.
+
+To set it manually instead, use `ServerConfig.TebexSecret` in `server/sv_config.lua`:
+
+```lua
+-- server/sv_config.lua  (server-only, never sent to clients)
+ServerConfig.TebexSecret = '' -- leave empty to use the sv_tebexSecret convar
+```
+
+<Danger>
+  Never put the Tebex secret in `shared/config.lua` — that file also runs on every client. The secret belongs only in the `sv_tebexSecret` convar or `server/sv_config.lua`.
+</Danger>
+
+<Warning>
+  If Tebex is enabled but no secret is found, the resource logs: `Tebex is enabled but no secret found — set the sv_tebexSecret convar (auto-set when you link Tebex) or ServerConfig.TebexSecret in server/sv_config.lua.` Redemptions will fail until a secret is provided.
+</Warning>
+
+## Mode 2 — Redemption codes
+
+Set `Config.Tebex.Enabled = false`. The Transaction ID field then validates against single-use codes that you pre-seed in the `nex_battlepass_codes` table.
+
+Add codes to the table, for example:
+
+```sql
+INSERT INTO nex_battlepass_codes (code) VALUES ('ABCD-1234-EFGH-5678');
+```
+
+Players enter the code in the Upgrade Pass dialog. Each code is single-use.
+
+## Premium expiration
+
+Whether and when premium expires is controlled by these options in `shared/config.lua`:
+
+| Option | What it does | Default |
+| --- | --- | --- |
+| `Config.EnablePremiumExpiration` | `false` means premium never expires once granted | `true` |
+| `Config.PremiumExpirationType` | `'duration'` = X days from activation, `'fixed'` = a specific day of each month | `'duration'` |
+| `Config.PremiumExpirationDay` | In `'duration'` mode: number of days. In `'fixed'` mode: day-of-month (1-28) it expires on. | `1` |
+| `Config.ResetXpOnExpiration` | `true` wipes the player's XP / level / claimed rewards when premium expires | `false` |
+
+### Examples
+
+- **30-day premium from activation:** `PremiumExpirationType = 'duration'`, `PremiumExpirationDay = 30`.
+- **Expires on the 1st of every month (seasonal):** `PremiumExpirationType = 'fixed'`, `PremiumExpirationDay = 1`.
+- **Never expires:** `EnablePremiumExpiration = false`.
+
+## Admin control
+
+Admins can manage premium directly:
+
+- `/setpremium [id] [0|1]` — enable or disable a player's premium
+- `/extendpremium [id]` — extend a player's premium duration
+
+Both require the `group.admin` ace. See [Commands](/nex_battlepass/commands).

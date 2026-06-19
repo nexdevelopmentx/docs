@@ -1,0 +1,76 @@
+---
+title: "Installation"
+description: "Requirements, install steps, server.cfg ensure order, optional SQL import and admin permission setup for nex_polecreator."
+---
+
+## Requirements
+
+| Requirement | Notes |
+|-------------|-------|
+| [`ox_lib`](https://github.com/overextended/ox_lib) | Core library — callbacks, keybinds, notifications. |
+| [`oxmysql`](https://github.com/overextended/oxmysql) | Database layer — poles are persisted here. |
+| A targeting resource matching `Config.Target` | `ox_target`, `qb-target`, or `ox_lib` zones. Default is `ox_target`. |
+
+<Info>
+  Placement is built in — no `object_gizmo` (or any other placement resource) is required.
+</Info>
+
+## Install steps
+
+1. Drop the `nex_polecreator` folder into your server's `resources/` directory.
+2. Make sure the UI is built so the `web/build/` folder exists (see [Building the UI](#building-the-ui) — it ships pre-built).
+3. Optionally import the database table (it is also auto-created on start — see [Database](#database)).
+4. Add the resource to your `server.cfg` in the correct order (see below).
+5. Make sure your admins have the ace permission set in `config.lua` (`AdminPermission`, default `group.admin`).
+
+## server.cfg
+
+Ensure the dependencies before `nex_polecreator`:
+
+```cfg
+ensure ox_lib
+ensure oxmysql
+ensure nex_polecreator
+```
+
+<Warning>
+  Also ensure your target resource (`ox_target`, `qb-target`, or `ox_lib`) before `nex_polecreator`, and make sure it matches `Config.Target`. A mismatch means players cannot interact with poles.
+</Warning>
+
+## Database
+
+The `nex_poles` table is created automatically on start, so no manual import is required. If you prefer to import it manually, run the bundled SQL:
+
+```sql
+-- sql/poles.sql
+SOURCE sql/poles.sql;
+```
+
+See [Configuration](/nex_polecreator/configuration#database-schema-nex_poles) for the full schema.
+
+## Building the UI
+
+The React source lives in `web/`. The build outputs to `web/build/`, which `fxmanifest.lua` ships through `ui_page`. It is built with [bun](https://bun.sh).
+
+<Info>
+  The build is already committed in this delivery, so the resource runs as-is. Only rebuild if you change anything under `web/`.
+</Info>
+
+To rebuild after editing the UI source:
+
+```bash
+cd web
+bun install
+bun run build
+```
+
+This regenerates `web/build/index.html` and `web/build/assets/`. Commit the `web/build/` folder (or build on deploy). For live UI development outside the game, run `bun run dev`.
+
+## Admin permissions
+
+The `/poles` manager and every database write are gated by an ace permission, re-checked server-side on every mutation.
+
+* `AdminPermission` (default `group.admin`) is a FiveM ace. Grant it with `add_ace` / `add_principal` in your `server.cfg` or admin setup.
+* If your admins are admins through your framework instead (an ESX group or a QBCore permission), they are matched through `AdminGroups` (default `admin`, `superadmin`, `god`) — you do not have to touch the ace system at all.
+
+See [Configuration](/nex_polecreator/configuration) for details on both options.

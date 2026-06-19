@@ -1,0 +1,80 @@
+---
+title: "Configuration"
+description: "Every option in config/config.lua for nex_polecreator — access control, theming, target system, dances, jobs — plus the nex_poles database schema."
+---
+
+## Config file
+
+All settings live in `config/config.lua`. The file is loaded on both the client and the server via `require 'config.config'`, and it is excluded from escrow so you can edit it freely.
+
+## Options
+
+| Option | Description |
+|--------|-------------|
+| `Command` | Chat command that opens the pole manager UI. Default `poles`. |
+| `UI.Accent` | Color used for all the white text, icons and accents in the UI (buttons, borders, the placement disc marker). Accepts any CSS color: hex (`#00E5FF`, `#bb5be0`) or a name (`white`). Default `#FFFFFF`. The panel background always stays black; only the white parts recolor. |
+| `AdminPermission` | FiveM **ace** required to open the manager and to create / edit / delete poles. Re-checked server-side on every database write, so the client can never write without it. Default `group.admin`. |
+| `AdminGroups` | Framework admin groups / permissions also allowed, in addition to the ace above. ESX: matched against the player's group. QBCore: matched against QBCore permissions. Default `{ 'admin', 'superadmin', 'god' }`. Use this if your admins aren't set up through aces. |
+| `DefaultModel` | The pole prop. Fixed to `prop_strip_pole_01` — the only stripper-pole prop that reliably works in GTA 5 — used for both the placement preview and any spawned prop. |
+| `Target` | Targeting system used for the dance interaction: `'ox'`, `'qb'`, or `'lib'` (`ox_target`, `qb-target`, or `ox_lib` zones). Default `'ox'`. |
+| `UseModels` | When `true`, adds a generic model target alongside the per-pole zones (`ox_target` / `qb` only). Default `false`. |
+| `InteractDistance` | Interaction / dance trigger distance for poles. Default `2.5`. |
+| `Dances` | Entries for the dance context menu. Add, remove or relabel freely — see [Dances](#dances) below. |
+| `Jobs` | Fallback job list for the job-lock dropdown when the framework can't supply one (or for standalone servers). Merged with framework jobs and de-duplicated. |
+| `Debug` | Master debug toggle — prints plus target debug polygons. Default `false`. |
+
+<Warning>
+  `Config.Target` must match a targeting resource you actually run and `ensure` before `nex_polecreator`. If it doesn't, players can't interact with poles to open the dance menu.
+</Warning>
+
+## Dances
+
+`Config.Dances` is a list, and the dance context menu is built entirely from it. Each entry has an `id`, a `label`, and a `type`:
+
+* **`type = 'pole'`** — plays a synchronised pole scene anchored to the pole. The `scene` value (`1`–`3`) selects one of the vanilla strip-club pole routines.
+* **`type = 'lap'`** — loops any animation in place where the player stands, using a `dict` and `anim` like any `TaskPlayAnim` emote.
+
+The shipped defaults:
+
+```lua
+Dances = {
+    { id = 'pole1', label = 'Pole Dance #1', type = 'pole', scene = 1 },
+    { id = 'pole2', label = 'Pole Dance #2', type = 'pole', scene = 2 },
+    { id = 'pole3', label = 'Pole Dance #3', type = 'pole', scene = 3 },
+    { id = 'lap1', label = 'Lap Dance #1', type = 'lap', dict = 'mp_safehouse', anim = 'lap_dance_girl' },
+    { id = 'lap2', label = 'Lap Dance #2', type = 'lap', dict = 'mini@strip_club@private_dance@idle', anim = 'priv_dance_idle' },
+    { id = 'lap3', label = 'Lap Dance #3', type = 'lap', dict = 'mini@strip_club@private_dance@part1', anim = 'priv_dance_p1' },
+}
+```
+
+<Info>
+  Lap-dance dictionaries are loaded at runtime and the list is user-editable, so a bad `dict` / `anim` fails with a notification instead of a script error. Verify any custom animation dictionary you add.
+</Info>
+
+## Jobs
+
+`Config.Jobs` is a fallback list of jobs shown in the job-lock dropdown. It is merged with the jobs your framework supplies and de-duplicated, so it mostly matters for standalone servers or when the framework can't provide a job list. Each entry is a `{ name = '...', label = '...' }` table:
+
+```lua
+Jobs = {
+    { name = 'unicorn', label = 'Vanilla Unicorn' },
+    { name = 'police',  label = 'Police' },
+    { name = 'ballas',  label = 'Ballas' },
+}
+```
+
+## Database schema (`nex_poles`)
+
+The resource creates this table automatically on start. It is also provided in `sql/poles.sql` for manual import.
+
+| Column | Type | Notes |
+|--------|------|-------|
+| `id` | `INT(11)` AI PK | Primary key, auto-increment. |
+| `model` | `VARCHAR(64)` | Always `prop_strip_pole_01`. |
+| `x` / `y` / `z` | `FLOAT` | Coordinates. |
+| `heading` | `FLOAT` | Rotation (default `0.0`). |
+| `label` | `VARCHAR(64)` NULL | Optional friendly name. |
+| `spawn_prop` | `TINYINT(1)` | `1` = spawn a pole prop, `0` = dance spot only. Auto-added to existing tables on start. |
+| `job_locked` | `TINYINT(1)` | `0` = anyone, `1` = job restricted. |
+| `job` | `VARCHAR(64)` NULL | Required job when locked. |
+| `created_at` | `TIMESTAMP` | Defaults to the current timestamp. |

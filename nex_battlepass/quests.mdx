@@ -1,0 +1,79 @@
+---
+title: "Quests"
+description: "Daily and weekly quests, built-in trackers, and custom quests driven by your own scripts"
+---
+
+Daily and weekly quests are defined in `Config.Quests` in `shared/config.lua`. Each quest can use a **built-in tracker** or be driven entirely by your own scripts via exports.
+
+## Defining a quest
+
+Each entry in `Config.Quests` is a table. Here's a built-in playtime quest:
+
+```lua
+Config.Quests = {
+    {
+        id = 'mission_1',                  -- must be unique
+        QuestName = 'Be online for 30 mins',
+        QuestDesc = 'You must be online for 30 mins to complete this quest',
+        totalObjectives = 30,              -- 30 minutes
+        Reward = 200,                      -- XP awarded on completion
+        questType = 'daily',               -- 'daily' or 'weekly'
+        BuiltinQuest = 'playtime'          -- built-in tracker (omit for custom quests)
+    },
+}
+```
+
+| Field | What it does |
+| --- | --- |
+| `id` | Unique identifier for the quest. Used by exports to push progress. |
+| `QuestName` | Display name shown in the UI |
+| `QuestDesc` | Description shown in the UI |
+| `totalObjectives` | Target the player must reach to complete the quest |
+| `Reward` | XP awarded when the quest completes |
+| `questType` | `'daily'` or `'weekly'` |
+| `BuiltinQuest` | Optional built-in tracker. Omit for a custom quest driven by your own scripts. |
+
+## Built-in trackers
+
+Set `BuiltinQuest` to one of these and progress is tracked automatically — no extra code needed.
+
+| Tracker | Counts | Unit |
+| --- | --- | --- |
+| `playtime` | Time online | minutes |
+| `killcount` | Player / NPC kills | kills |
+| `swimdistance` | Distance swam | km |
+| `rundistance` | Distance ran | km |
+
+The four sample quests shipped in `Config.Quests` demonstrate one of each tracker.
+
+## Reset timing
+
+- **Daily** quests reset at `Config.DailyResetHour` (0-23, default `0` = midnight).
+- **Weekly** quests reset on `Config.WeeklyResetDay` (`1` = Monday … `7` = Sunday, default Monday).
+
+See [Configuration](/nex_battlepass/configuration) for these options.
+
+## Custom quests from your own resources
+
+Add a quest in `Config.Quests` **without** a `BuiltinQuest` field, then push progress from anywhere on the server side:
+
+```lua
+-- add 1 progress to "mission_5" for a player
+exports.nex_battlepass:AddQuestProgress(source, 'mission_5', 1)
+```
+
+When the quest's progress reaches its `totalObjectives`, it completes automatically and awards its `Reward` XP.
+
+### Driving a built-in tracker manually
+
+You can also push progress to a built-in tracker type yourself — useful if you want to count an event the resource doesn't track natively:
+
+```lua
+exports.nex_battlepass:AddBuiltinProgress(source, 'killcount', 1)
+```
+
+This advances every quest that uses that built-in tracker type.
+
+<Info>
+  Both export calls are server-side. The amount defaults to `1` if omitted. See [Exports](/nex_battlepass/exports) for full signatures.
+</Info>

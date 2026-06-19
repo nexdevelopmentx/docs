@@ -1,0 +1,36 @@
+---
+title: "Troubleshooting"
+description: "Common issues and fixes for nex_battlepass"
+---
+
+Set `Config.Debug = true` in `shared/config.lua` and restart to print internal debug messages to the server console. Then watch the **server console** (filter for `[NEX Battlepass]`) and the **F8** client console.
+
+## Common issues
+
+| Problem | Fix |
+| --- | --- |
+| Resource won't start / "No framework detected" | A dependency isn't started, or it loads after `nex_battlepass`. Make sure ox_lib, oxmysql, and your framework `ensure` **before** `nex_battlepass` in `server.cfg`. Confirm `Config.Framework` matches your framework (`'qbx'`, `'qb'`, or `'esx'`). |
+| Database tables not created | oxmysql isn't started or can't connect. Tables auto-create on first start — there is no SQL to import. Check oxmysql is running and your DB connection string is correct, then restart. |
+| `/bpadmin` (or other admin commands) do nothing | The player isn't in the `group.admin` ace. Add them to that group and retry. See [Commands](/nex_battlepass/commands). |
+| Battle pass is empty / no levels | A fresh install starts empty. Open `/bpadmin` and add levels and rewards — they're stored in `nex_battlepass_levels`, not the config. See [Rewards editor](/nex_battlepass/rewards-editor). |
+| Premium not verifying (Tebex mode) | The Tebex secret is missing or wrong. The resource reads the `sv_tebexSecret` convar (auto-set when you link Tebex) or `ServerConfig.TebexSecret` in `server/sv_config.lua`. If you see `Tebex is enabled but no secret found` in console, set one of those. Never put the secret in `shared/config.lua`. |
+| Tebex transaction rejected | The package isn't in `Config.Tebex.PackageIds` (use `{}` to accept any package), the payment status isn't Complete/paid while `RequireComplete = true`, or the transaction was already redeemed (recorded in `nex_battlepass_redemptions`). |
+| Redemption code rejected | In code mode (`Config.Tebex.Enabled = false`) the code must exist in `nex_battlepass_codes` and be unused. Insert it with `INSERT INTO nex_battlepass_codes (code) VALUES ('...');`. |
+| Item rewards don't get delivered | Item rewards need `ox_inventory` (required on Qbox, recommended on all frameworks). Make sure it's started and the item name in the reward matches an existing `ox_inventory` item. |
+| Vehicle rewards don't appear | Vehicle rewards are added as **owned vehicles** to a garage. Make sure you have a garage system and that `Config.DefaultGarage` (default `pillboxgarage`) is a valid garage name. |
+| Item reward icons are broken | `Config.ImagePath` doesn't match your inventory. Default is `nui://ox_inventory/web/images/`. Or set a full image URL on the reward in `/bpadmin`. |
+| Quests never progress | Built-in trackers need the correct `BuiltinQuest` value (`playtime`, `killcount`, `swimdistance`, `rundistance`). Custom quests (no `BuiltinQuest`) only advance when you call `exports.nex_battlepass:AddQuestProgress`. See [Quests](/nex_battlepass/quests). |
+| Quests don't reset | Check `Config.DailyResetHour` (0-23) and `Config.WeeklyResetDay` (1 = Monday … 7 = Sunday). |
+| `/battlepass` or `F7` doesn't open the UI | Confirm `Config.OpenCommand` and `Config.OpenKey`. If `Config.OpenKey = ''` the keybind is disabled. Players may need to rebind `F7` if it conflicts in **Settings → Key Bindings**. |
+| Changes in `/bpadmin` not showing for players | Levels/rewards refresh open UIs automatically. If you edited the database directly, call `exports.nex_battlepass:ReloadLevels()` to reload and refresh without a restart. |
+
+## Before opening a support ticket
+
+Please have ready:
+
+1. Your framework (Qbox / QBCore / ESX) and its version.
+2. Server console output filtered for `[NEX Battlepass]`, with `Config.Debug = true`.
+3. F8 console output from the moment the problem happens.
+4. What you did and what you expected to happen.
+
+For more help, see [Support](/general/support).

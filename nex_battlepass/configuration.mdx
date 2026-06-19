@@ -1,0 +1,123 @@
+---
+title: "Configuration"
+description: "Every shared/config.lua option, theming, locales, and quest reset times"
+---
+
+All general settings live in `shared/config.lua`. Secrets (the Tebex secret key) live in `server/sv_config.lua` — see [Premium pass](/nex_battlepass/premium-pass).
+
+<Warning>
+  `shared/config.lua` is a `shared_script`, so it also runs on every client. Never put your Tebex secret or any private key in it. Use `server/sv_config.lua` for secrets.
+</Warning>
+
+## Core options
+
+| Option | What it does | Default |
+| --- | --- | --- |
+| `Config.Framework` | Your framework: `'qbx'`, `'qb'`, or `'esx'` | `'qbx'` |
+| `Config.ImagePath` | Where the UI loads reward icons from (the reward image is appended to this). Defaults to ox_inventory item images so item rewards show their real icon. | `'nui://ox_inventory/web/images/'` |
+| `Config.OpenCommand` | Command players use to open the UI | `'battlepass'` |
+| `Config.OpenKey` | Default keybind to open the UI. Players can rebind in **Settings → Key Bindings**. Set to `''` to disable. | `'F7'` |
+| `Config.Logo` | Image URL for the top-left logo (any link, e.g. a Fivemanage upload). `''` falls back to a plain accent icon. | A sample banner URL |
+| `Config.LevelUpPrice` | Flat cash price for the **Upgrade Level** button, which instantly advances the player one level. Set to `0` to make levelling free. | `25000` |
+| `Config.DefaultGarage` | QB/QBX garage that vehicle rewards are delivered to | `'pillboxgarage'` |
+| `Config.DefaultGarage` (ESX) | Used the same way — the garage vehicle rewards are delivered to | `'pillboxgarage'` |
+| `Config.SaveInterval` | Milliseconds between batched saves of dirty player data. Passive progress (playtime/quests/XP) is buffered and written on this interval; money-affecting actions always save immediately. | `10000` |
+| `Config.Debug` | Set to `true` to print internal debug messages to console | `false` |
+
+<Info>
+  The README refers to a "cost per XP" with the name `Config.EXP_PRICE`. In the actual source the price control is `Config.LevelUpPrice` — a flat cash price for the **Upgrade Level** button. There is no `Config.EXP_PRICE` key.
+</Info>
+
+## Admin command names
+
+The admin command names are configurable under `Config.Commands`. These are restricted to the `group.admin` ace — see [Commands](/nex_battlepass/commands).
+
+| Key | Command | Purpose |
+| --- | --- | --- |
+| `Config.Commands.addXp` | `/addxp` | Grant a player XP |
+| `Config.Commands.setPremium` | `/setpremium` | Toggle a player's premium |
+| `Config.Commands.extendPremium` | `/extendpremium` | Extend premium duration |
+| `Config.Commands.adminMenu` | `/bpadmin` | Open the in-game rewards editor |
+
+## Premium expiration
+
+These control whether and when premium expires. The full premium flow is covered on the [Premium pass](/nex_battlepass/premium-pass) page.
+
+| Option | What it does | Default |
+| --- | --- | --- |
+| `Config.EnablePremiumExpiration` | `false` means premium never expires once granted | `true` |
+| `Config.PremiumExpirationType` | `'duration'` = X days from activation, `'fixed'` = a specific day of each month | `'duration'` |
+| `Config.PremiumExpirationDay` | In `'duration'` mode: number of days. In `'fixed'` mode: day-of-month (1-28) it expires on. | `1` |
+| `Config.ResetXpOnExpiration` | `true` wipes the player's XP / level / claimed rewards when premium expires | `false` |
+
+## Tebex / redemption
+
+`Config.Tebex` chooses how premium is redeemed.
+
+| Option | What it does | Default |
+| --- | --- | --- |
+| `Config.Tebex.Enabled` | `true` validates real Tebex transactions; `false` validates single-use codes from `nex_battlepass_codes` | `true` |
+| `Config.Tebex.RequireComplete` | Only accept payments whose status is Complete/paid | `true` |
+| `Config.Tebex.PackageIds` | Optional allow-list of Tebex package IDs that grant premium. `{}` accepts any package. | `{7352503}` |
+
+See [Premium pass](/nex_battlepass/premium-pass) for the full setup, including where the Tebex secret comes from.
+
+## Theme
+
+The UI is fully black and white. `accentColor` is the single colour that replaces every "white" highlight in the interface — progress bars, glows, level markers, buttons, icons, the season title. Change it to re-skin the entire UI; leave it `#FFFFFF` for a pure monochrome look.
+
+```lua
+Config.Theme = {
+    accentColor = '#ffffff', -- main accent, default white. e.g. '#00E0FF', '#FF3B3B', '#7C5CFF'
+    accentShade = '#ffffff', -- a dimmer shade of the accent, used for gradient depth
+
+    -- Advanced (optional): leave out to auto-derive from the accent above.
+    -- secondaryColor = '#FFFFFF',
+    -- textGradient   = 'linear-gradient(180deg, #FFFFFF 0%, #9CA3AF 100%)',
+    -- buttonGradient = 'linear-gradient(90deg, #FFFFFF 0%, #9CA3AF 100%)',
+}
+```
+
+| Option | What it does | Default |
+| --- | --- | --- |
+| `Config.Theme.accentColor` | The single accent colour that themes the whole UI | `'#ffffff'` |
+| `Config.Theme.accentShade` | A dimmer shade of the accent, used for gradient depth | `'#ffffff'` |
+| `Config.Theme.secondaryColor` | Optional manual override (commented out by default) | Auto-derived |
+| `Config.Theme.textGradient` | Optional manual CSS text gradient | Auto-derived |
+| `Config.Theme.buttonGradient` | Optional manual CSS button gradient | Auto-derived |
+
+## Quest reset times
+
+Daily quests reset at a chosen hour; weekly quests reset on a chosen day.
+
+| Option | What it does | Default |
+| --- | --- | --- |
+| `Config.DailyResetHour` | Hour (0-23) daily quests reset at. `0` = midnight. | `0` |
+| `Config.WeeklyResetDay` | Day weekly quests reset on. `1` = Monday … `7` = Sunday. | `1` |
+
+See [Quests](/nex_battlepass/quests) for how quests are defined and tracked.
+
+## Anti-spam
+
+`Config.AntiSpam` sets the minimum milliseconds between repeated client actions. These are loose floods guards, not hard limits.
+
+| Key | What it limits | Default |
+| --- | --- | --- |
+| `Config.AntiSpam.questProgress` | ms between `updateQuestProgress` calls per quest id | `100` |
+| `Config.AntiSpam.builtinQuest` | ms between built-in quest progress calls per type (allows rapid kills) | `50` |
+| `Config.AntiSpam.claimReward` | ms between claim-reward UI clicks | `300` |
+| `Config.AntiSpam.buyLevel` | ms between Upgrade Level clicks | `500` |
+| `Config.AntiSpam.redeemPass` | ms between redeem-pass UI clicks | `1500` |
+
+## Languages and locales
+
+Translations live in the `locales/` folder as simple JSON files. The resource ships with `en.json` and `es.json`.
+
+The active language is set with `Config.Locale`, which lives in `shared/config_locale.lua` (not `shared/config.lua`). Its value must match a file in `locales/`. English is always loaded as the fallback.
+
+```lua
+-- shared/config_locale.lua
+Config.Locale = 'en' -- 'en', 'es', etc. (must match a file in locales/)
+```
+
+To change any on-screen text, edit `locales/en.json`. To add a language, copy a file (for example `locales/fr.json`), translate the values, and set `Config.Locale = 'fr'`.

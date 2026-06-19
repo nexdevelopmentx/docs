@@ -1,0 +1,68 @@
+---
+title: "Rewards editor"
+description: "Build levels and rewards live in-game with the /bpadmin editor"
+---
+
+Everything to do with **levels and rewards is managed in-game** and saved to the database. There are no reward tables to edit in `config.lua` — a fresh install starts empty, so you build the whole pass from the editor.
+
+## Opening the editor
+
+Run `/bpadmin` to open the in-game rewards editor. The command is restricted to the `group.admin` ace, so only admins can open it — see [Commands](/nex_battlepass/commands).
+
+<Info>
+  Levels and rewards are stored in the `nex_battlepass_levels` table. The `/bpadmin` editor writes to it for you, and open UIs refresh automatically — no resource restart needed.
+</Info>
+
+## Levels
+
+In the editor you can:
+
+- **Add levels** — build out the progression one level at a time
+- **Delete levels** — deleting asks for confirmation first
+- Set each level's **XP requirement** — the amount of XP a player needs to reach that level
+
+A player's level is calculated from their total XP against these requirements. XP is earned from quests, the **Upgrade Level** button, and any [exports](/nex_battlepass/exports) you call from other resources.
+
+## Reward tracks
+
+Every level has two reward slots:
+
+| Slot | Track | Who can claim |
+| --- | --- | --- |
+| **Standard** | Free | Any player who reaches the level |
+| **Advanced** | Premium | Players with an active premium pass |
+
+You can fill one slot, both, or leave a slot empty.
+
+## Reward types
+
+For each reward slot, choose a type and give it a **label** and **rarity**.
+
+| Type | What it grants | Notes |
+| --- | --- | --- |
+| **Money** | A cash amount | Granted directly to the player |
+| **Item** | An inventory item | Needs `ox_inventory` (required on Qbox, recommended elsewhere) |
+| **Vehicle** | An owned vehicle | Delivered to the garage set by `Config.DefaultGarage` |
+
+<Warning>
+  Item rewards require `ox_inventory`, and Vehicle rewards require a working garage system — the vehicle is added as an **owned vehicle** to `Config.DefaultGarage` (default `pillboxgarage`). If a player can't find a granted vehicle, check that garage name.
+</Warning>
+
+## Reward images
+
+Each reward has an **Image** field that controls the icon shown in the UI.
+
+- Leave the **Image** field **blank** to auto-use the right icon:
+  - **Items** → your inventory's item image (from `Config.ImagePath`, default `nui://ox_inventory/web/images/`)
+  - **Vehicles** → the official FiveM vehicle render
+- Or paste a **full image URL** (for example a Fivemanage link) to override it.
+
+## Building your first pass
+
+1. Run `/bpadmin`.
+2. Add your first level and set its XP requirement.
+3. Set the **Standard** (free) reward, and optionally the **Advanced** (premium) reward.
+4. Pick a reward type (Money / Item / Vehicle), then set the label, rarity, and (optionally) image.
+5. Repeat for each level. Deleting a level asks for confirmation.
+
+Changes save to the database immediately and any open battle pass UIs refresh live.

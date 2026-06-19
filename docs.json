@@ -24,172 +24,211 @@
         ]
       },
       {
-        "group": "NEX Garage",
+        "group": "nex_battlepass",
         "pages": [
-          "nex-garage/overview",
-          "nex-garage/installation",
-          "nex-garage/configuration",
-          "nex-garage/troubleshooting"
+          "nex_battlepass/overview",
+          "nex_battlepass/installation",
+          "nex_battlepass/configuration",
+          "nex_battlepass/rewards-editor",
+          "nex_battlepass/quests",
+          "nex_battlepass/premium-pass",
+          "nex_battlepass/commands",
+          "nex_battlepass/exports",
+          "nex_battlepass/troubleshooting"
         ]
       },
       {
-        "group": "NEX Elevators",
+        "group": "nex_bossmenu",
         "pages": [
-          "nex-elevators/overview",
-          "nex-elevators/installation",
-          "nex-elevators/configuration",
-          "nex-elevators/admin-panel"
+          "nex_bossmenu/overview",
+          "nex_bossmenu/installation",
+          "nex_bossmenu/configuration",
+          "nex_bossmenu/usage",
+          "nex_bossmenu/commands",
+          "nex_bossmenu/custom-frameworks",
+          "nex_bossmenu/troubleshooting"
         ]
       },
       {
-        "group": "NEX DJ Booth",
+        "group": "nex_businesses",
         "pages": [
-          "nex-djbooth/overview",
-          "nex-djbooth/installation",
-          "nex-djbooth/configuration",
-          "nex-djbooth/admin-panel",
-          "nex-djbooth/usage",
-          "nex-djbooth/commands",
-          "nex-djbooth/troubleshooting"
+          "nex_businesses/overview",
+          "nex_businesses/installation",
+          "nex_businesses/configuration",
+          "nex_businesses/setup",
+          "nex_businesses/management",
+          "nex_businesses/orders",
+          "nex_businesses/commands",
+          "nex_businesses/troubleshooting"
         ]
       },
       {
-        "group": "NEX Hotels",
+        "group": "nex_coordstool",
         "pages": [
-          "nex-hotels/overview",
-          "nex-hotels/installation",
-          "nex-hotels/configuration",
-          "nex-hotels/admin-panel",
-          "nex-hotels/usage",
-          "nex-hotels/commands",
-          "nex-hotels/troubleshooting"
+          "nex_coordstool/overview",
+          "nex_coordstool/installation",
+          "nex_coordstool/configuration",
+          "nex_coordstool/usage",
+          "nex_coordstool/troubleshooting"
         ]
       },
       {
-        "group": "NEX UI Pack",
+        "group": "nex_crafting",
         "pages": [
-          "nex-uipack/overview",
-          "nex-uipack/installation",
-          "nex-uipack/troubleshooting"
+          "nex_crafting/overview",
+          "nex_crafting/installation",
+          "nex_crafting/configuration",
+          "nex_crafting/creator-panel",
+          "nex_crafting/usage",
+          "nex_crafting/commands",
+          "nex_crafting/troubleshooting"
         ]
       },
       {
-        "group": "NEX Queue",
+        "group": "nex_crutchsystem",
         "pages": [
-          "nex-queue/overview",
-          "nex-queue/installation",
-          "nex-queue/discord-setup",
-          "nex-queue/configuration",
-          "nex-queue/themes",
-          "nex-queue/whitelist-and-priority",
-          "nex-queue/troubleshooting"
+          "nex_crutchsystem/overview",
+          "nex_crutchsystem/installation",
+          "nex_crutchsystem/configuration",
+          "nex_crutchsystem/usage",
+          "nex_crutchsystem/commands",
+          "nex_crutchsystem/exports",
+          "nex_crutchsystem/troubleshooting"
         ]
       },
       {
-        "group": "NEX Crafting",
+        "group": "nex_dealerships",
         "pages": [
-          "nex-crafting/overview",
-          "nex-crafting/installation",
-          "nex-crafting/configuration",
-          "nex-crafting/creator-panel",
-          "nex-crafting/usage",
-          "nex-crafting/commands",
-          "nex-crafting/troubleshooting"
+          "nex_dealerships/overview",
+          "nex_dealerships/installation",
+          "nex_dealerships/configuration",
+          "nex_dealerships/dealerships",
+          "nex_dealerships/admin-panel",
+          "nex_dealerships/management",
+          "nex_dealerships/usage",
+          "nex_dealerships/commands",
+          "nex_dealerships/integrations",
+          "nex_dealerships/troubleshooting"
         ]
       },
       {
-        "group": "NEX Item Whitelist",
+        "group": "nex_djbooth",
         "pages": [
-          "nex-itemwhitelist/overview",
-          "nex-itemwhitelist/installation",
-          "nex-itemwhitelist/configuration",
-          "nex-itemwhitelist/admin-menu",
-          "nex-itemwhitelist/commands",
-          "nex-itemwhitelist/troubleshooting"
+          "nex_djbooth/overview",
+          "nex_djbooth/installation",
+          "nex_djbooth/configuration",
+          "nex_djbooth/admin-panel",
+          "nex_djbooth/usage",
+          "nex_djbooth/commands",
+          "nex_djbooth/troubleshooting"
         ]
       },
       {
-        "group": "NEX Dealerships",
+        "group": "nex_donatorsystem",
         "pages": [
-          "nex-dealerships/overview",
-          "nex-dealerships/installation",
-          "nex-dealerships/configuration",
-          "nex-dealerships/dealerships",
-          "nex-dealerships/admin-panel",
-          "nex-dealerships/management",
-          "nex-dealerships/usage",
-          "nex-dealerships/commands",
-          "nex-dealerships/integrations",
-          "nex-dealerships/troubleshooting"
+          "nex_donatorsystem/overview",
+          "nex_donatorsystem/installation",
+          "nex_donatorsystem/configuration",
+          "nex_donatorsystem/tebex-setup",
+          "nex_donatorsystem/admin-panel",
+          "nex_donatorsystem/usage",
+          "nex_donatorsystem/commands",
+          "nex_donatorsystem/troubleshooting"
         ]
       },
       {
-        "group": "NEX Coords Tool",
+        "group": "nex_elevators",
         "pages": [
-          "nex-coordstool/overview",
-          "nex-coordstool/installation",
-          "nex-coordstool/configuration",
-          "nex-coordstool/usage",
-          "nex-coordstool/troubleshooting"
+          "nex_elevators/overview",
+          "nex_elevators/installation",
+          "nex_elevators/configuration",
+          "nex_elevators/admin-panel"
         ]
       },
       {
-        "group": "NEX Loading Screen",
+        "group": "nex_hotels",
         "pages": [
-          "nex-loadingscreen/overview",
-          "nex-loadingscreen/installation",
-          "nex-loadingscreen/configuration",
-          "nex-loadingscreen/music",
-          "nex-loadingscreen/troubleshooting"
+          "nex_hotels/overview",
+          "nex_hotels/installation",
+          "nex_hotels/configuration",
+          "nex_hotels/admin-panel",
+          "nex_hotels/usage",
+          "nex_hotels/commands",
+          "nex_hotels/troubleshooting"
         ]
       },
       {
-        "group": "NEX Donator System",
+        "group": "nex_itemwhitelist",
         "pages": [
-          "nex-donatorsystem/overview",
-          "nex-donatorsystem/installation",
-          "nex-donatorsystem/configuration",
-          "nex-donatorsystem/tebex-setup",
-          "nex-donatorsystem/admin-panel",
-          "nex-donatorsystem/usage",
-          "nex-donatorsystem/commands",
-          "nex-donatorsystem/troubleshooting"
+          "nex_itemwhitelist/overview",
+          "nex_itemwhitelist/installation",
+          "nex_itemwhitelist/configuration",
+          "nex_itemwhitelist/admin-menu",
+          "nex_itemwhitelist/commands",
+          "nex_itemwhitelist/troubleshooting"
         ]
       },
       {
-        "group": "NEX Shoulder Pets",
+        "group": "nex_loadingscreen",
         "pages": [
-          "nex-shoulderpets/overview",
-          "nex-shoulderpets/installation",
-          "nex-shoulderpets/configuration",
-          "nex-shoulderpets/adding-pets",
-          "nex-shoulderpets/usage",
-          "nex-shoulderpets/commands",
-          "nex-shoulderpets/troubleshooting"
+          "nex_loadingscreen/overview",
+          "nex_loadingscreen/installation",
+          "nex_loadingscreen/configuration",
+          "nex_loadingscreen/music",
+          "nex_loadingscreen/troubleshooting"
         ]
       },
       {
-        "group": "NEX Crutch System",
+        "group": "nex_polecreator",
         "pages": [
-          "nex-crutchsystem/overview",
-          "nex-crutchsystem/installation",
-          "nex-crutchsystem/configuration",
-          "nex-crutchsystem/usage",
-          "nex-crutchsystem/commands",
-          "nex-crutchsystem/exports",
-          "nex-crutchsystem/troubleshooting"
+          "nex_polecreator/overview",
+          "nex_polecreator/installation",
+          "nex_polecreator/configuration",
+          "nex_polecreator/usage",
+          "nex_polecreator/troubleshooting"
         ]
       },
       {
-        "group": "NEX Boss Menu",
+        "group": "nex_queue",
         "pages": [
-          "nex-bossmenu/overview",
-          "nex-bossmenu/installation",
-          "nex-bossmenu/configuration",
-          "nex-bossmenu/usage",
-          "nex-bossmenu/commands",
-          "nex-bossmenu/custom-frameworks",
-          "nex-bossmenu/troubleshooting"
+          "nex_queue/overview",
+          "nex_queue/installation",
+          "nex_queue/discord-setup",
+          "nex_queue/configuration",
+          "nex_queue/themes",
+          "nex_queue/whitelist-and-priority",
+          "nex_queue/troubleshooting"
+        ]
+      },
+      {
+        "group": "nex_scalemenu",
+        "pages": [
+          "nex_scalemenu/overview",
+          "nex_scalemenu/installation",
+          "nex_scalemenu/configuration",
+          "nex_scalemenu/permissions",
+          "nex_scalemenu/commands",
+          "nex_scalemenu/troubleshooting"
+        ]
+      },
+      {
+        "group": "nex_shoulderpets",
+        "pages": [
+          "nex_shoulderpets/overview",
+          "nex_shoulderpets/installation",
+          "nex_shoulderpets/configuration",
+          "nex_shoulderpets/adding-pets",
+          "nex_shoulderpets/usage",
+          "nex_shoulderpets/commands",
+          "nex_shoulderpets/troubleshooting"
+        ]
+      },
+      {
+        "group": "nex_uipack",
+        "pages": [
+          "nex_uipack/overview",
+          "nex_uipack/installation",
+          "nex_uipack/troubleshooting"
         ]
       },
       {
@@ -203,6 +242,14 @@
   },
   "navbar": {
     "links": [
+      {
+        "label": "Discord",
+        "href": "https://discord.gg/nexdev"
+      },
+      {
+        "label": "Website",
+        "href": "https://nexdevelopment.xyz"
+      },
       {
         "label": "Support",
         "href": "/general/support"
@@ -225,5 +272,11 @@
       "cursor",
       "vscode"
     ]
+  },
+  "footer": {
+    "socials": {
+      "discord": "https://discord.gg/nexdev",
+      "website": "https://nexdevelopment.xyz"
+    }
   }
 }

@@ -1,0 +1,33 @@
+---
+title: "Overview"
+description: "Admin pole setup system for FiveM — place, edit, job-lock and delete stripper poles through a black & white React NUI, persisted in MySQL and synced in real time."
+---
+
+## What it is
+
+`nex_polecreator` is a full pole setup system for FiveM. Admins place, edit, job-lock and delete stripper poles anywhere in the city through a custom black & white React NUI. Every pole is persisted in MySQL, loaded and spawned on resource start, and kept in sync across all clients in real time.
+
+It is built on `ox_lib` and `oxmysql`, and is framework-aware — it auto-detects ESX, QBCore, QBox, or runs standalone — purely for reading player jobs to enforce per-pole job locks.
+
+<Info>
+  Players (including non-admins) interact with a placed pole through your target system to open a dance context menu. Only admins can open the manager and create, edit or delete poles.
+</Info>
+
+## Features
+
+* **Built-in placement** — no external placement dependency. A translucent ghost of the pole follows where you look; press `[G]` to lock it in place so you can walk around and inspect it, then confirm. Placement controls are shown by a custom NUI overlay so they never flicker out mid-placement.
+* **Fixed prop** — the pole prop is fixed to `prop_strip_pole_01`, the only stripper-pole prop that reliably works in GTA 5. It is used for both the placement preview and any spawned prop.
+* **"Spawn prop" toggle** — turn it off to create a dance spot only (no prop spawned), for example to dance on a pole that is already part of the map. The pole dance animation still plays at the spot.
+* **Edit existing poles** — reposition, re-rotate, change the label, and change the job lock.
+* **Delete poles** — with a confirmation step.
+* **Per-pole job lock** — when locked, only players with the assigned job can use the pole; unlocked poles are usable by anyone. The job check uses the framework this resource detected.
+* **MySQL is the single source of truth** — no JSON files, no in-memory-only state. The `nex_poles` table is created automatically on start, and all writes go through the server, which validates and sanitizes every payload before touching the database.
+* **Dance context menu** — interacting with a pole opens a custom NUI menu with the 3 vanilla pole routines and 3 lap dances. The list is fully config-driven through `Config.Dances`. Press `[X]` (or the menu's Stop button) to stop dancing.
+* **Server-validated writes** — the client never writes to the database and never decides job assignment. The server validates the model against an allow-list, coerces coordinates to numbers, trims the label, and only honours a job lock when a real job name is supplied.
+
+## In this section
+
+* [Installation](/nex_polecreator/installation)
+* [Configuration](/nex_polecreator/configuration)
+* [Usage](/nex_polecreator/usage)
+* [Troubleshooting](/nex_polecreator/troubleshooting)

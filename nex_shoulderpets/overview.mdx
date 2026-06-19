@@ -1,0 +1,31 @@
+---
+title: "Overview"
+description: "A drop-in shoulder pet system for FiveM. Players use a pet item from their inventory, a small NUI menu opens, and the pet attaches to the left or right shoulder with an optional particle effect."
+---
+
+A drop-in shoulder pet system for FiveM. Players use a pet item from their inventory, a small NUI menu opens, and the pet attaches to the left or right shoulder with an optional particle effect.
+
+## In this section
+
+* [Installation](/nex_shoulderpets/installation)
+* [Configuration](/nex_shoulderpets/configuration)
+* [Adding pets](/nex_shoulderpets/adding-pets)
+* [Player usage](/nex_shoulderpets/usage)
+* [Commands](/nex_shoulderpets/commands)
+* [Troubleshooting](/nex_shoulderpets/troubleshooting)
+
+## What you get
+
+* Works on **ESX, QBCore, Qbox**, or fully **standalone** — auto-detected
+* Inventory bridge auto-detects **ox_inventory** or falls back to the framework's native inventory
+* **15 ready-made pets** shipped in `config.lua` (Shark Boi, Punk Monkey, Fox, Hollow Knight, Knight Cat, Powerpuff trio, etc.)
+* Clean NUI menu — pick a pet, switch shoulders, trigger a particle effect, re-summon, or dismiss
+* `/pet` slash command + configurable keybind (default **P**)
+* Optional `/spawnpet <id>` for standalone servers and `/removepet <id>` for admins (ace-permission gated)
+* Equip / unequip animations with optional `ox_lib` progress bar
+* Models distributed as a separate streaming bundle so you only ship the pets you want
+* `escrow_ignore` on `config.lua`, locales, and the editable client file so your tweaks survive updates
+
+<Info>
+  The bundled pet models are distributed as a separate stream resource. Download link is in [Installation → Pet models](/nex_shoulderpets/installation#pet-models).
+</Info>

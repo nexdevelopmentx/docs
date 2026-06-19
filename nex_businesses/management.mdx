@@ -1,0 +1,54 @@
+---
+title: "Management dashboard"
+description: "The /managebusiness dashboard — menu items, prices, recipes, station assignments, paintings, offline shop stock, and the live order queue."
+---
+
+`/managebusiness` opens the React management dashboard. It's where a boss runs the business day to day — building the menu, wiring up recipes, assigning stations, decorating the venue, stocking the offline shop, and watching the live order queue. Everything is edited in the UI; you never touch SQL.
+
+## Opening the dashboard
+
+Run `/managebusiness` while standing inside the business zone with a manager grade. The command is a UX shortcut — it pops the dashboard without first walking to the manager menu target, but it enforces the same gate.
+
+| Condition | Result if not met |
+|---|---|
+| Inside the business zone | `You are not inside a business.` |
+| Holds a manager grade for the bound job | `You are not a manager of this business.` |
+
+<Info>
+  Every change you make in the dashboard is validated server-side. The dashboard is just the editor; the server is the source of truth for prices, recipes, and stock.
+</Info>
+
+## Menu items
+
+Add, edit, and delete the items your business sells. Each item carries:
+
+- **Label** and **description** — the display name and blurb.
+- **Price** — what customers pay. Edits apply immediately and are reflected wherever the price is shown, including the offline shop, which joins the price live at read time.
+- **Emote** — the consumption emote played when the item is eaten or drunk (drawn from the preconfigured emote list in `cfg.lua`).
+- **Image URL** — the menu thumbnail.
+- **Type** — the item category.
+- **Nutrition** and **alcohol** overrides — optional `0–100` values. Nutrition overrides the hunger/thirst the item gives on consumption; alcohol replaces the recipe-derived alcohol added to the player's drunk effect. Leave blank to fall back to recipe-derived defaults.
+
+## Recipes
+
+Define the ingredients required to craft each menu item. Recipes are validated server-side, so quantities and ingredient names are checked before they're saved. Employees craft items at stations using these recipes.
+
+## Station assignments
+
+Assign each menu item to one or more of the prep stations you placed in the [setup tool](/nex_businesses/setup). An item can only be crafted at a station it's assigned to, which lets you split a kitchen into prep areas (grill, fryer, bar, and so on).
+
+## Paintings
+
+Decorate the venue with paintings. Bosses place and manage artwork from the dashboard so the interior can be customised without editing config.
+
+## Offline shop stock
+
+Stock the offline shopkeeper ped's inventory directly from the dashboard. Stock is stored in its own table (`nex_businesses_shop_stock`), independent of any inventory script's autosave cycle, so it survives restarts. The selling price is joined live from each item's current price, so price edits in the menu are reflected in the shop immediately.
+
+<Info>
+  If `Config.DisableOfflineShops = true`, no offline shop peds spawn server-wide regardless of stock. See [Configuration](/nex_businesses/configuration).
+</Info>
+
+## Live order queue
+
+The dashboard shows the live order queue, staying in sync with the same order events as the in-store queue terminal and the dispatch widget. Bosses can watch orders come in and track what's pending. For the full order flow, see [Orders](/nex_businesses/orders).

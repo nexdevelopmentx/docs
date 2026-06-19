@@ -1,0 +1,36 @@
+---
+title: "Commands"
+description: "Every command and keybind in nex_businesses, and who can use each."
+---
+
+## Commands
+
+| Command | Who | What |
+|---|---|---|
+| `/createbusiness` | Admin (ACE) | Register a new business and bind it to one of your framework's existing jobs, then launch the setup tool. Gated by the `nex_businesses.admin` ACE (or the `command` ACE). |
+| `/setupbusiness` | Boss (on job, manager grade) | Place, edit, and delete points — zones, stations, stashes, registers, trays, chairs, order counters, the queue terminal, the offline shop ped, and the manager menu. |
+| `/managebusiness` | Boss (on job, manager grade) | Open the management dashboard — menu items, prices, recipes, station assignments, paintings, the offline shop's stock, and the live order queue. |
+
+<Info>
+  The admin ACE is honoured **only** by `/createbusiness`, and only to register a new business. `/setupbusiness` and `/managebusiness` are gated purely by being clocked into the bound job with a manager grade — admins get no shortcut there. Every action is validated server-side.
+</Info>
+
+See [Setup tool](/nex_businesses/setup) for `/createbusiness` and `/setupbusiness`, and [Management dashboard](/nex_businesses/management) for `/managebusiness`.
+
+## Keybinds
+
+All keybinds are registered through FiveM's keymap and are rebindable per-player under **Settings → Key Bindings → FiveM → `nex_businesses`**. Their defaults come from `cfg.lua`.
+
+| Default | Action | Config key |
+|---|---|---|
+| `F7` | Open the UI Preferences panel. | `Config.UI.settingsKey` |
+| `U` | Toggle the order tickets widget. | `Config.UI.dispatch.toggleKey` |
+| `I` | Toggle the order tickets widget (alternate). | `Config.UI.dispatch.altToggleKey` |
+| `←` | Previous order ticket. | `Config.UI.dispatch.prevKey` |
+| `→` | Next order ticket. | `Config.UI.dispatch.nextKey` |
+
+<Info>
+  The order ticket keybinds (`U` / `I` / `←` / `→`) only do anything while you're inside a business you're clocked into. See [Orders](/nex_businesses/orders).
+</Info>
+
+See [Configuration](/nex_businesses/configuration) for changing the defaults in `cfg.lua`.

@@ -1,0 +1,76 @@
+---
+title: "Installation"
+description: "Requirements, server.cfg order, and how to open the battle pass UI"
+---
+
+## Requirements
+
+These must be installed and started **before** the battle pass.
+
+| Dependency | Required | Notes |
+| --- | --- | --- |
+| [ox_lib](https://github.com/overextended/ox_lib) | Yes | UI, commands, and shared helpers |
+| [oxmysql](https://github.com/overextended/oxmysql) | Yes | Database access — tables auto-create |
+| Framework | Yes | `qbx_core` (Qbox), `qb-core` (QBCore), or `es_extended` (ESX) |
+| [ox_inventory](https://github.com/overextended/ox_inventory) | For item rewards | Required on Qbox; recommended on all frameworks |
+| A garage system | For vehicle rewards | Vehicle rewards are added as **owned vehicles** to a garage |
+
+<Info>
+  Item rewards and Vehicle rewards are optional. If you only hand out Money rewards, you don't need `ox_inventory` or a garage.
+</Info>
+
+## Install steps
+
+1. Place the `nex_battlepass` folder in your `resources` directory.
+2. Open `shared/config.lua` and set your framework:
+
+   ```lua
+   Config.Framework = 'qbx' -- 'qbx' | 'qb' | 'esx'
+   ```
+
+3. Add it to your `server.cfg` **after** its dependencies:
+
+   ```cfg
+   ensure ox_lib
+   ensure oxmysql
+   ensure ox_inventory
+   ensure nex_battlepass
+   ```
+
+4. Start or restart the server.
+
+<Warning>
+  Order matters. If `nex_battlepass` starts before its framework, ox_lib, or oxmysql, it won't detect a framework and will fail to load. Keep the `ensure` lines in the order shown above.
+</Warning>
+
+## Database
+
+The required database tables are created automatically on first start — there is **no SQL file to import**. The tables created are:
+
+- `nex_battlepass` — player progress
+- `nex_battlepass_levels` — your levels and rewards (managed via `/bpadmin`)
+- `nex_battlepass_codes` — redemption codes (code mode)
+- `nex_battlepass_redemptions` — used Tebex transactions
+
+See [Exports](/nex_battlepass/exports) for the full table list.
+
+## Opening the UI
+
+| Action | Default | Where to change |
+| --- | --- | --- |
+| Open command | `/battlepass` | `Config.OpenCommand` |
+| Open keybind | `F7` (players can rebind in **Settings → Key Bindings**) | `Config.OpenKey` (set to `''` to disable) |
+
+You can also open the battle pass from another resource:
+
+```lua
+exports.nex_battlepass:openBattlepass()
+```
+
+## First run
+
+A fresh install starts with **no levels**. Run `/bpadmin` (admin only) to open the in-game editor and start adding levels and rewards. See the [Rewards editor](/nex_battlepass/rewards-editor) page.
+
+## Updating
+
+To update, stop the resource, replace the `nex_battlepass` folder with the new version, keep your edited `shared/config.lua` and `server/sv_config.lua` settings, and restart. Your levels, rewards, and player progress live in the database, so they are preserved across updates.
