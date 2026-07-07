@@ -1,0 +1,101 @@
+---
+title: "Configuration"
+description: "Where every NEX Garages setting lives and what the important toggles do."
+---
+
+The config is split per domain — one file per topic, all under `config/` and
+all editable (never escrowed):
+
+| File | What it controls |
+|---|---|
+| `config/main.lua` | Locale, currency/date format, framework selector, SQL auto-install, debug |
+| `config/garages.lua` | Public / job / gang garage & impound locations, interior layout |
+| `config/custom-garages.lua` | The in-game garage editor (`/garagesadmin`) |
+| `config/private-garages.lua` | Player-owned private garages |
+| `config/impound.lua` | Impound command, society fund, hold durations |
+| `config/features.lua` | Capacity, store fees, repair, mileage, sharing, selling, pins, finance, auto-impound, audit, phone |
+| `config/vehicles.lua` | Spawning & persistence, retrieval fees, transfers, vehicle classes, labels |
+| `config/vehicle-images.lua` | Thumbnail image sources |
+| `config/integrations.lua` | Fuel / keys / notify / banking / gangs / textUI / target / radial |
+| `config/controls.lua` | Key binds & interaction prompts |
+| `config/commands.lua` | Staff & admin command names |
+| `config/word-filter.lua` | Blocked words for nicknames, impound reasons, etc. |
+| `config/hooks-client.lua` / `config/hooks-server.lua` | Custom event hooks to veto or react to actions |
+| `locales/*.json` | Translations (English & Spanish included) |
+
+## Framework & locale (`config/main.lua`)
+
+```lua
+Locale = "en",                -- matches a file in locales/
+Framework = "auto",           -- "auto" | "QBCore" | "Qbox" | "ESX"
+AutoRunSQL = true,            -- install the schema on start
+```
+
+Leave `Framework` on `"auto"` unless you run multiple frameworks side by side.
+
+## Spawning & persistence (`config/vehicles.lua`)
+
+```lua
+Nex.Config.Spawning = {
+  saveDamage = true,        -- persist & restore body/engine damage
+  advancedDamage = true,    -- per-panel deformation (bundled)
+  savePropsOnStore = true,  -- persist mods/props when a vehicle is stored
+  checkVehicleModel = true, -- entity model must match the DB row
+  useServerSetter = false,  -- create vehicles server-side from the start
+}
+```
+
+`Nex.Config.Retrieval.returnCost` is the towing fee charged when a vehicle
+was left out or destroyed. `Nex.Config.Transfers` controls garage-to-garage
+and player-to-player transfers, their cost, and a spawn-name blacklist.
+
+## Vehicle classes (`config/vehicles.lua`)
+
+Speed tiers (D–S) derived from each vehicle's `fInitialDriveMaxFlatVel`
+handling value. Give any garage `vehicleClasses = { "C", "D" }` to restrict
+what can park there; omit it to allow everything. Per-vehicle overrides and a
+fallback class are available under `Nex.Config.VehicleClasses`.
+
+## Feature toggles (`config/features.lua`)
+
+Every gameplay extra has its own block with an `enabled` flag: capacity
+limits, store fees, finance blocking, auto-impound, mileage & service
+reminders, paid repairs, selling to players, shared access, pins, the track
+blip, the audit log, and phone exports. Open the file — each block is
+commented.
+
+## Vehicle thumbnails (`config/vehicle-images.lua`)
+
+Thumbnails load from a URL template — no image files ship with the resource.
+The default CDN covers every base-game vehicle. For addon cars, add direct
+links per spawn name in `Nex.Config.VehicleImageLinks`
+(`config/vehicles.lua`), or point the `url` template at your own image host.
+Set `url = false` to disable thumbnails — the UI falls back to a monogram.
+
+## Discord webhooks (server.cfg)
+
+Webhook URLs are read from convars so they never live inside resource files.
+Add the categories you want to `server.cfg` and restart:
+
+```cfg
+set nex_garages_webhook_store_takeout   "https://discord.com/api/webhooks/..."
+set nex_garages_webhook_player_transfer "https://discord.com/api/webhooks/..."
+set nex_garages_webhook_garage_transfer "https://discord.com/api/webhooks/..."
+set nex_garages_webhook_impound         "https://discord.com/api/webhooks/..."
+set nex_garages_webhook_private_garages "https://discord.com/api/webhooks/..."
+set nex_garages_webhook_custom_garages  "https://discord.com/api/webhooks/..."
+```
+
+Leave a convar unset to disable that category.
+
+<Warning>
+  Use `set`, not `setr` — replicated convars are visible to every client, and
+  webhook URLs must stay server-side.
+</Warning>
+
+## Hooks (`config/hooks-client.lua` / `config/hooks-server.lua`)
+
+`hooks-client.lua` ships with events that fire on store, impound, take-out
+and transfer, plus verification callbacks you can return `false` from to veto
+the action — no core edits needed. `hooks-server.lua` is a stub for your own
+server-side additions.

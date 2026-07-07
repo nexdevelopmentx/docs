@@ -146,6 +146,22 @@
         ]
       },
       {
+        "group": "nex_garages",
+        "pages": [
+          "nex_garages/overview",
+          "nex_garages/installation",
+          "nex_garages/configuration",
+          "nex_garages/garages",
+          "nex_garages/garage-editor",
+          "nex_garages/private-garages",
+          "nex_garages/impound",
+          "nex_garages/usage",
+          "nex_garages/commands",
+          "nex_garages/integrations",
+          "nex_garages/troubleshooting"
+        ]
+      },
+      {
         "group": "nex_hotels",
         "pages": [
           "nex_hotels/overview",
