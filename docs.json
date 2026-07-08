@@ -170,6 +170,17 @@
             ]
           },
           {
+            "group": "nex_fishing",
+            "icon": "fish",
+            "pages": [
+              "nex_fishing/overview",
+              "nex_fishing/installation",
+              "nex_fishing/configuration",
+              "nex_fishing/usage",
+              "nex_fishing/troubleshooting"
+            ]
+          },
+          {
             "group": "nex_garages",
             "icon": "warehouse",
             "pages": [

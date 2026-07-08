@@ -1,0 +1,189 @@
+---
+title: "Configuration"
+description: "All configuration lives in the config/ folder, split by topic — general settings, fish, equipment, zones, shops, reputation, and server-only settings."
+---
+
+All configuration lives in the `config/` folder, split by topic:
+
+| File | Contents |
+| ---- | -------- |
+| `config/config.lua` | General settings and skill check difficulty presets |
+| `config/fish.lua` | Every catchable fish |
+| `config/equipment.lua` | Fishing rods and baits |
+| `config/zones.lua` | Fishing zones and open water |
+| `config/shops.lua` | Fisherman shop and boat rental |
+| `config/reputation.lua` | Renown tiers and perks |
+| `config/server.lua` | Server-only settings (Discord webhook) |
+
+## General settings (`config/config.lua`)
+
+```lua
+Config.locale = 'en'            -- 'en' or 'es'; nil falls back to the ox:locale convar
+Config.progressPerCatch = 0.05  -- XP per caught fish (1.0 = a full level)
+
+Config.ui = {
+    accent = '#ffffff'          -- any CSS color: '#4cc2ff', 'rgb(255, 80, 80)', ...
+}
+
+Config.skillcheck = {
+    easy = { size = 38, speed = 0.85 },
+    medium = { size = 26, speed = 1.2 },
+    hard = { size = 14, speed = 1.65 }
+}
+```
+
+* `Config.locale` — must match a file in `locales/` without the `.json` extension.
+* `Config.ui.accent` — the accent color drives the whole UI: highlights, prices, progress bars, buttons, and the skill check.
+* `Config.skillcheck` — difficulty presets referenced by name from `config/fish.lua`. `size` is the width of the catch zone in % of the bar, `speed` is a marker speed multiplier.
+
+## Fish (`config/fish.lua`)
+
+Each entry in `Config.fish` takes:
+
+* `price` — fixed number or a `{ min, max }` range (rolled at sale time)
+* `chance` — weighted chance against the other fish in the zone
+* `rep` — renown gained per catch
+* `skillcheck` — one entry per round: `'easy'`, `'medium'`, `'hard'`, or a custom table like `{ size = 20, speed = 1.5 }`
+
+Defaults:
+
+| Fish | Price | Chance | Renown | Skill check rounds |
+| ---- | ----- | ------ | ------ | ------------------ |
+| `anchovy` | 25–50 | 35 | 1 | easy, medium |
+| `trout` | 50–100 | 35 | 1 | easy, medium |
+| `haddock` | 150–200 | 20 | 2 | easy, medium |
+| `salmon` | 200–250 | 10 | 2 | easy, medium, medium |
+| `grouper` | 300–350 | 25 | 3 | easy, medium, medium, medium |
+| `piranha` | 350–450 | 25 | 3 | easy, medium, hard |
+| `red_snapper` | 400–450 | 20 | 3 | easy, medium, medium, medium |
+| `mahi_mahi` | 450–500 | 20 | 3 | easy, medium, medium, medium |
+| `tuna` | 1250–1500 | 5 | 8 | easy, medium, hard |
+| `shark` | 2250–2750 | 1 | 15 | easy, hard, hard |
+
+<Info>
+Every fish name must exist as an item in your inventory — the catch is added with `addItem`, and the sell menu reads labels and images straight from the inventory's item data.
+</Info>
+
+## Rods & baits (`config/equipment.lua`)
+
+```lua
+Config.fishingRods = {
+    { name = 'basic_rod', price = 1000, minLevel = 1, breakChance = 20 },
+    { name = 'graphite_rod', price = 2500, minLevel = 2, breakChance = 10 },
+    { name = 'titanium_rod', price = 5000, minLevel = 3, breakChance = 1 },
+}
+
+Config.baits = {
+    { name = 'worms', price = 5, minLevel = 1, waitDivisor = 1.0 },
+    { name = 'artificial_bait', price = 50, minLevel = 2, waitDivisor = 3.0 },
+}
+```
+
+* `minLevel` — level required to buy the item from the fisherman.
+* `breakChance` — percentage chance the rod breaks on a **failed** catch.
+* `waitDivisor` — the bite wait time is divided by this value; higher = faster bites. The script always consumes the **best bait** (highest price) the player carries.
+
+Every rod in `Config.fishingRods` is registered as a usable item.
+
+## Zones (`config/zones.lua`)
+
+Each entry in `Config.fishingZones` becomes one or more spherical zones:
+
+* `locations` — sphere centers (`vector3`); every one becomes a zone
+* `radius` — sphere radius
+* `minLevel` — level required before the zone shows up and works
+* `waitTime` — bite wait time in seconds, `{ min, max }`
+* `includeOutside` — whether the open-water fish can also be caught here
+* `blip` — optional map blip (`name`, `sprite`, `color`, `scale`); a radius blip is drawn too
+* `message` — optional `{ enter, exit }` notifications
+* `fishList` — fish names from `config/fish.lua`
+
+Three zones ship by default: **Coral Reef** (level 1, mahi mahi and red snapper), **Deep Waters** (level 3, grouper, tuna, and shark), and **Swamp** (level 2, piranha).
+
+Fishing outside every zone uses `Config.outside`:
+
+```lua
+Config.outside = {
+    waitTime = { min = 10, max = 25 },
+    fishList = { 'trout', 'anchovy', 'haddock', 'salmon' }
+}
+```
+
+<Info>
+Zones and their blips only appear once the player reaches the zone's `minLevel` — they are rebuilt automatically on every level-up.
+</Info>
+
+## Shops (`config/shops.lua`)
+
+### Fisherman
+
+```lua
+Config.ped = {
+    model = `s_m_m_cntrybar_01`,
+    buyAccount = 'money',       -- account charged when buying rods & baits
+    sellAccount = 'money',      -- account paid when selling fish
+    blip = { name = 'SeaTrade Corporation', sprite = 356, color = 74, scale = 0.75 },
+    locations = { ... }         -- vector4 ped spawns, two by default
+}
+```
+
+On QBCore/Qbox the `money` account maps to `cash`.
+
+### Boat rental
+
+```lua
+Config.renting = {
+    model = `s_m_m_dockwork_01`,
+    account = 'money',
+    boats = {
+        { model = `speeder`, price = 500, image = '...' },
+        { model = `dinghy`, price = 750, image = '...' },
+        { model = `tug`, price = 1250, image = '...' }
+    },
+    blip = { name = 'Boat Rental', sprite = 410, color = 74, scale = 0.75 },
+    returnDivider = 5,      -- players get price / divider back on return
+    returnRadius = 30.0,    -- radius around the spawn where boats can be returned
+    locations = {
+        { coords = vector4(...), spawn = vector4(...) }
+    }
+}
+```
+
+`coords` is where the rental ped stands; `spawn` is where boats spawn and must be returned.
+
+## Renown (`config/reputation.lua`)
+
+Players earn renown for every catch (the `rep` value on the fish). Renown never resets — climbing tiers unlocks permanent perks:
+
+* `sellBonus` — fish sell for this much more (`0.10` = +10%)
+* `shopDiscount` — rods and baits cost this much less
+* `boatDiscount` — boat rentals cost this much less
+
+```lua
+Config.reputation = {
+    enabled = true,
+    tiers = {
+        { name = 'Deckhand', threshold = 0, sellBonus = 0.0, shopDiscount = 0.0, boatDiscount = 0.0 },
+        { name = 'Angler', threshold = 100, sellBonus = 0.05, shopDiscount = 0.05, boatDiscount = 0.10 },
+        { name = 'Seafarer', threshold = 300, sellBonus = 0.10, shopDiscount = 0.10, boatDiscount = 0.20 },
+        { name = 'Captain', threshold = 750, sellBonus = 0.15, shopDiscount = 0.15, boatDiscount = 0.30 },
+        { name = 'Legend of the Sea', threshold = 1500, sellBonus = 0.25, shopDiscount = 0.20, boatDiscount = 0.50 },
+    }
+}
+```
+
+<Warning>
+Keep the tiers ordered by `threshold`, and the first tier must start at `0`. Set `Config.reputation.enabled = false` to turn the whole system off — the renown row disappears from the fisherman menu and no perks apply.
+</Warning>
+
+## Server settings (`config/server.lua`)
+
+```lua
+SvConfig.webhook = 'WEBHOOK_HERE'
+```
+
+Set a Discord webhook URL to log every catch (player name, identifier, fish, and renown gained). Leave it as `'WEBHOOK_HERE'` to disable logging. This file is never sent to clients.
+
+## Locales
+
+UI strings live in `locales/en.json` and `locales/es.json`. To add a language, copy `en.json` to a new file (e.g. `de.json`), translate it, and set `Config.locale = 'de'`.

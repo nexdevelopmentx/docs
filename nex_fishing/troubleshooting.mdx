@@ -1,0 +1,39 @@
+---
+title: "Troubleshooting"
+description: "Common problems with NEX Fishing and how to fix them."
+---
+
+## Common issues
+
+| Problem | Fix |
+| ------- | --- |
+| Using the rod does nothing at all | The rod item isn't registered in your inventory, or the framework wasn't detected. Make sure the items from `install/items.md` exist with the exact same names, and that your framework resource starts **before** `nex_fishing`. |
+| Rod works, but nothing happens and no message shows | The player's inventory can't carry the rolled fish. The cast is silently aborted when `canCarryItem` fails — free up space. |
+| "There needs to be water in front of you." | The water probe in front of the player failed. Face open water and stand — you can't cast while swimming or while seated in a vehicle. Fish from shore, a pier, or the deck of an anchored boat. |
+| "You need to have a fishing bait." | The player carries no `worms` or `artificial_bait`. Bait is consumed per cast — buy more at the fisherman. |
+| Shop and rental peds have no interaction | No target resource is running. Start `ox_target`, `qtarget`, or `qb-target` — the peds get their **Talk** / **Rent Boats** options through it. |
+| Peds don't spawn at all | Peds spawn when a player comes within 100.0 units of the configured `locations`. If they never appear, check the F8 console for model request errors. |
+| Item labels show raw names like `basic_rod` | The menus read labels from your inventory's item data. Register the items (with labels) in your inventory and restart. |
+| Item images are broken in the menus | Copy `install/images/` into your inventory's image folder (e.g. `ox_inventory/web/images/`). Supported inventories for image paths: ox_inventory, qb-inventory, ps-inventory, lj-inventory, qs-inventory. |
+| Can't buy a rod or bait | The item is level-locked (`LVL` badge) or the player lacks money on the `buyAccount` (default `money`, which is `cash` on QBCore/Qbox). |
+| XP or renown doesn't save | oxmysql isn't running or can't reach the database. Progress saves to the `nex_fishing` table every 10 minutes, on txAdmin shutdown/scheduled restart, and when the resource stops — watch the server console for MySQL errors. |
+| Zone blips are missing | Zone blips only appear once the player reaches the zone's `minLevel`. Deep Waters, for example, needs level 3. |
+| Boat return prompt never shows | You must be **driving the boat you rented**, inside `returnRadius` (default `30.0`) of the rental **spawn point** — not the ped. Boats rented before a server restart can't be returned. |
+| No fuel in rented boats | Fuel is set through `LegacyFuel` or `ox_fuel`. With a different fuel script, boats spawn with whatever your script defaults to. |
+| No Discord logs | `SvConfig.webhook` in `config/server.lua` is still `'WEBHOOK_HERE'`. Set a real webhook URL and restart. |
+| UI is in the wrong language | Set `Config.locale` in `config/config.lua` to a file name from `locales/` (`'en'` or `'es'`). If it's `nil`, the server's `ox:locale` convar is used. |
+
+## Player stuck mid-cast
+
+Press **E** to cancel a cast at any time. If the animation is interrupted (ragdoll, damage), the cast cancels itself. Restarting the resource also releases NUI focus automatically, so a stuck skill check clears on restart.
+
+## Before opening a support ticket
+
+Please include:
+
+1. Your framework (Qbox / QBCore / ESX) and inventory resource.
+2. Server console output from resource start (look for MySQL or bridge errors).
+3. F8 console output from the moment the problem happens.
+4. What you did and what you expected to happen.
+
+See [Support & contact](/general/support).

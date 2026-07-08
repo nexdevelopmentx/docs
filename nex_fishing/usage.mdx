@@ -1,0 +1,65 @@
+---
+title: "Player usage"
+description: "There are no commands — players use a fishing rod from their inventory to cast, and talk to the shop and rental peds through your target resource."
+---
+
+There are no commands — players use a fishing rod from their inventory to cast, and talk to the shop and rental peds through your target resource.
+
+## Fishing
+
+1. Buy a rod and some bait from the fisherman (**SeaTrade Corporation** blip on the map).
+2. Stand facing open water — on the shore, a pier, or the deck of an anchored boat. You can't cast while swimming or while seated in a vehicle.
+3. Use the rod from your inventory. Your character casts and one bait is consumed.
+4. Wait for a bite. The wait time comes from the zone's `waitTime` (or `Config.outside.waitTime` in open water), divided by your bait's `waitDivisor` — better bait means faster bites. Press **E** at any time to cancel.
+5. When a fish bites you get a warning notification, and a moment later the skill check starts.
+6. Pass every round and the fish lands in your inventory, along with XP and renown. Fail and the fish gets away — and your rod may break, based on its `breakChance`.
+
+<Info>
+The script always consumes your **best bait** — the most expensive one you carry. One bait is used per cast, even if you cancel or the fish escapes.
+</Info>
+
+### The skill check
+
+Each fish has one or more rounds. A marker bounces across a bar — hit **SPACE** while the marker is inside the catch zone. Missing the zone, running out of time, or pressing **ESC** fails the whole check. Harder fish have smaller zones, faster markers, and more rounds.
+
+## Zones and levels
+
+* Fishing **anywhere with water** works and yields the open-water fish (trout, anchovy, haddock, salmon by default).
+* **Fishing zones** hold rarer fish. Zones with a blip show on the map with a colored radius circle, and entering or leaving one shows a notification.
+* Zones can be level-gated — their blips and effects only appear once you reach the required level. You gain `Config.progressPerCatch` XP per catch (`0.05` by default, so 20 catches per level), and you're notified on every level-up.
+
+## Renown
+
+Every catch also grants renown (never lost, never reset). Climbing tiers unlocks permanent perks — a fish sell bonus, a shop discount, and a boat rental discount. Your current tier, progress to the next one, and active perks show at the top of the fisherman menu.
+
+## The fisherman shop
+
+Walk up to a **SeaTrade Corporation** ped and select **Talk**. The menu shows:
+
+* **Current level** and **renown** progress
+* **Buy fishing rods** — rods below your level are locked with a `LVL` badge; each rod lists its break chance
+* **Buy fishing baits** — each bait lists its bite speed multiplier
+* **Sell fish** — only fish you actually carry are listed, with live prices including your renown sell bonus
+
+Buying and selling opens an amount dialog with a running total.
+
+## Boat rental
+
+Walk up to the **Boat Rental** ped and select **Rent Boats**. Three boats are available by default (`speeder`, `dinghy`, `tug`), priced with your renown discount applied. After confirming, the boat spawns at the dock with keys and a full tank.
+
+### Keybinds
+
+| Keybind | Default | Action |
+| ------- | ------- | ------ |
+| `nex_fishing_anchor` | **G** | Anchor / raise anchor while in a boat (boat must be nearly stopped) |
+| `nex_fishing_return` | **E** | Return your rented boat near the rental spawn point |
+
+Both are FiveM keybinds — players can rebind them under **Settings → Key Bindings → FiveM**.
+
+### Returning a boat
+
+Drive the rented boat back to within `returnRadius` (30.0 by default) of the rental spawn point. A text UI prompt appears — press the return key and confirm. You get part of the rental price back: what you paid divided by `returnDivider` (5 by default), and the boat despawns.
+
+<Info>
+Only the boat you rented can be returned, and you must be in the driver's seat. Anchoring (`G`) freezes the boat in place — useful as a fishing platform, since you cast standing on the deck.
+</Info>

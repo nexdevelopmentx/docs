@@ -1,0 +1,82 @@
+---
+title: "Installation"
+description: "How to install NEX Fishing on your FiveM server."
+---
+
+## Requirements
+
+* FiveM server
+* MySQL or MariaDB
+* One of: [`qbx_core`](https://github.com/Qbox-project/qbx_core), [`qb-core`](https://github.com/qbcore-framework/qb-core), or [`es_extended`](https://github.com/esx-framework/esx_core)
+* [`ox_lib`](https://github.com/overextended/ox_lib), [`oxmysql`](https://github.com/overextended/oxmysql)
+* A target resource: [`ox_target`](https://github.com/overextended/ox_target), `qtarget`, or `qb-target` — used to talk to the shop and boat rental peds
+
+The UI ships pre-built in `web/dist` — no Node.js and no build step.
+
+## Steps
+
+1. Drop the `nex_fishing` folder into your resources, e.g. `resources/[nex]/nex_fishing/`.
+
+2. Register the items in your inventory. For **ox_inventory** (Qbox ships with it — no extra steps), add this to `ox_inventory/data/items.lua`:
+
+   ```lua
+   ['basic_rod'] = { label = 'Fishing rod', stack = false, weight = 250 },
+   ['graphite_rod'] = { label = 'Graphite rod', stack = false, weight = 350 },
+   ['titanium_rod'] = { label = 'Titanium rod', stack = false, weight = 450 },
+   ['worms'] = { label = 'Worms', weight = 10 },
+   ['artificial_bait'] = { label = 'Artificial bait', weight = 30 },
+   ['anchovy'] = { label = 'Anchovy', weight = 20 },
+   ['trout'] = { label = 'Trout', weight = 750 },
+   ['haddock'] = { label = 'Haddock', weight = 500 },
+   ['salmon'] = { label = 'Salmon', weight = 1000 },
+   ['grouper'] = { label = 'Grouper', weight = 3500 },
+   ['piranha'] = { label = 'Piranha', weight = 1500 },
+   ['red_snapper'] = { label = 'Red Snapper', weight = 2500 },
+   ['mahi_mahi'] = { label = 'Mahi Mahi', weight = 3500 },
+   ['tuna'] = { label = 'Tuna', weight = 10000 },
+   ['shark'] = { label = 'Shark', weight = 7500 },
+   ```
+
+   The full snippet also lives in `install/items.md`. If you use a different inventory (qb-inventory, ps-inventory, lj-inventory, qs-inventory), register items with the **same names** in its item table instead.
+
+3. Copy the item images from `install/images/` into `ox_inventory/web/images/` (or your inventory's image folder).
+
+4. *(Optional)* Import `install/import.sql` into your database. The resource also creates the `nex_fishing` table automatically on first start.
+
+5. Add it to `server.cfg` **after** `ox_lib` and `oxmysql`:
+
+   ```
+   ensure ox_lib
+   ensure oxmysql
+   ensure ox_target
+   ensure nex_fishing
+   ```
+
+6. Restart your server.
+
+That's it. Grab a rod and some bait, find water, and use the rod from your inventory.
+
+<Info>
+Rods are registered as **usable items** — there is no fishing command. Players use the rod from their inventory to start fishing.
+</Info>
+
+## Checking it worked
+
+From F8:
+
+```
+lua print(GetResourceState('nex_fishing'))
+```
+
+Should print `started`. If it prints `missing` or `stopped`, fix `server.cfg` and restart.
+
+## Updating
+
+`config/*.lua` and `bridge/**/*.lua` are listed under `escrow_ignore` and are preserved across updates. Player XP and renown live in the `nex_fishing` MySQL table and are preserved automatically.
+
+1. Replace the resource files with the new version (keep your edited `config/` files).
+2. Restart the server.
+
+<Info>
+Installs created before the renown system are migrated automatically — the script adds the missing `rep` column to the `nex_fishing` table on start.
+</Info>
