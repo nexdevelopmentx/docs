@@ -1,0 +1,63 @@
+---
+title: "Installation"
+description: "How to install NEX Anim Pos on your FiveM server."
+---
+
+## Requirements
+
+* FiveM server
+* [`ox_lib`](https://github.com/overextended/ox_lib)
+
+That's the whole list — no framework, no SQL, no other resources. The web UI ships pre-built in `web/dist`, so there's nothing to compile.
+
+## Steps
+
+1. Install [`ox_lib`](https://github.com/overextended/ox_lib) if you don't have it already.
+
+2. Drop the `nex_animpos` folder into your `resources/` directory. Any subfolder is fine, e.g. `resources/[nex]/nex_animpos/`.
+
+3. Add it to your `server.cfg`, making sure `ox_lib` starts **before** it:
+
+   ```
+   ensure ox_lib
+   ensure nex_animpos
+   ```
+
+4. Start (or restart) your server.
+
+That's it. Run `/animpos` in-game to enter positioning mode.
+
+## Language
+
+Text is translatable. The active language follows the `ox:locale` convar (default `en`):
+
+```
+setr ox:locale "en"
+```
+
+The resource ships with `locales/en.json`. To add a language, copy it to `locales/<lang>.json`, translate the strings, and set the convar to match.
+
+## Checking it worked
+
+From F8:
+
+```
+lua print(GetResourceState('nex_animpos'))
+```
+
+Should print `started`. If it prints `missing` or `stopped`, fix `server.cfg` and restart.
+
+<Info>
+On boot the server runs a version check against the public `nexdevelopmentx/versions` manifest. If a newer release exists, an update box is printed to the server console with the changelog and download links. It's informational only — nothing auto-updates.
+</Info>
+
+## Updating
+
+`shared/config.lua` is listed under `escrow_ignore`, so your settings survive updates.
+
+1. Replace the resource files with the new version (keep your edited `shared/config.lua`).
+2. Restart the resource: `restart nex_animpos`.
+
+<Warning>
+If you customised the web UI, the source lives in `web/`. Run `npm install` then `npm run build` inside `web/` to regenerate `web/dist` — the game only loads the built files, not the source.
+</Warning>

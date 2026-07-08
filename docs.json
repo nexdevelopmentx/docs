@@ -27,6 +27,18 @@
         "group": "Scripts",
         "pages": [
           {
+            "group": "nex_animpos",
+            "icon": "street-view",
+            "pages": [
+              "nex_animpos/overview",
+              "nex_animpos/installation",
+              "nex_animpos/configuration",
+              "nex_animpos/usage",
+              "nex_animpos/exports",
+              "nex_animpos/troubleshooting"
+            ]
+          },
+          {
             "group": "nex_battlepass",
             "icon": "trophy",
             "pages": [
