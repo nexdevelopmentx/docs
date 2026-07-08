@@ -28,10 +28,17 @@ body condition, mileage, and every available action:
 | **Repair** | Fixes engine, body and deformation for a fee based on missing condition (`Features.repair`) |
 | **Transfer** | Moves the vehicle to another garage (for a fee) or gifts it to a nearby player |
 | **Share** | Grants up to `maxShares` players access to take the vehicle out |
-| **Sell** | Sells to another player for a negotiated price — money and ownership swap in one step |
+| **Sell** | Sends a purchase offer to another player. The buyer gets a confirmation popup showing the seller, vehicle, plate and price, and must accept within `Features.sellVehicle.offerTimeoutSeconds` (default 30s). On accept the price is charged to whichever of their cash or bank balance covers it — nothing moves until they say yes, and declining, disconnecting or timing out cancels the sale |
 | **Rename** | Sets a nickname shown instead of the model name (word-filtered) |
 | **Pin** | Pins the vehicle to the top of your list |
 | **Track** | Marks a left-out vehicle on the map. With `Features.trackBlip.live` enabled (default) the blip follows the vehicle in real time — even while someone is driving it — with a GPS route, until the tracker expires or the vehicle is stored |
+
+<Info>
+  Player pickers (transfer, share, sell) only list players within
+  `Transfers.nearbyPlayerRadius` metres (10 by default) — and the same
+  distance is enforced server-side when the action runs. Set it to `false`
+  to allow the whole server.
+</Info>
 
 Financed vehicles show a **Financed** tag and can be blocked from take-out
 and transfer until paid off (`Features.finance`).

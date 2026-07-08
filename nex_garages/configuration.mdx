@@ -8,7 +8,7 @@ all editable (never escrowed):
 
 | File | What it controls |
 |---|---|
-| `config/main.lua` | Locale, currency/date format, framework selector, SQL auto-install, debug |
+| `config/main.lua` | Locale, currency/date format, framework selector, UI accent color, SQL auto-install, debug |
 | `config/garages.lua` | Public / job / gang garage & impound locations, interior layout |
 | `config/custom-garages.lua` | The in-game garage editor (`/garagesadmin`) |
 | `config/private-garages.lua` | Player-owned private garages |
@@ -33,6 +33,50 @@ AutoRunSQL = true,            -- install the schema on start
 
 Leave `Framework` on `"auto"` unless you run multiple frameworks side by side.
 
+## UI accent color (`config/main.lua`)
+
+The UI ships monochrome, but every highlight surface — primary buttons,
+active tabs, condition bars, status chips, toasts, checkboxes — follows one
+accent color you can change without touching the UI bundle:
+
+```lua
+UI = {
+  accentColor = "#FFFFFF",     -- try your server's brand color
+  accentTextColor = "#000000", -- text on accent surfaces; use "#FFFFFF" for dark accents
+},
+```
+
+Body text stays neutral so any accent keeps the panels readable.
+
+## Cinematic garage mode (`config/main.lua`)
+
+Prefer an in-world browser over the list menu? Enable the cinematic garage:
+
+```lua
+CinematicGarage = {
+  enabled = false,
+  camera = {                            -- offsets relative to the previewed vehicle
+    coords = vector3(3.0, 5.5, 0.3),
+    focus = vector3(-0.75, 1.2, 0.0),
+    fov = 35.0,
+  },
+  transitionMs = 650,
+  switchMs = 350,
+  screenEffects = true, -- vignette + bloom while browsing, bright pulse on exit
+  seatPlayer = true,    -- sit the player in the previewed vehicle's driver seat
+},
+```
+
+Pressing **E** at a garage then previews your stored vehicles one at a time at
+the spawn point — with your mods, livery and plate — behind a cinematic
+camera. **← / →** browse, **E / ENTER** drives, **BACKSPACE / ESC** exits. A
+slim HUD shows the vehicle's name, plate, condition, mileage and class.
+
+Previews are only visible to you and can't be entered or damaged. Impound
+lots and job spawner garages always keep the classic menu, and the classic
+panel still opens when nothing is parked at the garage — so vehicles stored
+elsewhere stay reachable for transfers.
+
 ## Spawning & persistence (`config/vehicles.lua`)
 
 ```lua
@@ -47,7 +91,9 @@ Nex.Config.Spawning = {
 
 `Nex.Config.Retrieval.returnCost` is the towing fee charged when a vehicle
 was left out or destroyed. `Nex.Config.Transfers` controls garage-to-garage
-and player-to-player transfers, their cost, and a spawn-name blacklist.
+and player-to-player transfers, their cost, a spawn-name blacklist, and
+`nearbyPlayerRadius` — player transfers, shares and sales only list and
+allow players within that range (default 10 m, `false` = whole server).
 
 ## Vehicle classes (`config/vehicles.lua`)
 
