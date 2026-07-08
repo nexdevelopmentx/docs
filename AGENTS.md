@@ -29,6 +29,21 @@
 - Code formatting for file names, commands, paths, and config keys.
 - Use callouts (`<Info>`, `<Warning>`, `<Danger>`) for notes and cautions.
 
+## Confidentiality
+
+The scripts are sold as CFX-escrowed products. The docs describe **what a script
+does and how to use it — never how it is built.**
+
+- Never name UI frameworks, libraries, or build tooling (React, Vue, Svelte,
+  Tailwind, Node, npm, bun, Vite, etc.).
+- Never document internal source structure (`web/src`, `web/dist`, `web/build`,
+  `client/`, `server/` file names) or include UI build/rebuild instructions.
+  If UI files are missing, the fix is "re-download from your purchase".
+- Say "the UI ships ready to use — no build step" instead of naming the stack.
+- Fine to mention: user-editable files (`config.lua`, `install/`, SQL files),
+  public third-party dependencies (`ox_lib`, `oxmysql`, `ox_inventory` paths),
+  and generic FiveM platform terms (NUI focus, ACE permissions, convars).
+
 ## Branding
 
 - Colors are black (`#000000`) and white (`#FFFFFF`).
