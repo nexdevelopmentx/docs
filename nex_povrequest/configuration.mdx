@@ -1,0 +1,127 @@
+---
+title: "Configuration"
+description: "Every nex_povrequest config option in lua/config.lua — cooldowns, locale, the ACE permission, Discord webhook, and the UI table."
+---
+
+Everything lives in `lua/config.lua`. Edit, then `restart nex_povrequest`.
+
+## Cooldowns
+
+```lua
+Config.GlobalCooldown = 10   -- requester cooldown between ANY requests
+Config.PairCooldown   = 30   -- requester -> same target cooldown
+```
+
+Both values are in seconds and are enforced server-side per requester:
+
+| Key | Default | What it limits |
+| --- | --- | --- |
+| `Config.GlobalCooldown` | `10` | Minimum time between any two requests from the same admin |
+| `Config.PairCooldown` | `30` | Minimum time before the same admin can request the **same player** again |
+
+After a successful send, the panel shows a live countdown on the send button until the global cooldown expires.
+
+## Locale
+
+```lua
+Config.Locale = 'en'
+```
+
+Loads `locales/<code>.json`. English (`en`), Spanish (`es`), French (`fr`), and German (`de`) ship with the resource. Any key missing from the selected language falls back to English.
+
+To add a language, copy `locales/en.json` to `locales/<code>.json`, translate the values, and set `Config.Locale` to that code.
+
+## Permission
+
+```lua
+Config.RequiredAce = 'nex_povrequest.use'
+```
+
+The ACE permission required to open the panel and send requests. Grant it in `server.cfg`:
+
+```cfg
+add_ace group.admin nex_povrequest.use allow
+```
+
+Set `Config.RequiredAce = nil` (or `false`, or `''`) to let **everyone** use the command.
+
+<Info>
+  Receiving a request never requires permission — any targeted player always gets the notification. The check is enforced server-side on both the player-list fetch and the send, so it cannot be bypassed from the client.
+</Info>
+
+## Discord logging
+
+```lua
+Config.WebhookURL = 'https://discord.com/api/webhooks/...'
+
+Config.Embed = {
+    username   = 'POV Logger',
+    avatar_url = nil,
+    color_note = 0x5865F2,
+    serverName = 'NEX.dev',
+}
+```
+
+| Key | Default | Description |
+| --- | --- | --- |
+| `Config.WebhookURL` | example URL | Your Discord webhook. Set to `''` to disable logging entirely |
+| `Config.Embed.username` | `'POV Logger'` | Name the webhook posts as |
+| `Config.Embed.avatar_url` | `nil` | Optional avatar image URL for the webhook |
+| `Config.Embed.color_note` | `0x5865F2` | Embed side-bar colour |
+| `Config.Embed.serverName` | `'NEX.dev'` | Shown in the embed footer next to the timestamp |
+
+<Warning>
+  Replace the shipped example `Config.WebhookURL` with your own webhook before going live.
+</Warning>
+
+## UI
+
+The `Config.UI` table controls the panel and the target toast:
+
+```lua
+Config.UI = {
+    command        = 'pov',
+    title          = nil,
+    accent         = '#ffffff',
+    showPlayerList = true,
+    allowManualId  = true,
+    enableReason   = true,
+    reasonMaxLen   = 120,
+    closeOnEscape  = true,
+    toastDuration  = 8000,
+}
+```
+
+| Key | Default | Description |
+| --- | --- | --- |
+| `command` | `'pov'` | Chat command that opens the panel (`/pov`). Rename it if it clashes with another resource |
+| `title` | `nil` | Title in the panel top bar. Leave `nil` or `''` to use the locale title (`"POV Request"` in English) |
+| `accent` | `'#ffffff'` | Accent colour — recolours every foreground element (text, icons, buttons, active tab, highlights, progress bars). Text on accent-coloured buttons auto-picks black or white for contrast |
+| `showPlayerList` | `true` | Show the searchable list of online players |
+| `allowManualId` | `true` | Allow typing a raw server ID in the **Server ID** tab |
+| `enableReason` | `true` | Show the optional reason field (also logged to Discord) |
+| `reasonMaxLen` | `120` | Character cap for the reason field |
+| `closeOnEscape` | `true` | ESC closes the panel |
+| `toastDuration` | `8000` | Milliseconds the target's toast stays on screen |
+
+<Info>
+  If you disable `showPlayerList`, the panel opens straight on the server-ID input. If you disable `allowManualId`, only the player list is shown. Disabling both leaves no way to pick a target from the panel, so keep at least one enabled.
+</Info>
+
+## Fallback notifications
+
+`Config.Notify` styles the ox_lib notifications used for the `/pov [id]` direct-send feedback and other fallback messages:
+
+```lua
+Config.Notify = {
+    position = 'top', -- 'top' = centered horizontally at top, 'bottom' = bottom-center
+    style = {
+        ['font-size']     = '22px',
+        ['max-width']     = '720px',
+        ['padding']       = '16px 20px',
+        ['border-radius'] = '14px',
+    }
+}
+```
+
+The `style` table is passed straight to `lib.notify`, so any CSS property ox_lib accepts works here (e.g. `background-color`, `color`, `box-shadow`, `text-align`).

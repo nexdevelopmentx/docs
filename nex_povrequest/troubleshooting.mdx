@@ -1,0 +1,35 @@
+---
+title: "Troubleshooting"
+description: "Fixes for common nex_povrequest issues — permissions, ox_lib order, Discord logging, avatars, locales, and cooldowns."
+---
+
+Most issues come down to the ACE grant, `ox_lib` start order, or the webhook. Work through the table below before reaching out.
+
+| Problem | Fix |
+|---------|-----|
+| `/pov` says `No permission.` | The player doesn't hold the ACE from `Config.RequiredAce` (default `nex_povrequest.use`). Add `add_ace group.admin nex_povrequest.use allow` to `server.cfg` and make sure the player is actually in that group, then restart the server so the ACE applies. |
+| `/pov` does nothing at all | The resource didn't start, or `ox_lib` is missing/started too late. Check the server console for errors, confirm `ensure ox_lib` comes **before** `ensure nex_povrequest`, and from F8 run `lua print(GetResourceState('nex_povrequest'))` — it should print `started`. |
+| The command is taken by another resource | Rename it via `Config.UI.command` in `lua/config.lua` and `restart nex_povrequest`. |
+| `Target ID not online.` | The server ID you entered has no connected player. IDs change on reconnect — hit the refresh button in the panel to reload the list. |
+| "Please wait…" / "You recently requested POV from this player." | You hit the anti-spam cooldowns. Tune `Config.GlobalCooldown` (default `10` s) and `Config.PairCooldown` (default `30` s). |
+| Nothing arrives in Discord | `Config.WebhookURL` is empty, still the shipped example, or the webhook was deleted. Create a fresh webhook in your Discord channel settings and paste its URL. The server also needs outbound HTTPS access. |
+| Player pictures show initials instead of avatars | Avatars only resolve for players who connect with a `discord` identifier, and the lookup runs through an external API. If that API is slow or down, the panel still opens after a 4-second timeout — just without pictures. Results are cached for 30 minutes, so a newly linked avatar can take up to 30 minutes to appear. |
+| Panel takes a few seconds to open | That's the Discord avatar lookup for players not yet cached. It is capped at 4 seconds; subsequent opens are fast thanks to the cache. |
+| Texts show raw keys like `sent_to_target` | The locale file failed to load. Check that `locales/<Config.Locale>.json` exists and is valid JSON — the console prints `[nex_povrequest] WARNING: no locale strings loaded` when nothing could be read. Keys missing from a translation fall back to English automatically. |
+| Wrong language shows | `Config.Locale` must match a file in `locales/` (`en`, `es`, `fr`, `de`, or your own code). Restart the resource after changing it. |
+| Mouse stuck after the panel closed | Press **ESC** (unless you disabled `Config.UI.closeOnEscape`) or click **Close**. As a last resort, `restart nex_povrequest` — the resource releases NUI focus automatically when it stops. |
+| Config edits don't apply | The config is read at startup. Run `restart nex_povrequest` after every edit to `lua/config.lua`. |
+
+## Update notice in the console
+
+A boxed `NEX DEVELOPMENT • UPDATE AVAILABLE` message in the server console means a newer version exists. It includes the changelog and download links. If the check itself fails, you'll only see a harmless `NEX version check unavailable` line — it never affects the script.
+
+## Before opening a support ticket
+
+Please include:
+
+1. Your FiveM artifact build number and `ox_lib` version.
+2. Server console output filtered for `nex_povrequest` (or any errors mentioning it).
+3. Whether the issue is reproducible from a fresh `restart nex_povrequest`.
+
+See [Support & contact](/general/support) for how to reach us.

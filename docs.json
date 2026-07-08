@@ -271,6 +271,18 @@
             ]
           },
           {
+            "group": "nex_povrequest",
+            "icon": "video",
+            "pages": [
+              "nex_povrequest/overview",
+              "nex_povrequest/installation",
+              "nex_povrequest/configuration",
+              "nex_povrequest/commands",
+              "nex_povrequest/usage",
+              "nex_povrequest/troubleshooting"
+            ]
+          },
+          {
             "group": "nex_queue",
             "icon": "list-ol",
             "pages": [

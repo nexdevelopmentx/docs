@@ -1,0 +1,42 @@
+---
+title: "Overview"
+description: "An admin POV request tool for FiveM. Run /pov, pick a player from a live online list or enter their server ID, add an optional reason, and send — the player gets an on-screen notification and every request is logged to Discord."
+---
+
+`nex_povrequest` is an admin **POV request** tool for FiveM. Staff run `/pov` to ask a player to post their POV footage in a report — pick the player from a searchable online list (with Discord profile pictures) or enter their server ID, attach an optional reason, and send. The requested player receives an on-screen toast notification, and every request is logged to a Discord webhook.
+
+The UI ships **pre-built** — no Node, npm, or Bun, and no build step. Drop the folder in, ensure it, grant the ACE permission, done.
+
+## Features
+
+- **Clean in-game panel** — searchable online player list **or** manual server ID entry, with Discord profile pictures (falls back to initials).
+- **Optional reason** attached to each request, shown to the player and logged to Discord.
+- **Direct send** — `/pov [id]` skips the panel entirely.
+- **Anti-spam cooldowns** — a global cooldown between any two requests and a per-target cooldown.
+- **Configurable accent colour** that themes the entire interface, with automatic text contrast on buttons.
+- **Multi-language** — JSON locale files (English, Spanish, French, German included) with English fallback.
+- **Admin-only** — access enforced server-side through an ACE permission.
+- **Discord webhook logging** for every request.
+
+## Requirements
+
+| Requirement | Notes |
+| --- | --- |
+| FiveM server | Any recent artifacts |
+| [`ox_lib`](https://github.com/overextended/ox_lib) | Required. Must start **before** this resource |
+
+No framework, no SQL. Permissions use FiveM's built-in ACE system, so the script works on any server.
+
+## How it works
+
+An admin runs `/pov`. The server checks the `nex_povrequest.use` ACE permission, builds the online player list (excluding the requester), resolves Discord avatars, and the panel opens. The admin selects a target, optionally types a reason, and sends. The server validates the target, enforces the cooldowns, shows the target a toast notification, and posts an embed to your Discord webhook with the requester, target, and reason.
+
+The requested player never needs any permission — any targeted player always receives the notification.
+
+## In this section
+
+- [Installation](/nex_povrequest/installation) — drag-and-drop install, `server.cfg` order, and the ACE grant
+- [Configuration](/nex_povrequest/configuration) — cooldowns, locale, permission, webhook, and the UI table
+- [Commands](/nex_povrequest/commands) — `/pov` and `/pov [id]`, and how to rename them
+- [Usage](/nex_povrequest/usage) — the panel workflow, the target toast, and the Discord log
+- [Troubleshooting](/nex_povrequest/troubleshooting) — common issues and fixes

@@ -1,0 +1,50 @@
+---
+title: "Commands"
+description: "The /pov command — panel mode, direct-send mode, the ACE permission it requires, and how to rename it."
+---
+
+`nex_povrequest` registers a single command with two modes. Both modes require the ACE permission set in `Config.RequiredAce` (default `nex_povrequest.use`).
+
+## Reference
+
+| Command | What it does |
+| --- | --- |
+| `/pov` | Opens the request panel |
+| `/pov [id]` | Instantly sends a request to the given server ID — no panel |
+
+A chat suggestion is registered for the command, so typing `/pov` in chat shows usage help and the optional `id` argument.
+
+## Details
+
+### `/pov`
+
+Opens the panel. The online player list is fetched first so the panel never opens empty. If you lack the permission, you get a `No permission.` notification instead.
+
+### `/pov [id]`
+
+Sends a request directly to the player with that server ID and reports the result as an ox_lib notification (`POV request sent to ID %s.` on success). No reason is attached in this mode — use the panel if you want to add one.
+
+The same server-side rules apply as in the panel: the target must be online, you cannot target yourself, and both [cooldowns](/nex_povrequest/configuration#cooldowns) are enforced.
+
+## Renaming the command
+
+The command name comes from `Config.UI.command` in `lua/config.lua`:
+
+```lua
+Config.UI = {
+    command = 'pov',   -- chat command that opens the panel (/pov)
+    -- ...
+}
+```
+
+Change it (lowercase, no leading slash) and `restart nex_povrequest` if it clashes with another resource.
+
+## Permission
+
+Grant access in `server.cfg`:
+
+```cfg
+add_ace group.admin nex_povrequest.use allow
+```
+
+Set `Config.RequiredAce = nil` to open the command to everyone. See [Configuration → Permission](/nex_povrequest/configuration#permission).
