@@ -55,20 +55,6 @@
             ]
           },
           {
-            "group": "nex_businesses",
-            "icon": "store",
-            "pages": [
-              "nex_businesses/overview",
-              "nex_businesses/installation",
-              "nex_businesses/configuration",
-              "nex_businesses/setup",
-              "nex_businesses/management",
-              "nex_businesses/orders",
-              "nex_businesses/commands",
-              "nex_businesses/troubleshooting"
-            ]
-          },
-          {
             "group": "nex_coordstool",
             "icon": "location-dot",
             "pages": [
