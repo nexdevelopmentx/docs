@@ -147,6 +147,19 @@
             ]
           },
           {
+            "group": "nex_drugscreator",
+            "icon": "cannabis",
+            "pages": [
+              "nex_drugscreator/overview",
+              "nex_drugscreator/installation",
+              "nex_drugscreator/configuration",
+              "nex_drugscreator/creator-panel",
+              "nex_drugscreator/usage",
+              "nex_drugscreator/commands",
+              "nex_drugscreator/troubleshooting"
+            ]
+          },
+          {
             "group": "nex_elevators",
             "icon": "elevator",
             "pages": [

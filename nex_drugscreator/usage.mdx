@@ -1,0 +1,74 @@
+---
+title: "Player usage"
+description: "How players consume drugs and take part in the world economy — harvesting, growing, crafting, and the selling channels."
+---
+
+Players don't need the panel. They use drug items from their inventory and interact with the world using **[E]** (configurable via `Config.World.InteractKey`).
+
+## Consuming a drug
+
+Using a configured item plays the drug's animation with an ox_lib progress bar (or circle), then consumes it (if **remove on use** is set) and applies every effect on its timeline.
+
+* If the drug has a **required item** (e.g. a lighter), the player must carry it — otherwise they get "You need a … to use this". It can optionally be consumed too.
+* Everything is re-validated server-side: item checks, required-item checks, value clamping, and anti-spam.
+
+### Puff drugs
+
+Drugs with **max puffs** above `0` work differently — the item is consumed up front, then the player smokes it puff by puff:
+
+* **[E]** — take a puff (each puff runs its own progress and delivers a fraction of the effects)
+* **[G]** — pass the burning drug to the closest player within 3 meters; they continue with the remaining puffs
+* **[X]** — stop
+
+The puff and stop keys come from `Config.PuffKeys`.
+
+## Harvesting
+
+Standing in a harvest zone (visible as a ground circle) and pressing **[E]** starts a continuous harvesting mode that yields items on a loop. Press **[E]** again, or walk out of the circle, to stop. Zones can require a tool, be limited to jobs/gangs, and have per-player cooldowns.
+
+## Drug fields
+
+Fields work in one of two modes, set per field in the panel:
+
+* **Plant mode** — plant seeds and come back when they've grown.
+* **Wild mode** — plants respawn on their own.
+
+Harvesting a grown plant can require a tool and can roll chance-based extra yields.
+
+## Crafting
+
+* **Pocket crafting** — `/pocketcraft` opens a menu of recipes with the *Pocket* mode, usable anywhere. Recipes can also be bound to a **trigger item** — using that item from the inventory starts the craft directly.
+* **Laboratories** — walk-in zones with per-lab recipe lists and optional props. Lab recipes are crafted at the lab with **[E]**.
+* **Advanced crafting** — when enabled, lab cooks type the ingredient amounts themselves. A wrong mix wastes the ingredients and can start a **fire** or an **explosion** at the lab.
+
+## Drug factories
+
+Deposit ingredient batches and production runs passively; collect the output later. Factories with a price are **buyable**: owners can upgrade workers for faster production, whitelist friends, and sell the factory back.
+
+## Selling
+
+Each sellable drug has per-channel toggles, so a drug can be street-only, dealer-only, and so on.
+
+| Channel | How it works |
+| ------- | ------------ |
+| Street selling | `/selldrugs` toggles selling mode — offer drugs to nearby peds. Refusals can rob you, attack you, or alert the police; chase the thief to get your drugs back. Per-restart caps and job blacklists apply. |
+| Corner selling | `/cornersell` (or the trap phone) — stay on your corner while customers walk up to you, with optional customer spawning. |
+| Plane & boat runs | Hold your position (and minimum altitude for planes) for the timer and sell everything the buyers want — with sell areas, cooldowns, and police alerts. |
+| Narcos | A roaming wholesale buyer who requests one drug in bulk and relocates on a timer. |
+| Pushers | Fixed NPC fences with real-world work hours, per-player sell caps, and optional one-random-drug rotation. |
+| Dealer spots | Admin-placed NPCs that passively sell anyone's deposited stock. |
+| Auctions | Scheduled (or admin-started) black-market bidding events: broker ped and van, bidding rounds — **[E]** to bid, arrows to adjust — and police tip-offs. |
+
+## Territories and territory wars
+
+Territories apply price multipliers to sales inside them. With territory wars enabled, factions earn points from sales (and optionally kills) in a zone — the leader owns it, gaining a sell bonus, fewer police alerts, and gang alerts against intruders. Hot zones rotate on a timer with boosted rewards, and points can decay.
+
+## Hired dealers and the trap phone
+
+Players whose faction owns a territory can hire AI dealers (tiers with cost/fee/heat trade-offs) through the **trap phone** — opened with the `trap_phone` usable item or the `/trapphone` command. Dealers sell passively, build heat, and can get **arrested** or **robbed** (chase the robber to recover the stash). Dealers go dark when the territory is lost.
+
+The trap phone also handles corner selling and live territory intel — leaderboards, hot zones, and sales progress.
+
+## Police
+
+Every activity can require a minimum number of police online. Alerts show a blip to on-duty cops (jobs from `Config.PoliceJobs`, editable live in the panel), and prices can drop when too few cops are on.
