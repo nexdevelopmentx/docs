@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "NEX Development",
+  "name": "NEX.dev",
   "colors": {
     "primary": "#000000",
     "light": "#FFFFFF",

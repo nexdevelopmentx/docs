@@ -1,8 +1,8 @@
-# NEX Development docs — project instructions
+# NEX.dev docs — project instructions
 
 ## About this project
 
-- Documentation for NEX Development's FiveM scripts.
+- Documentation for NEX.dev's FiveM scripts.
 - Pages are MDX files with YAML frontmatter; one folder per script.
 - Navigation and site configuration live in `docs.json`.
 

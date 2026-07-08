@@ -1,6 +1,6 @@
-# NEX Development Documentation
+# NEX.dev Documentation
 
-The official documentation for NEX Development's FiveM scripts — install guides,
+The official documentation for NEX.dev's FiveM scripts — install guides,
 configuration references, and troubleshooting for every resource.
 
 ## Editing
