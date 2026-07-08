@@ -1,0 +1,78 @@
+---
+title: "Exports & hooks"
+description: "Server exports, the external contract callback, and the server-side hook file for integrating NEX Trucking with your other resources."
+---
+
+## Server exports
+
+```lua
+-- Generate a contract programmatically (0 = quick, 1 = freight)
+exports.nex_trucking:generateContract(0)
+
+-- Inject a contract that calls back into your resource on completion
+exports.nex_trucking:generateExternalContract(
+    1,                    -- contract type (0 quick / 1 freight)
+    'Mystery Package',    -- display name
+    'phantom',            -- truck model (rental for type 0)
+    'docktrailer',        -- trailer model
+    vector4(x, y, z, h),  -- drop-off parking spot
+    5000,                 -- fixed reward
+    'my_resource',        -- your resource name (receives the callback)
+    extra                 -- optional table merged into the callback data
+)
+
+-- Progression helpers (identifier = ESX identifier / citizenid)
+exports.nex_trucking:getPlayerLevel(identifier)   -- returns 0-36
+exports.nex_trucking:addPlayerXP(identifier, 250) -- returns levels gained
+exports.nex_trucking:addPlayerMoney(identifier, 500)
+
+-- Detected framework: 'esx' | 'qb' | 'qbox'
+exports.nex_trucking:getFramework()
+```
+
+`addPlayerMoney` credits the trucking company wallet, not the player's framework account.
+
+## External contract callback
+
+When you use `generateExternalContract`, your resource must expose a `finishTruckerContract` export. It's called when the delivery completes:
+
+```lua
+-- in my_resource
+exports('finishTruckerContract', function(source, externalData, contractId)
+    -- externalData contains x, y, z, h, reward, export, plus your `extra` fields
+end)
+```
+
+The player is still paid the fixed reward by NEX Trucking; use the callback for your own side effects (items, quest progress, etc.).
+
+## Server-side hooks
+
+`shared/hooks.lua` runs on the server and is meant to be edited. Return `false` from any `before*` hook to block the action; `after*` hooks are notifications only.
+
+```lua
+Hooks.beforeBuyLocation(src, identifier)               -- first dashboard open
+Hooks.beforeBuyTruck(src, truckName, price, identifier)
+Hooks.afterBuyTruck(src, truckName, price, identifier)
+Hooks.beforeSellTruck(src, truckName, price, identifier)
+Hooks.afterSellTruck(src, truckName, price, identifier)
+Hooks.beforeHireDriver(src, price, identifier)
+Hooks.afterHireDriver(src, price, identifier)
+Hooks.beforeStartContract(src, contractId)
+Hooks.afterFinishContract(src, money, xp, distance, contract)
+Hooks.beforeDeposit(src, amount, account)
+Hooks.beforeWithdraw(src, amount, account)
+```
+
+## Client event
+
+Every vehicle the script spawns (rentals, trailers, owned trucks) fires a client event you can listen to for custom integrations:
+
+```lua
+AddEventHandler('nex_trucking:client:vehicleSpawned', function(vehicle, model)
+    -- e.g. hand out keys through a key system the script doesn't support
+end)
+```
+
+## Vehicle key systems
+
+Keys are granted automatically after each spawn. The script detects whichever of these is running — no configuration needed: `qbx_vehiclekeys`, `qb-vehiclekeys`, `Renewed-Vehiclekeys`, `wasabi_carlock`, `MrNewbVehicleKeys`, `t1ger_keys`, `mk_vehiclekeys`, `jaksam-vehiclekeys`, `okokVehicleKeys`, and `F_RealCarKeysSystem`. For anything else, hook `nex_trucking:client:vehicleSpawned` as shown above.

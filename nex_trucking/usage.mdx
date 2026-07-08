@@ -1,0 +1,91 @@
+---
+title: "Player usage"
+description: "Players don't need any commands — they walk up to the depot and open the dashboard."
+---
+
+Players don't need any commands — they walk up to the depot and open the dashboard.
+
+## Opening the dashboard
+
+Walk to the depot blip (LSIA freight yard by default). With `ox_target` enabled you get an **Open trucker dashboard** option; otherwise a marker is drawn and **E** opens it. If `Config.AllowedJobs` is set, only those jobs can open it.
+
+The dashboard has eleven pages: **Profile** (stats, level, leaderboard), **Quick Jobs**, **Freight**, **Crew**, **Skills**, **Diagnostic** (repairs and refueling), **Dealership**, **My Trucks**, **Recruit**, **My Drivers**, and **Bank**. The Recruit and My Drivers pages are hidden when `Config.DisableDrivers = true`.
+
+## Quick jobs vs freight
+
+* **Quick Jobs** — no truck required. A rental truck and the cargo trailer spawn at the depot. After delivering, drive the rental back to a garage slot and press **E** to return it.
+* **Freight** — bring your own rig. You must own at least one truck, and rewards are multiplied by `1.2` by default.
+
+## Running a delivery
+
+1. Pick a contract. Each card shows the cargo, trailer, distance, reward, and any flags (ADR class, fragile, valuable, urgent, illegal).
+2. Hook the trailer to your truck and follow the route blip.
+3. At the destination, back the trailer into the marker: it must be **hooked**, within **5.5 m**, and aligned within **35°** of the marker's heading. The on-screen prompt tells you which condition is missing.
+4. Press **E** to park the cargo. The payout and XP land instantly.
+
+To cancel a delivery, hold **F6** for 2 seconds (`Config.Contracts.cancelKey`). If the trailer is destroyed, the delivery fails automatically.
+
+<Warning>
+Distance to the marker is measured from the **trailer**, not the player or the truck.
+</Warning>
+
+## Payouts
+
+The base reward is distance × the contract's price per km (randomized between `150` and `350` at generation, with freight and illegal multipliers already applied). On top of that:
+
+* **Skill bonuses** add a percentage of the reward and XP per matching skill tier.
+* **Crew bonus** adds `2%` money and XP per delivery by default.
+* **Urgent cargo** must arrive within `90` seconds per km, or bonuses take a `20%` penalty.
+* **Fragile cargo** must arrive with the trailer above `70%` health, or bonuses take a `20%` penalty.
+* The final payout and XP are both scaled by the trailer's condition on arrival — deliver a wrecked trailer and you keep only that fraction.
+
+XP is `2` per 100 m driven by default (`Config.ExpGain`), and each level up to 36 grants one skill point.
+
+## Skills
+
+Six skill paths, each upgradeable to tier 6 with skill points:
+
+| Skill | Gate |
+| ----- | ---- |
+| ADR Certification | Required at or above the cargo's ADR class (1–6) |
+| Range | Caps delivery distance — 6 km at tier 0, up to unlimited at tier 6 |
+| High-value | Required for valuable cargo; adds money/XP bonuses |
+| Fragile | Required for fragile cargo; adds money/XP bonuses |
+| Urgent | Required for urgent contracts; adds money/XP bonuses |
+| Illegal | Required for illegal cargo; adds money/XP bonuses |
+
+Contracts you lack the skills for are refused with a notification explaining which skill is missing.
+
+## Dealership and truck upkeep
+
+* **Dealership** — buy trucks with company funds, gated by level. Selling returns `70%` of the purchase price (`Config.SellPriceMultiplier`).
+* **My Trucks** — spawn an owned truck at the depot, or store it again by driving into a garage slot and pressing **E**. Damage and fuel are tracked live and saved.
+* **Diagnostic** — repair the engine, body, transmission, and wheels or refuel, priced per 1% of damage (`Config.RepairPrice`). Store your truck before repairing or selling it.
+
+## NPC drivers
+
+1. Hire drivers from the **Recruit** page. A new candidate appears every `20` minutes; your hire cap grows with level (1 driver at level 0 up to 4 at level 30 by default).
+2. Assign a driver to one of your trucks in **My Drivers**. The truck needs all parts above 70% and more than 20% fuel.
+3. Every `30` minutes, each assigned driver completes a run: you earn a profit based on the driver's skills and the truck's `driverBonus`, and the truck burns 2–8% fuel. By default you must be online to earn (`Config.DriverJobs.earnWhileOffline`).
+
+A truck that is out with a driver can't be spawned or sold until the driver is unassigned.
+
+## Bank
+
+Earnings land in the **company wallet**, not your pocket. The Bank page moves money between the wallet and your framework account (`Config.Account`, default `bank`). Withdrawals are blocked while any loan is outstanding.
+
+## Loans and bankruptcy
+
+Take a loan from one of the configured plans (limited by level). Repayment is debited from the company wallet every `24` hours.
+
+<Danger>
+If a daily payment can't be covered, the player goes **bankrupt**: their trucks, drivers, loans, crew membership, and progression are all deleted. A crew they lead is disbanded entirely.
+</Danger>
+
+## Crews
+
+Create a crew from the **Crew** page (costs `5000` plus `100` per seat by default), optionally with a password. Members within 40 m of the depot join a crew delivery automatically — each gets their own truck and trailer — and everyone earns the crew bonus. Only the leader can start crew deliveries by default, and the crew can't start if any member fails the skill or truck requirements.
+
+## Police inspection
+
+Officers with a job in `Config.PoliceJobs` can inspect any parked cargo trailer — via `ox_target` or by walking up to it and pressing **E**. After a 5-second inspection, the cargo manifest is revealed; illegal loads show a **SUSPICIOUS CARGO** alert. Haulers cannot scrub their own manifest — it's cleared server-side only when the delivery ends.

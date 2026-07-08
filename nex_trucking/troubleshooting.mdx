@@ -1,0 +1,38 @@
+---
+title: "Troubleshooting"
+description: "Watch your server console and F8 console, filtering for [nex_trucking] — the script logs its database status, framework detection, and a vehicle model audit at startup."
+---
+
+Watch your **server console** and **F8 console**, filtering for `[nex_trucking]` — the script logs its database status, framework detection, and a vehicle model audit at startup.
+
+## Common issues
+
+| Problem | Fix |
+| ------- | --- |
+| `Missing vehicle models: ...` warning in F8 | The resource shipping those models isn't started, or starts **after** `nex_trucking`. Reorder `server.cfg`, or remove the entries from `config/dealership.lua` and `Config.Contracts.rental.availableTrucks`. |
+| "Could not spawn vehicle" when starting a job | Same cause as above — check F8 for `Model "X" is not registered / streamed`. The contract is cancelled automatically so the player isn't stuck. |
+| Dashboard silently doesn't open | The database isn't ready yet or the framework wasn't detected. Confirm the server console printed `[nex_trucking] Database ready (framework=...)`. If it says `framework=standalone`, your framework resource isn't started before `nex_trucking`. |
+| "You lack the required job" | `Config.AllowedJobs` is set and the player's job isn't in it. Leave the table empty (`{ }`) to allow everyone. |
+| No ox_target option at the depot | `Config.UseOxTarget` is `false` by default. Set it to `true` in `config/main.lua` **and** make sure `ox_target` is started. |
+| No contracts listed | The generator produces 5 quick + 5 freight contracts every 5 minutes, starting ~10 seconds after boot. If the list stays empty, the database thread never became ready — check `oxmysql` and your connection string. |
+| "Someone else already took this job" | Contracts are claimed atomically — another player got there first, or the player disconnected mid-job and the contract was released. Pick another one. |
+| "All garage slots are occupied" | Vehicles are parked within 4.5 m of the depot's spawn slots. Move them, or add more slots in `config/locations.lua`. |
+| Freight contracts refused with "You need your own truck" | Freight jobs require truck ownership. Buy one at the dealership or run quick jobs. |
+| Prompt says "Park the truck correctly" but nothing happens | All three conditions must hold: trailer hooked, within 5.5 m of the marker, aligned within 35°. The prompt names the failing condition — and distance is measured from the trailer, not the truck. |
+| No keys for spawned trucks | Your key resource isn't one of the ten auto-detected systems. Hook the `nex_trucking:client:vehicleSpawned` event — see [Exports & hooks](/nex_trucking/exports#vehicle-key-systems). |
+| `Possible delivery exploit by ...` in the server log | A client fired the delivery event while more than 30 m from the drop-off. The delivery is ignored — this usually means a cheat attempt, not a bug. |
+| Player lost all trucks/progress overnight | They defaulted on a loan. When a daily payment can't be covered, the player is declared bankrupt and their data is wiped by design. Raise `Config.MaxLoanPerLevel`, soften the plans in `config/loans.lua`, or set `Config.DisableLoans = true`. |
+| Cannot withdraw from the bank | Withdrawals are blocked while any loan is outstanding. Pay the loan off first. |
+| UI shows raw text keys like `no_permission` | The locale file didn't load. Make sure `setr ox:locale en` is in `server.cfg` and the matching `locales/<lang>.json` exists. |
+| Police can't inspect a trailer | The inspector's job must be in `Config.PoliceJobs`, and the trailer must be stationary (speed below 0.5). The job check is cached for 30 seconds, so a fresh job change can take a moment to apply. |
+
+## Before opening a support ticket
+
+Please include:
+
+1. Your framework (ESX / QBCore / Qbox) and your ox_lib version.
+2. Server console output filtered for `[nex_trucking]`.
+3. F8 console output from the moment the problem happens, including the startup model audit line.
+4. What you did and what you expected to happen.
+
+See [Support & contact](/general/support).

@@ -321,6 +321,18 @@
             ]
           },
           {
+            "group": "nex_trucking",
+            "icon": "truck",
+            "pages": [
+              "nex_trucking/overview",
+              "nex_trucking/installation",
+              "nex_trucking/configuration",
+              "nex_trucking/usage",
+              "nex_trucking/exports",
+              "nex_trucking/troubleshooting"
+            ]
+          },
+          {
             "group": "nex_uipack",
             "icon": "palette",
             "pages": [
