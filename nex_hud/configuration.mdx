@@ -1,0 +1,104 @@
+---
+title: "Configuration"
+description: "Every option in config.lua with its default. Many values are only server defaults — players can override them per player in the in-game settings window."
+---
+
+All options live in `config.lua` as plain `Config.<Field>` globals. Integration hooks (fuel, seatbelt, job / money, postal) live in `integration.lua` — see [Integrations](/nex_hud/integrations).
+
+<Info>
+  Many of these values are just **server defaults**. Players can override them in `/hudsettings`, and their choices are saved per player and layered on top of your config. Resetting in the **Reset** tab returns a player to your config values.
+</Info>
+
+## General
+
+| Option | What it does | Default |
+| ------ | ------------ | ------- |
+| `Config.Framework` | Status source for hunger / thirst / stress and the load/logout HUD toggle: `"none"`, `"esx"`, `"qb"`, `"ox"`, or `"custom"`. With `"none"`, those three statuses are simply not shown. | `"none"` |
+| `Config.SpeedUnit` | Speedometer unit: `"mph"` or `"kph"`. Player-overridable. | `"mph"` |
+| `Config.HudVisibleByDefault` | Show the HUD automatically on load/restart, or start hidden until `/togglehud`. | `true` |
+| `Config.Debug` | Forwards a debug flag to the NUI for verbose browser logging. | `false` |
+
+## Seatbelt
+
+| Option | What it does | Default |
+| ------ | ------------ | ------- |
+| `Config.UseSeatbeltLogic` | Use the built-in seatbelt (keybind, exit blocking, windscreen ejection). Set `false` to read seatbelt state from your own resource via `Bridge.isSeatbeltOn`. | `true` |
+| `Config.SeatbeltEjectSpeed` | Minimum crash speed (in `Config.SpeedUnit`) to eject an unbuckled driver through the windscreen. | `20.0` |
+
+<Warning>
+  The built-in ejection needs `setr game_enableFlyThroughWindscreen true` in your `server.cfg`.
+</Warning>
+
+## Minimap and compass
+
+| Option | What it does | Default |
+| ------ | ------------ | ------- |
+| `Config.MinimapAlways` | Always show the minimap, or only while in a vehicle. Player-overridable. | `false` |
+| `Config.CompassAlways` | Always show the compass, or only while in a vehicle. Player-overridable. | `false` |
+| `Config.Compass` | Compass position: `"top"`, `"bottom"`, or `"hidden"`. Player-overridable. | `"top"` |
+| `Config.ShowPostal` | Show the nearest postal in the street card (needs a postal resource). Player-overridable. | `true` |
+| `Config.ShowElevation` | Show elevation in the street card. Player-overridable. | `true` |
+
+## Style
+
+| Option | What it does | Default |
+| ------ | ------------ | ------- |
+| `Config.SkewedStyle` | Enable the 3D skewed HUD style. Player-overridable. | `false` |
+| `Config.SkewAmount` | Skew amount when the skewed style is on (recommended 10–20, clamped to 0–30 on save). Player-overridable. | `15` |
+
+## Weapon HUD
+
+| Option | What it does | Default |
+| ------ | ------------ | ------- |
+| `Config.ShowWeaponHud` | Show the weapon pill (name + ammo) while armed. Player-overridable. | `true` |
+
+## Vehicle features
+
+| Option | What it does | Default |
+| ------ | ------------ | ------- |
+| `Config.EnableCruiseControl` | Enable cruise control. | `true` |
+| `Config.CruiseControlKeybind` | Default cruise control key. | `"J"` |
+| `Config.IndicatorLeftKeybind` | Left indicator key. Set to `false` to disable. | `"LEFT"` |
+| `Config.IndicatorRightKeybind` | Right indicator key. Set to `false` to disable. | `"RIGHT"` |
+| `Config.IndicatorHazardsKeybind` | Hazard lights key. Set to `false` to disable. | `"UP"` |
+| `Config.AutoCancelIndicators` | Auto-cancel an indicator after completing the turn. | `true` |
+| `Config.IndicatorSound` | Play the synthesised indicator tick. Player-overridable. | `true` |
+| `Config.SeatbeltWarningSound` | Play the seatbelt warning chime. Player-overridable. | `true` |
+| `Config.BoatAnchorKeybind` | Boat anchor toggle key (only active while driving a boat). Set to `false` to disable. | `"K"` |
+| `Config.VehicleControlsKeybind` | Vehicle controls menu key. | `"F6"` |
+
+<Info>
+  `UP` can conflict with the vanilla GTA phone bind on some setups. Players can rebind every key under **FiveM Settings → Key Bindings → FiveM**, or you can change the default here.
+</Info>
+
+<Warning>
+  FiveM stores a player's keybinds after their first join. Changing a keybind default in `config.lua` only affects players who haven't already saved a binding — existing players need to rebind in their FiveM settings.
+</Warning>
+
+## Speed limits
+
+| Option | What it does | Default |
+| ------ | ------------ | ------- |
+| `Config.ShowSpeedLimitSign` | Show the posted speed-limit sign next to the minimap while driving. Player-overridable. | `true` |
+| `Config.SpeedLimitOverrides` | Exact street-name overrides, in mph. | `{}` |
+
+Limits are derived from the street-name suffix, first match wins:
+
+| Suffix | Limit (mph) |
+| ------ | ----------- |
+| `Fwy`, `Freeway` | 65 |
+| `Hwy`, `Highway`, `Great Ocean` | 60 |
+| `Route <n>`, `Rte` | 55 |
+| `Blvd`, `Boulevard`, `Pkwy`, `Parkway` | 40 |
+| `Ave`, `Avenue`, `Dr`, `Drive`, `Rd`, `Road`, `Way` | 35 |
+| `St`, `Street`, `Ln`, `Lane`, `Pl`, `Place`, `Ct`, `Court`, `Circus`, `Passage` | 30 |
+
+Overrides always win over the heuristic:
+
+```lua
+Config.SpeedLimitOverrides = {
+    ["O'Neil Way"] = 25,
+}
+```
+
+Values are authored in mph and converted automatically for players driving in kph. Streets with no match (and off-road driving) show no sign.

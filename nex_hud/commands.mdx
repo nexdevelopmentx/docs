@@ -1,0 +1,38 @@
+---
+title: "Commands & keybinds"
+description: "Every command and default keybind NEX HUD registers."
+---
+
+## Chat commands
+
+| Command | What it does |
+| ------- | ------------ |
+| `/togglehud` | Toggles the HUD visibility on or off. |
+| `/hudsettings` | Opens the settings window. |
+
+Both are available to everyone — there are no admin commands.
+
+## Keybinds
+
+All keybinds are registered through FiveM's key mapping system, so every player can rebind them under **FiveM Settings → Key Bindings → FiveM**. The defaults come from `config.lua`:
+
+| Action | Default key | Command | Config option |
+| ------ | ----------- | ------- | ------------- |
+| Toggle seatbelt | `B` | `-toggle_seatbelt` | `Config.UseSeatbeltLogic` |
+| Toggle cruise control | `J` | `nexhud_cruise` | `Config.CruiseControlKeybind` |
+| Left indicator | `←` | `nexhud_indicator_left` | `Config.IndicatorLeftKeybind` |
+| Right indicator | `→` | `nexhud_indicator_right` | `Config.IndicatorRightKeybind` |
+| Hazard lights | `↑` | `nexhud_hazards` | `Config.IndicatorHazardsKeybind` |
+| Boat anchor | `K` | `nexhud_anchor` | `Config.BoatAnchorKeybind` |
+| Vehicle controls menu | `F6` | `nexhud_vehcontrols` | `Config.VehicleControlsKeybind` |
+| Open settings window | unbound | `hudsettings` | — |
+
+Set an indicator or anchor keybind to `false` in `config.lua` to disable that feature's bind entirely.
+
+<Info>
+  The seatbelt bind only exists when `Config.UseSeatbeltLogic = true`, and the cruise bind only when `Config.EnableCruiseControl = true`.
+</Info>
+
+<Warning>
+  FiveM remembers each player's keybinds after their first join. Changing a default in `config.lua` won't move keys for players who already have a stored binding — they rebind in their own FiveM settings.
+</Warning>

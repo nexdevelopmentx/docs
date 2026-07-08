@@ -1,0 +1,35 @@
+---
+title: "Overview"
+description: "A premium glass-pill HUD for FiveM. Dark translucent pills with colored accents, per-class vehicle clusters, a live player headshot, and a full in-game settings window with a drag-and-drop layout editor."
+---
+
+A premium glass-pill HUD for FiveM. Dark translucent pills with colored accents, per-class vehicle clusters, a live player headshot, and a full in-game settings window with a drag-and-drop layout editor. Every player customizes their own HUD — everything persists per player.
+
+## In this section
+
+* [Installation](/nex_hud/installation)
+* [Configuration](/nex_hud/configuration)
+* [Player usage](/nex_hud/usage)
+* [Commands & keybinds](/nex_hud/commands)
+* [Exports](/nex_hud/exports)
+* [Integrations](/nex_hud/integrations)
+* [Troubleshooting](/nex_hud/troubleshooting)
+
+## What you get
+
+* **Top-right info column** — voice level + mic state, your live GTA headshot, server ID, time (game or local clock), job with grade, cash / bank pills, and a dirty-money pill that hides itself when you're clean. Every pill individually toggleable.
+* **Street card** — an 8-way compass chip beside the street name, plus an area line with zone, postal (via `nearest-postal`, auto-detected), and elevation — e.g. `Grapeseed, 2024 (292ft)`.
+* **Player status** — two switchable styles: circular rings or compact glass bars (health, armor, hunger, thirst, oxygen, stamina, stress), pulsing red when critical. Optionally hide maxed-out stats.
+* **Per-class vehicle clusters** — cars and bikes get an RPM gauge or a minimal speed pill, bicycles a bare speed pill, boats an anchor chip, aircraft an altitude readout with a stall warning, trains a speed-only readout. A glass strip shows fuel, NOS, engine health, headlights, and seatbelt.
+* **Speed limits** — a speed-limit sign pinned to the minimap shows the posted limit for the current street, flashing red when you speed.
+* **Driving features** — cruise control (`J`), turn signals and hazards with auto-cancel after turns, a seatbelt warning chime (synthesised in the NUI, no audio files), and a boat anchor (`K`).
+* **Vehicle controls menu** (`F6`) — engine, doors, windows, and seat switching in a glass panel, with passenger permission rules.
+* **Weapon HUD** — weapon name and clip / reserve ammo, with a DLC-complete name table.
+* **Full settings window** (`/hudsettings`) — General, Map & Compass, Player Status, Vehicles, Player Info, Weapon, Import & Export, and Reset tabs. Everything saves per player instantly.
+* **Layout editor** — drag any HUD element anywhere, resize it from a corner handle, hide it with an eye toggle. Snap-to-grid, undo/redo, per-player persistence.
+* **Framework auto-detection** — job, cash, bank, and dirty money work out of the box on QBCore and ESX; wire anything else through one function in `integration.lua`.
+* **Fully resolution-scaled** — the whole HUD is sized in viewport units, so it looks identical from 1080p to 4K.
+
+## Requirements at a glance
+
+The only hard dependency is [`ox_lib`](https://github.com/CommunityOx/ox_lib) (3.27.0 or higher). Framework support for hunger / thirst / stress covers ESX, QBCore, and ox_core, with a `custom` adapter for anything else. See [Installation](/nex_hud/installation).

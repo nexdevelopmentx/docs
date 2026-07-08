@@ -1,0 +1,61 @@
+---
+title: "Player usage"
+description: "What your players see and do in-game — the settings window, the layout editor, and the driving features."
+---
+
+What your players see and do in-game.
+
+## Showing and hiding the HUD
+
+* `/togglehud` flips the whole HUD on or off.
+* The HUD hides automatically while the pause menu is open and comes back when it closes.
+* On QBCore, ESX, ox_core, and custom setups (via `Config.Framework`), the HUD also shows on player load and hides on logout.
+
+## The settings window
+
+Open it with `/hudsettings`, or bind a key to **nex_hud: Open Settings** under **FiveM Settings → Key Bindings → FiveM** (unbound by default). Every change applies live and saves instantly, per player.
+
+| Tab | What's in it |
+| --- | ------------ |
+| **General** | Speed unit (mph / kph), distance unit (feet / meters, used for aircraft altitude), clock source (game time or your local time), the 3D skewed style and its skew amount. |
+| **Map & Compass** | Compass position (top / bottom / hidden), compass and minimap always-on toggles, postal and elevation toggles. |
+| **Player Status** | Rings or bars, and an option to hide maxed-out stats (health always stays visible). |
+| **Vehicles** | Gauge or minimal speedometer, speed-limit sign, flash-on-speeding, indicator tick and seatbelt chime sounds. |
+| **Player Info** | Per-pill visibility: avatar, voice, server ID, time, job, cash, bank, dirty money. |
+| **Weapon** | Weapon HUD toggle, hide melee weapons (on by default), show weapon name. |
+| **Import & Export** | Your full configuration — settings and layout — as JSON. Copy it as a backup or share it; importing overwrites your current settings and layout. |
+| **Reset** | Reset everything, settings only, or layout only — back to the server's config defaults. |
+
+## The layout editor
+
+Click **Edit Layout** in the top right of the settings window, then:
+
+* **Drag** any HUD element anywhere on screen.
+* **Resize** it from the corner handle (0.5× to 2×).
+* **Hide** it with the eye toggle.
+* Snap-to-grid, undo/redo, then **save** or **discard**.
+
+Movable elements: Player Info, Status, Street & Compass, Speed Sign, Vehicle Cluster, and Weapon. Layouts persist per player.
+
+## Driving
+
+* **Seatbelt** — press `B` to buckle up. While buckled you can't exit the vehicle; unbuckled, a crash above the configured speed ejects you through the windscreen. The belt icon pulses red (with an optional chime) until you buckle.
+* **Cruise control** — press `J` while driving at least ~10 mph. The car holds its current speed until you brake, pull the handbrake, toggle it off, drop below ~5 mph, stay airborne for over a second, or leave the driver's seat. Not available on bicycles, boats, aircraft, or trains.
+* **Indicators** — `←` / `→` toggle turn signals, `↑` toggles hazards. With auto-cancel on, a signal switches off by itself once you've steered into the turn and straightened out.
+* **Vehicle controls menu** — press `F6` in any vehicle for engine, doors, windows, and seat switching. Passengers can only operate their own door and window; only the driver can toggle the engine.
+* **Boat anchor** — press `K` while driving a boat. Anchoring only works while the boat is stationary and in open water.
+* **Speed-limit sign** — shows the posted limit for the current street next to the minimap and flashes the speedometer red when you exceed it.
+
+## Vehicle clusters
+
+The cluster adapts to what you're driving:
+
+* **Cars and motorcycles** — RPM gauge or a minimal speed pill (your choice), gear indicator, plus a glass strip with fuel, NOS, engine health, headlights, and seatbelt.
+* **Bicycles** — a bare speed pill.
+* **Boats** — speed plus an anchor chip.
+* **Helicopters and planes** — speed and altitude; planes get a stall warning when airborne and slow.
+* **Trains** — speed only.
+
+## Weapon HUD
+
+Draw any firearm and a pill shows the weapon name and clip / reserve ammo. Melee weapons are hidden by default (toggle in the **Weapon** tab), and thrown weapons show your full stash as the count.

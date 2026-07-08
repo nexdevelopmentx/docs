@@ -211,6 +211,20 @@
             ]
           },
           {
+            "group": "nex_hud",
+            "icon": "gauge-high",
+            "pages": [
+              "nex_hud/overview",
+              "nex_hud/installation",
+              "nex_hud/configuration",
+              "nex_hud/usage",
+              "nex_hud/commands",
+              "nex_hud/exports",
+              "nex_hud/integrations",
+              "nex_hud/troubleshooting"
+            ]
+          },
+          {
             "group": "nex_itemwhitelist",
             "icon": "lock",
             "pages": [

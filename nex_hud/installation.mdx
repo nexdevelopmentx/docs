@@ -1,0 +1,75 @@
+---
+title: "Installation"
+description: "How to install NEX HUD on your FiveM server."
+---
+
+## Requirements
+
+* FiveM server
+* [`ox_lib`](https://github.com/CommunityOx/ox_lib) **3.27.0 or higher** — the resource refuses to start without it
+
+Optional, auto-detected when present:
+
+* [`nearest-postal`](https://github.com/DevBlocky/nearest-postal) — adds a postal code to the street card
+* A fuel script: `ps-fuel`, `cdn-fuel`, `LegacyFuel`, or `ox_fuel` (native fuel level is used otherwise)
+* `jim-mechanic` — used for seatbelt state if you disable the built-in seatbelt logic
+
+<Info>
+  No database and no framework are required. The HUD runs standalone; QBCore and ESX are auto-detected for the job / money pills, and hunger / thirst / stress are wired through `Config.Framework`.
+</Info>
+
+## Steps
+
+1. Drop the `nex_hud` folder into your resources, e.g. `resources/[nex]/nex_hud/`.
+
+   <Warning>
+     Keep the folder named exactly `nex_hud`. Renaming it changes the export names (`exports['nex_hud']:...`) and skips the automatic version check.
+   </Warning>
+
+2. Add it to `server.cfg` **after** `ox_lib`:
+
+   ```
+   ensure ox_lib
+   ensure nex_hud
+   ```
+
+3. If you use the built-in seatbelt logic (`Config.UseSeatbeltLogic = true`, the default), also add:
+
+   ```
+   setr game_enableFlyThroughWindscreen true
+   ```
+
+   Without it, unbuckled players are never ejected through the windscreen.
+
+4. Open `config.lua` and set `Config.Framework` — `"qb"`, `"esx"`, `"ox"`, `"custom"`, or leave the default `"none"`. This only feeds the hunger / thirst / stress statuses; the job and money pills auto-detect QBCore and ESX regardless.
+
+5. Disable or remove any other HUD resource (e.g. your framework's default HUD) so the two don't overlap. `nex_hud` already hides the default GTA street / area / vehicle-name labels and the health and armor bars on the minimap by itself.
+
+6. Restart your server.
+
+## Checking it worked
+
+Join the server — the HUD shows automatically (`Config.HudVisibleByDefault = true`). Run `/hudsettings` to open the settings window, or `/togglehud` to flip visibility.
+
+## Building from source
+
+Release builds ship with the NUI already compiled in `dist/`. If you cloned the repository instead and see this in your server console:
+
+```
+UI not compiled, either compile the UI or download a compiled version
+```
+
+build the interface with [Bun](https://bun.sh/) (or Node.js):
+
+```bash
+cd nex_hud/web
+bun install
+bun run build   # outputs to ../dist
+```
+
+## Updating
+
+1. Replace the resource files with the new version, keeping your edited `config.lua` and `integration.lua`.
+2. Restart the server.
+
+Player settings and layouts are stored client-side (per-player KVP), so they survive updates automatically.

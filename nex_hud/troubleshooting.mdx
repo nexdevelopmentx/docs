@@ -1,0 +1,47 @@
+---
+title: "Troubleshooting"
+description: "Fixes for common NEX HUD issues, based on how the resource actually fails."
+---
+
+For extra logging, set the ox_lib print level to debug (`set ox:printlevel "debug"` in the client or server console) and watch the **F8** console.
+
+## Common issues
+
+| Problem | Fix |
+| ------- | --- |
+| Server console prints `UI not compiled` in red | The `dist/` folder is missing. Download a release build, or build the NUI yourself (`cd web && bun install && bun run build`). |
+| Server error `ox_lib is not started` | `ox_lib` must be ensured **before** `nex_hud` in `server.cfg`. |
+| Server error `Upgrade ox_lib to 3.27.0 or higher` | Your `ox_lib` is too old. Update it. |
+| Hunger / thirst / stress don't show | `Config.Framework` is still `"none"` (the default). Set it to `"qb"`, `"esx"`, `"ox"`, or `"custom"`. |
+| Hunger / thirst show but never update on QBCore | The QB adapter listens to `hud:client:UpdateNeeds` / `hud:client:UpdateStress`. Something on your server must still emit those events (qb-core does by default). |
+| Job pill stuck on `Civilian`, cash and bank stuck at 0 | Neither `qb-core` nor `es_extended` is running, so auto-detection found nothing. Wire your framework in `Bridge.getInfo` in `integration.lua`. |
+| Unbuckled players never fly through the windscreen | `setr game_enableFlyThroughWindscreen true` is missing from `server.cfg`. |
+| Hazards key opens the GTA phone | The default `↑` bind conflicts with the vanilla phone on some setups. Rebind it under **FiveM Settings → Key Bindings → FiveM**, or change `Config.IndicatorHazardsKeybind`. |
+| Changed a keybind in `config.lua` but nothing happened | FiveM stores per-player bindings after first join. Existing players must rebind in their own FiveM settings. |
+| No postal in the street card | `nearest-postal` isn't started (it's auto-detected), or the player turned postal off in **Map & Compass**. For another postal script, wire `Bridge.getPostal` in `integration.lua`. |
+| Fuel bar wrong or frozen | No supported fuel script detected (`ps-fuel`, `cdn-fuel`, `LegacyFuel`, `ox_fuel`), so the native fuel level is used. Wire yours in `Bridge.getVehicleFuel`. |
+| NOS bar always empty | Expected — `Bridge.getNosLevel` returns `0` until you wire your nitrous script in `integration.lua`. |
+| HUD invisible after joining | `Config.HudVisibleByDefault` is `false`, or the player toggled it off with `/togglehud`. With a framework set, the adapter also hides the HUD on logout and re-shows it on the next player-loaded event. |
+| Minimap only shows in vehicles | That's the default (`Config.MinimapAlways = false`). Players can enable **always show minimap** in the **Map & Compass** tab. |
+| Two HUDs on screen | Another HUD resource (e.g. your framework's default HUD) is still running. Disable it. |
+| Speed-limit sign shows the wrong limit | Limits come from a street-name suffix heuristic. Add the exact street name to `Config.SpeedLimitOverrides`. |
+| No speed-limit sign at all | Off-road and unmatched street names show no sign, and the sign only exists for cars and motorcycles. Also check the **Vehicles** settings tab. |
+| Cruise control keeps switching off | By design — it disengages on brake or handbrake, below ~5 mph, after more than a second airborne, when the engine dies, or when you leave the driver's seat. |
+| Weapon pill missing for knives and bats | Melee weapons are hidden by default. Toggle **hide melee weapons** off in the **Weapon** tab. |
+| F8 warning `stored preferences were invalid, ignoring` | The player's saved settings blob was corrupted and has been discarded. They can set things up again in `/hudsettings`; the **Reset** tab clears the stored blob cleanly. |
+| Console says the version check was skipped | You renamed the resource folder. That's harmless, but automatic update checks (and the `exports['nex_hud']` name) only work with the original `nex_hud` name. |
+
+## A player wants their old settings back
+
+Settings and layout are saved per player in client KVP under the key `nexhud:prefs:v2` — there is nothing server-side to restore. If they exported their configuration from the **Import & Export** tab, they can paste it back in. Otherwise, the **Reset** tab returns them to the server defaults.
+
+## Before opening a support ticket
+
+Please include:
+
+1. Server console output from the `nex_hud` start (any red lines especially).
+2. F8 console output with `set ox:printlevel "debug"` active while reproducing the issue.
+3. Your framework (`Config.Framework` value) and any edits to `integration.lua`.
+4. What you did and what you expected to happen.
+
+See [Support & contact](/general/support).
