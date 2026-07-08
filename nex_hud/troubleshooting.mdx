@@ -9,7 +9,7 @@ For extra logging, set the ox_lib print level to debug (`set ox:printlevel "debu
 
 | Problem | Fix |
 | ------- | --- |
-| Server console prints `UI not compiled` in red | The `dist/` folder is missing. Download a release build, or build the NUI yourself (`cd web && bun install && bun run build`). |
+| Server console prints `UI not compiled` in red | The resource's UI files are missing or incomplete — re-download the release build from your purchase and re-upload the whole folder. |
 | Server error `ox_lib is not started` | `ox_lib` must be ensured **before** `nex_hud` in `server.cfg`. |
 | Server error `Upgrade ox_lib to 3.27.0 or higher` | Your `ox_lib` is too old. Update it. |
 | Hunger / thirst / stress don't show | `Config.Framework` is still `"none"` (the default). Set it to `"qb"`, `"esx"`, `"ox"`, or `"custom"`. |

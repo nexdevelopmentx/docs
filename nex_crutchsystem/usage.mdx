@@ -72,11 +72,11 @@ No `ox_target` needed. Walk within `Config.TextUI.distance` (2m default) of the 
 
 ```
 You confirm at the NPC
-  → React medic dialog opens (or ox_lib progressBar if UI disabled)
+  → medic dialog opens (or ox_lib progressBar if UI disabled)
   → "Pay $X" / "Remove Crutch"
     → server validates: price + has-crutch + near-medic + has-money
     → NPC plays the animation
-    → React drives the visible progress bar for Config.Animation.duration
+    → progress bar runs for Config.Animation.duration
     → server charges money + clears the crutch
     → legacy hooks fire (wasabi_crutch, ak47_crutch — if running)
 ```

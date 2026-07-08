@@ -8,7 +8,7 @@ description: "How to install NEX Anim Pos on your FiveM server."
 * FiveM server
 * [`ox_lib`](https://github.com/overextended/ox_lib)
 
-That's the whole list — no framework, no SQL, no other resources. The web UI ships pre-built in `web/dist`, so there's nothing to compile.
+That's the whole list — no framework, no SQL, no other resources. The UI ships ready to use, so there's nothing to compile.
 
 ## Steps
 
@@ -57,7 +57,3 @@ On boot the server runs a version check against the public `nexdevelopmentx/vers
 
 1. Replace the resource files with the new version (keep your edited `shared/config.lua`).
 2. Restart the resource: `restart nex_animpos`.
-
-<Warning>
-If you customised the web UI, the source lives in `web/`. Run `npm install` then `npm run build` inside `web/` to regenerate `web/dist` — the game only loads the built files, not the source.
-</Warning>

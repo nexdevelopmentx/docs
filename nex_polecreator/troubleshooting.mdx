@@ -1,22 +1,14 @@
 ---
 title: "Troubleshooting"
-description: "Fixes for common nex_polecreator problems — missing UI build, target mismatch, admin access, poles not spawning, prop and job-lock issues."
+description: "Fixes for common nex_polecreator problems — missing UI files, target mismatch, admin access, poles not spawning, prop and job-lock issues."
 ---
 
 ## The UI doesn't load / panel is blank
 
-The built UI is missing. `fxmanifest.lua` ships `web/build/index.html`, so the `web/build/` folder must exist.
+The resource's UI files are missing or incomplete — usually a bad upload or an antivirus/FTP client stripping files.
 
-* Confirm `web/build/index.html` and `web/build/assets/` are present in the resource.
-* If you edited anything under `web/`, rebuild it:
-
-  ```bash
-  cd web
-  bun install
-  bun run build
-  ```
-
-See [Installation](/nex_polecreator/installation#building-the-ui).
+* Re-download the resource from your purchase and re-upload the whole folder.
+* Make sure your upload method transfers every file (some FTP clients skip nested folders).
 
 ## Players can't interact with poles
 

@@ -17,7 +17,7 @@ If something's wrong, check your **F8** console and **server console** first —
 | Keyboard movement stops while using the panel | Movement is suspended while you're editing a value in the panel. Click off the field and movement resumes. |
 | "Reached the maximum distance" warning | You hit the `Config.MaxDistance` ring (default `5.0` m from the start). Raise it in `shared/config.lua` if you need more room. |
 | Free-fly camera stops moving away | The fly-cam is tethered to `Config.Camera.free.maxDistance` (default `30.0` m) from the start point. Raise it if needed. |
-| UI is blank after editing the web source | The game loads `web/dist`, not `web/src`. Run `npm install` and `npm run build` inside `web/`, then restart the resource. |
+| UI is blank | The resource's UI files are missing or incomplete — re-download from your purchase and re-upload the whole folder, then restart the resource. |
 | UI too small / too large | Adjust `Config.UI.scale` (bump for 1440p+, lower for 1080p). |
 | Text shows locale keys or the wrong language | The language follows the `ox:locale` convar (`setr ox:locale "en"`). Make sure a matching file exists in `locales/`. Only `en.json` ships by default. |
 | Ended up back at the start after pressing `X` | That's by design — cancel always restores your starting spot because the placed position has no collision. Use **Confirm** (`G`) to keep the spot. |

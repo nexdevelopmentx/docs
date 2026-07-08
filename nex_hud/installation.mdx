@@ -51,21 +51,7 @@ Optional, auto-detected when present:
 
 Join the server — the HUD shows automatically (`Config.HudVisibleByDefault = true`). Run `/hudsettings` to open the settings window, or `/togglehud` to flip visibility.
 
-## Building from source
-
-Release builds ship with the NUI already compiled in `dist/`. If you cloned the repository instead and see this in your server console:
-
-```
-UI not compiled, either compile the UI or download a compiled version
-```
-
-build the interface with [Bun](https://bun.sh/) (or Node.js):
-
-```bash
-cd nex_hud/web
-bun install
-bun run build   # outputs to ../dist
-```
+The UI ships ready to use — no build step. If your server console ever prints `UI not compiled`, the resource files are incomplete: re-download from your purchase and re-upload the whole folder.
 
 ## Updating
 

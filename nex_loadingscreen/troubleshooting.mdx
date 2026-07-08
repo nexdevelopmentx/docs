@@ -15,7 +15,7 @@ description: "Fixes for common NEX Loading Screen issues."
 | Logo / cover art / song change didn't apply | Same as theme — these are baked into the config payload at connect time. Restart the resource and reconnect. |
 | Player gets stuck on "Enter Server" | The `playerSpawned` event never fired (game crashed during spawn, or something blocked it). Have them disconnect and reconnect. If it's repeatable, check the F8 console on their machine. |
 | Loading screen never shuts down | `Config.RequireClick = true` requires a click. Set `Config.RequireClick = false` if you'd rather auto-dismiss. If even auto-dismiss hangs, something is keeping `playerSpawned` from firing — usually another resource crashing during spawn. |
-| F8 console shows "SendLoadingScreenMessage called while the loading screen was shut down" | Cosmetic warning, safely ignored — `client.lua` guards every NUI write behind a `shutdown` flag specifically for this, but a single warning can still slip through under unusual timing. |
+| F8 console shows "SendLoadingScreenMessage called while the loading screen was shut down" | Cosmetic warning, safely ignored — the resource guards every UI write behind a shutdown flag specifically for this, but a single warning can still slip through under unusual timing. |
 
 ## Before opening a support ticket
 
