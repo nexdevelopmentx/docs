@@ -248,6 +248,18 @@
             ]
           },
           {
+            "group": "nex_peacetime",
+            "icon": "dove",
+            "pages": [
+              "nex_peacetime/overview",
+              "nex_peacetime/installation",
+              "nex_peacetime/configuration",
+              "nex_peacetime/usage",
+              "nex_peacetime/commands",
+              "nex_peacetime/troubleshooting"
+            ]
+          },
+          {
             "group": "nex_polecreator",
             "icon": "martini-glass",
             "pages": [

@@ -1,0 +1,34 @@
+---
+title: "Overview"
+description: "Advanced peacetime enforcement for FiveM roleplay servers. Admins lock down combat actions server-wide with a single command — timed or indefinite, with a broadcast reason and live restriction toggles."
+---
+
+Advanced peacetime enforcement for FiveM roleplay servers. An admin runs `/ptmenu`, picks a duration and an optional reason, and every combat action you've selected is locked for every player on the server. Peacetime ends automatically when the timer expires, or the moment an admin disables it.
+
+Built on `ox_lib` and OneSync GlobalState with a Svelte NUI — the server is the single source of truth, so restriction changes replicate to every player instantly without a resource restart.
+
+## In this section
+
+* [Installation](/nex_peacetime/installation)
+* [Configuration](/nex_peacetime/configuration)
+* [Usage](/nex_peacetime/usage)
+* [Commands](/nex_peacetime/commands)
+* [Troubleshooting](/nex_peacetime/troubleshooting)
+
+## What you get
+
+* **One admin command** — `/ptmenu` opens the menu; permission is checked server-side before anything opens
+* **Timed or indefinite peacetime** — preset chips (`15m` / `30m` / `1h` / `2h` / `∞`) plus a custom duration in seconds, minutes, or hours
+* **Broadcast reason** — attach an optional message shown to every player when peacetime starts
+* **Seven granular restrictions** — firing, aiming, weapon swap, melee, vehicle weapons, throwables, detonation
+* **Live saving** — restriction toggles apply server-wide the instant you flip them, with `Full` / `Light` / `Off` quick presets
+* **HUD indicator** — every player sees a peacetime banner with a live countdown; position and animation are configurable
+* **Toast notifications** — start and end notices for all players, styled by a single configurable accent color
+* **Four admin paths** — ACE permissions, an identifier whitelist, auto-detected ESX / QBCore / QBox admin groups, or your own custom check
+* **Optional Discord logging** — server-side webhooks for enable, disable, expiry, restriction changes, and denied access
+* **JSON locales** — every visible string lives in `locales/en.json`; copy it to translate
+* `escrow_ignore` on `shared/config.lua` and `shared/sv_config.lua`, so your settings survive updates
+
+## How it works
+
+The server writes peacetime state to OneSync GlobalState and pushes a consistent snapshot to every client. While peacetime is active, each client disables the game controls mapped to the enabled restriction categories every frame — the exact controls per category are configurable in `Config.ControlGroups`. Every action (enable, disable, restriction save) is re-validated against the admin check on the server, so spoofed client events can't bypass it.

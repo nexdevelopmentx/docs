@@ -1,0 +1,31 @@
+---
+title: "Troubleshooting"
+description: "Fixes for common nex_peacetime issues."
+---
+
+| Problem | Fix |
+| --- | --- |
+| "You do not have permission to use this." when running `/ptmenu` | None of the admin paths recognize you. Check the server console — on every denial it prints your full identifier list plus a hint. Paste one identifier into `Config.Admins` in `shared/config.lua` (or grant the ACE from `Config.AcePermission`) and `restart nex_peacetime`. |
+| Resource won't start, error mentions `@ox_lib/init.lua` | `ox_lib` isn't installed or isn't started before this resource. Put `ensure ox_lib` above `ensure nex_peacetime` in `server.cfg`. |
+| Resource won't start, dependency error mentions `/onesync` | OneSync is disabled. Enable it (`onesync infinity` recommended) — GlobalState replication requires it. |
+| `/ptmenu` does nothing at all | The resource isn't running. From F8: `lua print(GetResourceState('nex_peacetime'))` should print `started`. Check `server.cfg` and the server console for boot errors. |
+| Restrictions don't apply | Confirm peacetime is actually active (the HUD indicator shows on every screen) and that the category is toggled on in the menu — restriction toggles save live, so a stray click can disable one. Also confirm `ox_lib` starts before `nex_peacetime`. |
+| Players can still perform an action during peacetime | The action's control ID isn't in that category's list. Add the `{ controlGroup, controlId }` pair to `Config.ControlGroups` in `shared/config.lua` and restart the resource. |
+| Peacetime ends sooner or later than expected | The auto-end timer runs on the **server clock** and is checked every two seconds. A 30-minute session ends 30 server minutes after enable, regardless of client time zones. |
+| Accent color, indicator, or toast changes don't show | `Config.UI` is pushed to the NUI when the resource starts and isn't editable from the menu. Edit `shared/config.lua`, then `restart nex_peacetime`. |
+| Console warning: `locales/xx.json is not valid JSON` | Your translation file has a syntax error. Fix the JSON (or delete the file); the script falls back to English in the meantime. |
+| Everyone on the server can open the menu | `Config.DebugAlwaysAdmin` is still `true`. It grants every connected player admin — set it back to `false` for production. |
+| Discord logs never arrive | Check, in order: `Config.Discord.enabled` must be `true`, `webhook` must contain a URL, and the event's flag under `Config.Discord.log` must be `true` (`denied` is off by default). All of this lives in `shared/sv_config.lua`. |
+| Console prints `Discord webhook (…) failed: HTTP 4xx` | The webhook URL is wrong or was deleted (401/404), or Discord is rate-limiting you (429). Re-copy the URL from Discord → **Server Settings** → **Integrations** → **Webhooks**. |
+| Boxed "An update is available!" notice in the console | Informational only — a newer version has been published. Download it, replace the files (keep your `shared/config.lua` and `shared/sv_config.lua`), and restart the resource. |
+
+## Before opening a support ticket
+
+Please include:
+
+1. Your FiveM artifact build number and whether OneSync is enabled.
+2. Server console output filtered for `[nex_peacetime]`, plus any F8 errors mentioning the resource.
+3. Which admin path you expect to match (ACE, whitelist, framework, custom hook) and your `Config.AcePermission` / `Config.Admins` values.
+4. Whether the issue is reproducible from a fresh resource start.
+
+See [Support & contact](/general/support) for how to reach us.

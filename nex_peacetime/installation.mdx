@@ -1,0 +1,58 @@
+---
+title: "Installation"
+description: "How to install nex_peacetime on your FiveM server."
+---
+
+## Requirements
+
+* A FiveM server with **OneSync** enabled (`onesync infinity` recommended). The resource declares a hard `/onesync` dependency — it will not start without it.
+* [`ox_lib`](https://github.com/overextended/ox_lib) installed and started **before** this resource.
+
+No framework is required. ESX, QBCore, and QBox admin groups are auto-detected if present, but the script runs standalone.
+
+## Steps
+
+1. Drop the `nex_peacetime` folder into your `resources/` directory. Any subfolder is fine, e.g. `resources/[nex]/nex_peacetime/`.
+
+2. Add both resources to your `server.cfg`, in this order:
+
+   ```
+   ensure ox_lib
+   ensure nex_peacetime
+   ```
+
+3. Grant yourself admin access — see [Configuration → Admin access](/nex_peacetime/configuration#admin-access). The quickest route is ACE:
+
+   ```
+   add_ace group.admin simple.pt allow
+   add_principal identifier.fivem:1234567 group.admin
+   ```
+
+4. Restart the server (or `ensure nex_peacetime`).
+
+## Checking it worked
+
+Run `/ptmenu` in-game. If you're an admin, the menu opens. If you're not, you get a permission notice and the server console prints your identifiers — paste one into `Config.Admins` in `shared/config.lua` and restart the resource.
+
+From F8 you can also verify the resource state:
+
+```
+lua print(GetResourceState('nex_peacetime'))
+```
+
+Should print `started`.
+
+<Warning>
+If the resource refuses to start with a dependency error mentioning `/onesync`, OneSync is disabled on your server. Enable it — GlobalState replication requires it.
+</Warning>
+
+## Updating
+
+`shared/config.lua` and `shared/sv_config.lua` are listed under `escrow_ignore`, so your settings and webhooks survive updates.
+
+1. Replace the resource files with the new version (keep your edited `shared/config.lua` and `shared/sv_config.lua`).
+2. Restart the resource: `restart nex_peacetime`.
+
+<Info>
+The resource checks for updates on start and prints a boxed notice in the server console when a newer version is published. It never downloads anything — updating is always manual.
+</Info>
