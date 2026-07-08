@@ -8,11 +8,16 @@ all editable (never escrowed):
 
 | File | What it controls |
 |---|---|
-| `config/main.lua` | Locale, currency/date format, framework selector, UI accent color, SQL auto-install, debug |
-| `config/garages.lua` | Public / job / gang garage & impound locations, interior layout |
-| `config/custom-garages.lua` | The in-game garage editor (`/garagesadmin`) |
+| `config/main.lua` | Locale, currency/date format, framework selector, UI accent color, cinematic mode, SQL auto-install, debug |
+| `config/public-garages.lua` | Public garage locations |
+| `config/job-garages.lua` | Job garage locations & spawner fleets |
+| `config/gang-garages.lua` | Gang garage locations |
+| `config/impound-locations.lua` | Impound lot locations |
+| `config/interior.lua` | The walk-in showroom interior |
+| `config/garage-defaults.lua` | Shared blip & marker defaults for the location files |
+| `config/custom-garages.lua` | The in-game garage editor (`/garagesadmin`) + staff ACE |
 | `config/private-garages.lua` | Player-owned private garages |
-| `config/impound.lua` | Impound command, society fund, hold durations |
+| `config/impound.lua` | Impound command, society fund, hold durations, fee cap, proximity rule |
 | `config/features.lua` | Capacity, store fees, repair, mileage, sharing, selling, pins, finance, auto-impound, audit, phone |
 | `config/vehicles.lua` | Spawning & persistence, retrieval fees, transfers, vehicle classes, labels |
 | `config/vehicle-images.lua` | Thumbnail image sources |
@@ -60,7 +65,7 @@ Prefer an in-world browser over the list menu? Enable the cinematic garage:
 
 ```lua
 CinematicGarage = {
-  enabled = false,
+  enabled = true,
   camera = {                            -- offsets relative to the previewed vehicle
     coords = vector3(3.0, 5.5, 0.3),
     focus = vector3(-0.75, 1.2, 0.0),
@@ -72,8 +77,13 @@ CinematicGarage = {
   vignetteStrength = 1.0, -- 0.0 - 1.0 intensity of the held vignette
   wipeTransition = true,  -- accent-edged wipe panel sweeping across on enter & exit
   seatPlayer = true,      -- sit the player in the previewed vehicle's driver seat
+  hideHud = true,         -- hide minimap, GTA HUD and detected framework HUDs while browsing
 },
 ```
+
+`hideHud` auto-detects common HUD resources (`qbx_hud`, `qb-hud`, `ps-hud`,
+`jg-hud`, `izzy-hud`, `0r-hud`) — pick one explicitly or turn it off with the
+`hud` option in `config/integrations.lua`.
 
 Pressing **E** at a garage then previews your stored vehicles one at a time at
 the spawn point — with your mods, livery and plate — behind a cinematic

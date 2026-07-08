@@ -21,11 +21,14 @@ Nex.Config.Impound = {
   command = "impound",
   societyFund = "police",  -- fees are paid into this society (optional)
   timeOptions = { 0, 1, 4, 12, 24, 72, 168 }, -- hours
+  maxFee = 50000,              -- hard fee cap, enforced server-side
+  requireNearbyVehicle = true, -- officer must be near the vehicle
+  nearbyDistance = 8.0,
 }
 ```
 
-Impound **locations** live in `config/garages.lua` — restrict each lot to the
-jobs that should operate it via its `job` field.
+Impound **locations** live in `config/impound-locations.lua` — restrict each
+lot to the jobs that should operate it via its `job` field.
 
 ## Releasing vehicles
 

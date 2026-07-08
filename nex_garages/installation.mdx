@@ -31,13 +31,14 @@ Everything else is optional and auto-detected — see
 3. Start your server. The database schema installs itself on first start —
    the console prints `SQL setup complete` when it's done.
 
-4. Grant staff access for the admin commands. The in-game garage editor
-   accepts the ACE groups from `Nex.Config.CustomGarages.allowedGroups`
-   (defaults: `god`, `admin`, `mod`):
+4. Grant staff access for the admin commands with the dedicated ACE:
 
    ```
-   add_ace group.admin admin allow
+   add_ace group.admin nex_garages.admin allow
    ```
+
+   The in-game garage editor also accepts the ACE groups from
+   `Nex.Config.CustomGarages.allowedGroups` (defaults: `god`, `admin`, `mod`).
 
 That's it — the default garages and impound lots appear on the map.
 

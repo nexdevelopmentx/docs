@@ -3,8 +3,11 @@ title: "Garage locations"
 description: "Define public, job and gang garages in config/garages.lua — or skip the file entirely and use the in-game editor."
 ---
 
-All static locations live in `config/garages.lua`. Every garage and impound
-name must be **unique** across all sections.
+Static locations live in one file per garage type — `config/public-garages.lua`,
+`config/job-garages.lua`, `config/gang-garages.lua` and
+`config/impound-locations.lua` — with shared blip and marker defaults in
+`config/garage-defaults.lua`. Every garage and impound name must be **unique**
+across all files.
 
 <Info>
   You can also create and edit garages entirely in-game with
@@ -87,7 +90,7 @@ resolve automatically on QBCore/Qbox; on ESX, wire your gang system into
 
 ## Garage interiors
 
-`Nex.Config.Interior` configures the walk-in showroom: the IPL shell, the
+`config/interior.lua` configures the walk-in showroom: the IPL shell, the
 entrance, a short entry cutscene, and up to eleven display positions filled
-with the vehicles parked at that garage. Disable interiors per section
-(`interiors = false`) if you don't want them.
+with the vehicles parked at that garage. Disable interiors per garage type
+(`interiors = false` in that type's location file) if you don't want them.
