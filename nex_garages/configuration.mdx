@@ -62,20 +62,25 @@ CinematicGarage = {
   },
   transitionMs = 650,
   switchMs = 350,
-  screenEffects = true, -- vignette + bloom while browsing, bright pulse on exit
-  seatPlayer = true,    -- sit the player in the previewed vehicle's driver seat
+  screenEffects = true,   -- held vignette while browsing, bright pulse in/out
+  vignetteStrength = 1.0, -- 0.0 - 1.0 intensity of the held vignette
+  wipeTransition = true,  -- accent-edged wipe panel sweeping across on enter & exit
+  seatPlayer = true,      -- sit the player in the previewed vehicle's driver seat
 },
 ```
 
 Pressing **E** at a garage then previews your stored vehicles one at a time at
 the spawn point — with your mods, livery and plate — behind a cinematic
-camera. **← / →** browse, **E / ENTER** drives, **BACKSPACE / ESC** exits. A
-slim HUD shows the vehicle's name, plate, condition, mileage and class.
+camera. **← / →** browse, **E / ENTER** drives, **↑** opens the actions
+drawer (pin, repair, track, transfer, share, sell, rename, go inside —
+navigate with **↑ / ↓**, confirm with **ENTER**), and **BACKSPACE / ESC**
+exits. A slim HUD shows the vehicle's name, plate, condition, mileage, class
+and status badges.
 
 Previews are only visible to you and can't be entered or damaged. Impound
 lots and job spawner garages always keep the classic menu, and the classic
-panel still opens when nothing is parked at the garage — so vehicles stored
-elsewhere stay reachable for transfers.
+panel still opens when nothing is parked at the garage — nothing from the
+regular menu is ever out of reach.
 
 ## Spawning & persistence (`config/vehicles.lua`)
 
