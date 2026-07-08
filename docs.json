@@ -269,7 +269,7 @@
       },
       {
         "label": "Website",
-        "href": "https://nexdevelopment.xyz"
+        "href": "https://nexdev.store"
       },
       {
         "label": "Support",
@@ -297,7 +297,7 @@
   "footer": {
     "socials": {
       "discord": "https://discord.gg/nexdev",
-      "website": "https://nexdevelopment.xyz"
+      "website": "https://nexdev.store"
     }
   }
 }
