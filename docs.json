@@ -28,6 +28,7 @@
         "pages": [
           {
             "group": "nex_battlepass",
+            "icon": "trophy",
             "pages": [
               "nex_battlepass/overview",
               "nex_battlepass/installation",
@@ -42,6 +43,7 @@
           },
           {
             "group": "nex_bossmenu",
+            "icon": "briefcase",
             "pages": [
               "nex_bossmenu/overview",
               "nex_bossmenu/installation",
@@ -54,6 +56,7 @@
           },
           {
             "group": "nex_businesses",
+            "icon": "store",
             "pages": [
               "nex_businesses/overview",
               "nex_businesses/installation",
@@ -67,6 +70,7 @@
           },
           {
             "group": "nex_coordstool",
+            "icon": "location-dot",
             "pages": [
               "nex_coordstool/overview",
               "nex_coordstool/installation",
@@ -77,6 +81,7 @@
           },
           {
             "group": "nex_crafting",
+            "icon": "hammer",
             "pages": [
               "nex_crafting/overview",
               "nex_crafting/installation",
@@ -89,6 +94,7 @@
           },
           {
             "group": "nex_crutchsystem",
+            "icon": "crutch",
             "pages": [
               "nex_crutchsystem/overview",
               "nex_crutchsystem/installation",
@@ -101,6 +107,7 @@
           },
           {
             "group": "nex_dealerships",
+            "icon": "car",
             "pages": [
               "nex_dealerships/overview",
               "nex_dealerships/installation",
@@ -116,6 +123,7 @@
           },
           {
             "group": "nex_djbooth",
+            "icon": "music",
             "pages": [
               "nex_djbooth/overview",
               "nex_djbooth/installation",
@@ -128,6 +136,7 @@
           },
           {
             "group": "nex_donatorsystem",
+            "icon": "gift",
             "pages": [
               "nex_donatorsystem/overview",
               "nex_donatorsystem/installation",
@@ -141,6 +150,7 @@
           },
           {
             "group": "nex_elevators",
+            "icon": "elevator",
             "pages": [
               "nex_elevators/overview",
               "nex_elevators/installation",
@@ -150,6 +160,7 @@
           },
           {
             "group": "nex_garages",
+            "icon": "warehouse",
             "pages": [
               "nex_garages/overview",
               "nex_garages/installation",
@@ -166,6 +177,7 @@
           },
           {
             "group": "nex_hotels",
+            "icon": "hotel",
             "pages": [
               "nex_hotels/overview",
               "nex_hotels/installation",
@@ -178,6 +190,7 @@
           },
           {
             "group": "nex_itemwhitelist",
+            "icon": "lock",
             "pages": [
               "nex_itemwhitelist/overview",
               "nex_itemwhitelist/installation",
@@ -189,6 +202,7 @@
           },
           {
             "group": "nex_loadingscreen",
+            "icon": "image",
             "pages": [
               "nex_loadingscreen/overview",
               "nex_loadingscreen/installation",
@@ -199,6 +213,7 @@
           },
           {
             "group": "nex_polecreator",
+            "icon": "martini-glass",
             "pages": [
               "nex_polecreator/overview",
               "nex_polecreator/installation",
@@ -209,6 +224,7 @@
           },
           {
             "group": "nex_queue",
+            "icon": "list-ol",
             "pages": [
               "nex_queue/overview",
               "nex_queue/installation",
@@ -221,6 +237,7 @@
           },
           {
             "group": "nex_scalemenu",
+            "icon": "ruler-vertical",
             "pages": [
               "nex_scalemenu/overview",
               "nex_scalemenu/installation",
@@ -232,6 +249,7 @@
           },
           {
             "group": "nex_shoulderpets",
+            "icon": "paw",
             "pages": [
               "nex_shoulderpets/overview",
               "nex_shoulderpets/installation",
@@ -244,6 +262,7 @@
           },
           {
             "group": "nex_uipack",
+            "icon": "palette",
             "pages": [
               "nex_uipack/overview",
               "nex_uipack/installation",
