@@ -27,318 +27,206 @@
         "group": "Scripts",
         "pages": [
           {
-            "group": "nex_animpos",
+            "group": "nexdev_animpos",
             "icon": "street-view",
             "pages": [
-              "nex_animpos/overview",
-              "nex_animpos/installation",
-              "nex_animpos/configuration",
-              "nex_animpos/usage",
-              "nex_animpos/exports",
-              "nex_animpos/troubleshooting"
+              "nexdev_animpos/overview",
+              "nexdev_animpos/installation",
+              "nexdev_animpos/configuration",
+              "nexdev_animpos/usage",
+              "nexdev_animpos/exports",
+              "nexdev_animpos/troubleshooting"
             ]
           },
           {
-            "group": "nex_battlepass",
-            "icon": "trophy",
-            "pages": [
-              "nex_battlepass/overview",
-              "nex_battlepass/installation",
-              "nex_battlepass/configuration",
-              "nex_battlepass/rewards-editor",
-              "nex_battlepass/quests",
-              "nex_battlepass/premium-pass",
-              "nex_battlepass/commands",
-              "nex_battlepass/exports",
-              "nex_battlepass/troubleshooting"
-            ]
-          },
-          {
-            "group": "nex_bossmenu",
+            "group": "nexdev_bossmenu",
             "icon": "briefcase",
             "pages": [
-              "nex_bossmenu/overview",
-              "nex_bossmenu/installation",
-              "nex_bossmenu/configuration",
-              "nex_bossmenu/usage",
-              "nex_bossmenu/commands",
-              "nex_bossmenu/custom-frameworks",
-              "nex_bossmenu/troubleshooting"
+              "nexdev_bossmenu/overview",
+              "nexdev_bossmenu/installation",
+              "nexdev_bossmenu/configuration",
+              "nexdev_bossmenu/usage",
+              "nexdev_bossmenu/commands",
+              "nexdev_bossmenu/custom-frameworks",
+              "nexdev_bossmenu/troubleshooting"
             ]
           },
           {
-            "group": "nex_coordstool",
-            "icon": "location-dot",
-            "pages": [
-              "nex_coordstool/overview",
-              "nex_coordstool/installation",
-              "nex_coordstool/configuration",
-              "nex_coordstool/usage",
-              "nex_coordstool/troubleshooting"
-            ]
-          },
-          {
-            "group": "nex_crafting",
+            "group": "nexdev_crafting",
             "icon": "hammer",
             "pages": [
-              "nex_crafting/overview",
-              "nex_crafting/installation",
-              "nex_crafting/configuration",
-              "nex_crafting/creator-panel",
-              "nex_crafting/usage",
-              "nex_crafting/commands",
-              "nex_crafting/troubleshooting"
+              "nexdev_crafting/overview",
+              "nexdev_crafting/installation",
+              "nexdev_crafting/configuration",
+              "nexdev_crafting/creator-panel",
+              "nexdev_crafting/usage",
+              "nexdev_crafting/commands",
+              "nexdev_crafting/troubleshooting"
             ]
           },
           {
-            "group": "nex_crutchsystem",
+            "group": "nexdev_crutchsystem",
             "icon": "crutch",
             "pages": [
-              "nex_crutchsystem/overview",
-              "nex_crutchsystem/installation",
-              "nex_crutchsystem/configuration",
-              "nex_crutchsystem/usage",
-              "nex_crutchsystem/commands",
-              "nex_crutchsystem/exports",
-              "nex_crutchsystem/troubleshooting"
+              "nexdev_crutchsystem/overview",
+              "nexdev_crutchsystem/installation",
+              "nexdev_crutchsystem/configuration",
+              "nexdev_crutchsystem/usage",
+              "nexdev_crutchsystem/commands",
+              "nexdev_crutchsystem/exports",
+              "nexdev_crutchsystem/troubleshooting"
             ]
           },
           {
-            "group": "nex_dealerships",
+            "group": "nexdev_dealerships",
             "icon": "car",
             "pages": [
-              "nex_dealerships/overview",
-              "nex_dealerships/installation",
-              "nex_dealerships/configuration",
-              "nex_dealerships/dealerships",
-              "nex_dealerships/admin-panel",
-              "nex_dealerships/management",
-              "nex_dealerships/usage",
-              "nex_dealerships/commands",
-              "nex_dealerships/integrations",
-              "nex_dealerships/troubleshooting"
+              "nexdev_dealerships/overview",
+              "nexdev_dealerships/installation",
+              "nexdev_dealerships/configuration",
+              "nexdev_dealerships/dealerships",
+              "nexdev_dealerships/admin-panel",
+              "nexdev_dealerships/management",
+              "nexdev_dealerships/usage",
+              "nexdev_dealerships/commands",
+              "nexdev_dealerships/integrations",
+              "nexdev_dealerships/troubleshooting"
             ]
           },
           {
-            "group": "nex_djbooth",
-            "icon": "music",
-            "pages": [
-              "nex_djbooth/overview",
-              "nex_djbooth/installation",
-              "nex_djbooth/configuration",
-              "nex_djbooth/admin-panel",
-              "nex_djbooth/usage",
-              "nex_djbooth/commands",
-              "nex_djbooth/troubleshooting"
-            ]
-          },
-          {
-            "group": "nex_donatorsystem",
+            "group": "nexdev_donatorsystem",
             "icon": "gift",
             "pages": [
-              "nex_donatorsystem/overview",
-              "nex_donatorsystem/installation",
-              "nex_donatorsystem/configuration",
-              "nex_donatorsystem/tebex-setup",
-              "nex_donatorsystem/admin-panel",
-              "nex_donatorsystem/usage",
-              "nex_donatorsystem/commands",
-              "nex_donatorsystem/troubleshooting"
+              "nexdev_donatorsystem/overview",
+              "nexdev_donatorsystem/installation",
+              "nexdev_donatorsystem/configuration",
+              "nexdev_donatorsystem/tebex-setup",
+              "nexdev_donatorsystem/admin-panel",
+              "nexdev_donatorsystem/usage",
+              "nexdev_donatorsystem/commands",
+              "nexdev_donatorsystem/troubleshooting"
             ]
           },
           {
-            "group": "nex_drugscreator",
+            "group": "nexdev_drugscreator",
             "icon": "cannabis",
             "pages": [
-              "nex_drugscreator/overview",
-              "nex_drugscreator/installation",
-              "nex_drugscreator/configuration",
-              "nex_drugscreator/creator-panel",
-              "nex_drugscreator/usage",
-              "nex_drugscreator/commands",
-              "nex_drugscreator/troubleshooting"
+              "nexdev_drugscreator/overview",
+              "nexdev_drugscreator/installation",
+              "nexdev_drugscreator/configuration",
+              "nexdev_drugscreator/creator-panel",
+              "nexdev_drugscreator/usage",
+              "nexdev_drugscreator/commands",
+              "nexdev_drugscreator/troubleshooting"
             ]
           },
           {
-            "group": "nex_elevators",
+            "group": "nexdev_elevators",
             "icon": "elevator",
             "pages": [
-              "nex_elevators/overview",
-              "nex_elevators/installation",
-              "nex_elevators/configuration",
-              "nex_elevators/admin-panel"
+              "nexdev_elevators/overview",
+              "nexdev_elevators/installation",
+              "nexdev_elevators/configuration",
+              "nexdev_elevators/admin-panel"
             ]
           },
           {
-            "group": "nex_fishing",
-            "icon": "fish",
-            "pages": [
-              "nex_fishing/overview",
-              "nex_fishing/installation",
-              "nex_fishing/configuration",
-              "nex_fishing/usage",
-              "nex_fishing/troubleshooting"
-            ]
-          },
-          {
-            "group": "nex_garages",
+            "group": "nexdev_garages",
             "icon": "warehouse",
             "pages": [
-              "nex_garages/overview",
-              "nex_garages/installation",
-              "nex_garages/configuration",
-              "nex_garages/garages",
-              "nex_garages/garage-editor",
-              "nex_garages/private-garages",
-              "nex_garages/impound",
-              "nex_garages/usage",
-              "nex_garages/commands",
-              "nex_garages/integrations",
-              "nex_garages/troubleshooting"
+              "nexdev_garages/overview",
+              "nexdev_garages/installation",
+              "nexdev_garages/configuration",
+              "nexdev_garages/garages",
+              "nexdev_garages/garage-editor",
+              "nexdev_garages/private-garages",
+              "nexdev_garages/impound",
+              "nexdev_garages/usage",
+              "nexdev_garages/commands",
+              "nexdev_garages/integrations",
+              "nexdev_garages/troubleshooting"
             ]
           },
           {
-            "group": "nex_hotels",
+            "group": "nexdev_hotels",
             "icon": "hotel",
             "pages": [
-              "nex_hotels/overview",
-              "nex_hotels/installation",
-              "nex_hotels/configuration",
-              "nex_hotels/admin-panel",
-              "nex_hotels/usage",
-              "nex_hotels/commands",
-              "nex_hotels/troubleshooting"
+              "nexdev_hotels/overview",
+              "nexdev_hotels/installation",
+              "nexdev_hotels/configuration",
+              "nexdev_hotels/admin-panel",
+              "nexdev_hotels/usage",
+              "nexdev_hotels/commands",
+              "nexdev_hotels/troubleshooting"
             ]
           },
           {
-            "group": "nex_hud",
-            "icon": "gauge-high",
-            "pages": [
-              "nex_hud/overview",
-              "nex_hud/installation",
-              "nex_hud/configuration",
-              "nex_hud/usage",
-              "nex_hud/commands",
-              "nex_hud/exports",
-              "nex_hud/integrations",
-              "nex_hud/troubleshooting"
-            ]
-          },
-          {
-            "group": "nex_itemwhitelist",
+            "group": "nexdev_itemwhitelist",
             "icon": "lock",
             "pages": [
-              "nex_itemwhitelist/overview",
-              "nex_itemwhitelist/installation",
-              "nex_itemwhitelist/configuration",
-              "nex_itemwhitelist/admin-menu",
-              "nex_itemwhitelist/commands",
-              "nex_itemwhitelist/troubleshooting"
+              "nexdev_itemwhitelist/overview",
+              "nexdev_itemwhitelist/installation",
+              "nexdev_itemwhitelist/configuration",
+              "nexdev_itemwhitelist/admin-menu",
+              "nexdev_itemwhitelist/commands",
+              "nexdev_itemwhitelist/troubleshooting"
             ]
           },
           {
-            "group": "nex_loadingscreen",
+            "group": "nexdev_loadingscreen",
             "icon": "image",
             "pages": [
-              "nex_loadingscreen/overview",
-              "nex_loadingscreen/installation",
-              "nex_loadingscreen/configuration",
-              "nex_loadingscreen/music",
-              "nex_loadingscreen/troubleshooting"
+              "nexdev_loadingscreen/overview",
+              "nexdev_loadingscreen/installation",
+              "nexdev_loadingscreen/configuration",
+              "nexdev_loadingscreen/music",
+              "nexdev_loadingscreen/troubleshooting"
             ]
           },
           {
-            "group": "nex_peacetime",
-            "icon": "dove",
-            "pages": [
-              "nex_peacetime/overview",
-              "nex_peacetime/installation",
-              "nex_peacetime/configuration",
-              "nex_peacetime/usage",
-              "nex_peacetime/commands",
-              "nex_peacetime/troubleshooting"
-            ]
-          },
-          {
-            "group": "nex_polecreator",
-            "icon": "martini-glass",
-            "pages": [
-              "nex_polecreator/overview",
-              "nex_polecreator/installation",
-              "nex_polecreator/configuration",
-              "nex_polecreator/usage",
-              "nex_polecreator/troubleshooting"
-            ]
-          },
-          {
-            "group": "nex_povrequest",
-            "icon": "video",
-            "pages": [
-              "nex_povrequest/overview",
-              "nex_povrequest/installation",
-              "nex_povrequest/configuration",
-              "nex_povrequest/commands",
-              "nex_povrequest/usage",
-              "nex_povrequest/troubleshooting"
-            ]
-          },
-          {
-            "group": "nex_queue",
+            "group": "nexdev_queue",
             "icon": "list-ol",
             "pages": [
-              "nex_queue/overview",
-              "nex_queue/installation",
-              "nex_queue/discord-setup",
-              "nex_queue/configuration",
-              "nex_queue/themes",
-              "nex_queue/whitelist-and-priority",
-              "nex_queue/troubleshooting"
+              "nexdev_queue/overview",
+              "nexdev_queue/installation",
+              "nexdev_queue/discord-setup",
+              "nexdev_queue/configuration",
+              "nexdev_queue/themes",
+              "nexdev_queue/whitelist-and-priority",
+              "nexdev_queue/troubleshooting"
             ]
           },
           {
-            "group": "nex_scalemenu",
+            "group": "nexdev_scalemenu",
             "icon": "ruler-vertical",
             "pages": [
-              "nex_scalemenu/overview",
-              "nex_scalemenu/installation",
-              "nex_scalemenu/configuration",
-              "nex_scalemenu/permissions",
-              "nex_scalemenu/commands",
-              "nex_scalemenu/troubleshooting"
+              "nexdev_scalemenu/overview",
+              "nexdev_scalemenu/installation",
+              "nexdev_scalemenu/configuration",
+              "nexdev_scalemenu/permissions",
+              "nexdev_scalemenu/commands",
+              "nexdev_scalemenu/troubleshooting"
             ]
           },
           {
-            "group": "nex_shoulderpets",
-            "icon": "paw",
-            "pages": [
-              "nex_shoulderpets/overview",
-              "nex_shoulderpets/installation",
-              "nex_shoulderpets/configuration",
-              "nex_shoulderpets/adding-pets",
-              "nex_shoulderpets/usage",
-              "nex_shoulderpets/commands",
-              "nex_shoulderpets/troubleshooting"
-            ]
-          },
-          {
-            "group": "nex_trucking",
-            "icon": "truck",
-            "pages": [
-              "nex_trucking/overview",
-              "nex_trucking/installation",
-              "nex_trucking/configuration",
-              "nex_trucking/usage",
-              "nex_trucking/exports",
-              "nex_trucking/troubleshooting"
-            ]
-          },
-          {
-            "group": "nex_uipack",
+            "group": "nexdev_uipack",
             "icon": "palette",
             "pages": [
-              "nex_uipack/overview",
-              "nex_uipack/installation",
-              "nex_uipack/troubleshooting"
+              "nexdev_uipack/overview",
+              "nexdev_uipack/installation",
+              "nexdev_uipack/troubleshooting"
+            ]
+          },
+          {
+            "group": "nexdev_watermark",
+            "icon": "stamp",
+            "pages": [
+              "nexdev_watermark/overview",
+              "nexdev_watermark/installation",
+              "nexdev_watermark/configuration",
+              "nexdev_watermark/usage",
+              "nexdev_watermark/exports",
+              "nexdev_watermark/troubleshooting"
             ]
           }
         ]

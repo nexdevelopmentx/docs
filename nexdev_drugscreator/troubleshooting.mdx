@@ -1,0 +1,38 @@
+---
+title: "Troubleshooting"
+description: "Common issues with NEX Drugs Creator and how to fix them. Watch your server console and F8 console for messages from nexdev_drugscreator."
+---
+
+Watch your **server console** and **F8 console** for messages from `nexdev_drugscreator`. Setting `Config.Debug = true` in `config.lua` adds extra output (e.g. the "up to date" notice from the version check).
+
+## Common issues
+
+| Problem | Fix |
+| ------- | --- |
+| `/drugscreator` says you don't have permission | Run `add_ace group.admin nexdev_drugscreator.admin allow`, or make sure your framework group is in `Config.Admin.Groups` (`admin`, `superadmin`, `god` by default). |
+| Console warns `no framework detected (es_extended / qb-core / qbx_core) - drugs cannot be registered as usable items` | Your framework resource isn't started, or started more than 30 seconds after `nexdev_drugscreator`. Ensure `nexdev_drugscreator` **after** your framework in `server.cfg`. |
+| Console error `Config.Storage = "mysql" but oxmysql is not running - falling back to JSON storage` | Add `ensure oxmysql` before `nexdev_drugscreator`, or switch back to `Config.Storage = 'json'`. |
+| Console error `failed to parse data/drugs.json` (or `world.json` / `world_state.json`) | The file was hand-edited into invalid JSON. Fix the syntax or restore a backup — these files are meant to be written by the panel, not by hand. |
+| Using a drug item does nothing | The item must exist in your inventory resource **and** be saved as a drug. Re-open the panel — the item editor tells you whether the name was found. Also check the drug wasn't consumed within the 1-second anti-spam window. |
+| "You need a … to use this" | The drug has a required item (e.g. a lighter) the player isn't carrying. Edit the drug or give the player the item. |
+| Saving a drug fails with `… effect(s) failed validation` | An effect references a preset that no longer exists in `Config.ScreenEffects` / `Config.Timecycles` / `Config.CamShakes` / `Config.MovementClipsets`, or values are outside `Config.Limits`. Fix the effect entries and save again. |
+| Item images are broken in the panel | `Config.UI.ItemImage = 'auto'` only detects `ox_inventory`, `qb-inventory`, `qs-inventory`, and `ps-inventory`. For anything else, set a custom pattern like `'nui://your_inventory/images/%s.png'`. |
+| Emote taking method plays nothing | The emote name isn't in `Config.Emotes` and no supported emote menu is running (`prism-emotemenu`, `scully_emotemenu`, `rpemotes-reborn`, `rpemotes`, `dpemotes`). Use a built-in emote or wire `Config.PlayEmote` to your menu. |
+| `lollipop2e` emote shows no prop | The natty lollipop addon prop isn't streamed on your server. |
+| Trap phone doesn't open from the item | The `trap_phone` item doesn't exist in your inventory, or hired dealers changed the item name in the panel's **Hired Dealers** config. Players can always use the `/trapphone` command. |
+| Renamed a command in the panel and the old one still works | Expected — the new name registers immediately, but the old command stays active until the next server restart. |
+| Notifications/prompts look wrong or you don't want ox_lib styling | Switch `Config.Notify.Type` / `Config.TextUI.Type` to `'gta'` — or flip it live for everyone from the panel's **Settings** tab. |
+| No police alerts reach your dispatch | The built-in alert only blips for jobs in `Config.PoliceJobs`. For dispatch resources, set the `Config.PoliceAlert` function — it's `nil` by default. |
+| Changes to the world (zones, selling) don't survive a restart | With JSON storage, the resource must be able to write to its `data/` folder. Check file permissions, especially on Linux. |
+| "An update is available!" box in the console | A newer build was published. Download it and reinstall — see [Installation](/nexdev_drugscreator/installation#updating). |
+
+## Before opening a support ticket
+
+Please include:
+
+1. Your framework (ESX / QBCore / Qbox) and inventory resource.
+2. The startup line from the server console, e.g. `loaded 3 drug(s) [framework: esx | ox_inventory: yes]`.
+3. Server console output around the problem, with `Config.Debug = true`.
+4. What you did and what you expected to happen.
+
+See [Support & contact](/general/support).

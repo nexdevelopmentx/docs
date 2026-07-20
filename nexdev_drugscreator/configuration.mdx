@@ -1,0 +1,181 @@
+---
+title: "Configuration"
+description: "Everything in config.lua: command, storage, permissions, UI, consumption limits, effect catalogs, world defaults, police, and emotes. Zone and economy data is managed in-game from the panel instead."
+---
+
+All static options live in `config.lua`. Zone, recipe, selling, and territory **data** is managed in-game from the [creator panel](/nexdev_drugscreator/creator-panel) and stored in `data/world.json` (or MySQL) — you don't edit that by hand.
+
+## General
+
+```lua
+Config.Command = 'drugscreator' -- chat command that opens the panel (admins only)
+Config.Debug   = false          -- extra console output (e.g. "up to date" notice)
+Config.Storage = 'json'         -- 'json' or 'mysql'
+```
+
+## Permissions
+
+```lua
+Config.Admin = {
+    AcePermission = 'nexdev_drugscreator.admin',
+    Groups = { 'admin', 'superadmin', 'god' },
+}
+```
+
+A player may open and edit the Drugs Creator when they have the ace permission **or** their framework group matches one of the groups. Grant the ace via `server.cfg`:
+
+```
+add_ace group.admin nexdev_drugscreator.admin allow
+```
+
+## UI
+
+```lua
+Config.UI = {
+    AccentColor = '#ffffff', -- hex color tinting all white text/borders in the panel
+    ItemImage   = 'auto',    -- item image source
+}
+```
+
+`ItemImage` accepts:
+
+* `'auto'` — detect the running inventory (`ox_inventory`, `qb-inventory`, `qs-inventory`, `ps-inventory`)
+* a custom pattern, e.g. `'nui://ox_inventory/web/images/%s.png'` (`%s` is replaced with the item name)
+* `false` — disable item images
+
+## Consumption
+
+```lua
+Config.Progress = {
+    Style = 'bar',         -- 'bar' or 'circle' (ox_lib progress style)
+    Label = 'Using %s...', -- %s is replaced with the drug label
+}
+
+Config.Notify = {
+    Type     = 'ox_lib', -- 'ox_lib' or 'gta' (native notification feed)
+    Position = 'top',    -- ox_lib notify position (ignored when Type = 'gta')
+    Title    = 'Drugs',  -- title used for consumption notifications
+}
+
+Config.TextUI = {
+    Type     = 'ox_lib',      -- 'ox_lib' or 'gta' (native prompt)
+    Position = 'left-center', -- ox_lib textUI position (ignored when Type = 'gta')
+}
+```
+
+<Info>
+`Config.Notify.Type` and `Config.TextUI.Type` are only the **defaults**. Both can be switched live from the panel's **Settings** tab — the change is saved to `data/world.json` and applies to every player instantly.
+</Info>
+
+```lua
+Config.PuffKeys = {
+    puff = 38, -- E
+    stop = 73, -- X
+}
+```
+
+## Limits
+
+Hard limits enforced by the server and mirrored by the UI:
+
+```lua
+Config.Limits = {
+    useTime     = { min = 0.5, max = 30 }, -- seconds (per puff when puffing)
+    maxPuffs    = 50,                      -- 0 = single progress use
+    timelineMax = 600,                     -- seconds, effect timeline length
+    maxEffects  = 20,                      -- effects per drug
+}
+```
+
+## Effect types and preset catalogs
+
+`Config.EffectTypes` is the catalog of everything that can go on a drug's timeline, grouped into `visual`, `camera`, `movement`, `stats`, and `special` categories. Each entry defines its strength slider (`min`/`max`/`step`/`default`) and whether it applies instantly or on consumption.
+
+The preset catalogs it points at are also plain config tables you can extend:
+
+| Table | Contains |
+| ----- | -------- |
+| `Config.ScreenEffects` | Screen effect presets (animpostfx names) — 16 ship by default |
+| `Config.Timecycles` | Timecycle filter presets (support strength) |
+| `Config.CamShakes` | Camera shake presets (drunk, drug trip, tremor, …) |
+| `Config.MovementClipsets` | Walk style presets |
+
+<Warning>
+The server validates every saved effect against these catalogs. If you remove a preset that an existing drug uses, re-saving that drug will fail with an "effect(s) failed validation" error until the effect is updated.
+</Warning>
+
+## Use animations
+
+`Config.Animations` lists the animation presets shown in the drug editor:
+
+```lua
+Config.Animations = {
+    { id = 'smoke',  label = 'Smoke',          dict = 'timetable@gardener@smoking_joint', clip = 'smoke_idle' },
+    { id = 'pill',   label = 'Pill',           dict = 'mp_suicide',                       clip = 'pill' },
+    { id = 'snort',  label = 'Snort',          dict = 'switch@trevor@trev_smoking_meth',  clip = 'trev_smoking_meth_loop' },
+    { id = 'snort2', label = 'Snort (Party)',  dict = 'missfbi3_party',                   clip = 'snort_coke_b_male3' },
+    { id = 'drink',  label = 'Drink',          dict = 'mp_player_intdrink',               clip = 'loop_bottle' },
+    { id = 'eat',    label = 'Eat',            dict = 'mp_player_inteat@burger',          clip = 'mp_player_int_eat_burger' },
+}
+```
+
+The UI also offers **Scenario**, **Emote**, and **Custom** options where a name or dictionary/clip is typed manually.
+
+## Emotes
+
+`Config.Emotes` is a built-in emote engine — looped animation plus a prop attached to a ped bone and optional particle effects, played natively without any emote menu. Entries shipped by default: `joint`, `cigarette`, `beer`, `whiskey`, `burger`, `bandage`, `lollipop2e`, `crackpipe`, `bong`, `needle`, `soda`. Add your own freely.
+
+<Info>
+The `lollipop2e` emote requires the natty lollipop addon prop to be streamed on your server.
+</Info>
+
+`Config.PlayEmote` decides how "Emote" taking methods play: built-in emotes play natively; any other name falls through to a running emote menu (`prism-emotemenu`, `scully_emotemenu`, `rpemotes-reborn`, `rpemotes`, or `dpemotes`). Replace the function to wire a custom menu. `Config.StopEmote` is called when consumption ends.
+
+## World
+
+```lua
+Config.World = {
+    InteractKey = 38,                  -- E (harvest, plant, labs, factories, dealers, selling)
+    PocketCraftCommand = 'pocketcraft',
+
+    Marker = {                         -- ground circle drawn inside walk-in zones
+        Enabled      = true,
+        DrawDistance = 30.0,
+        Type         = 1,              -- DrawMarker type (1 = cylinder / ground circle)
+        Height       = 1.0,
+        SinkZ        = 0.95,
+        Color        = { r = 72, g = 207, b = 132, a = 110 },
+    },
+
+    Defaults = {                       -- applied until changed in the panel's Settings tab
+        sellCommand        = 'selldrugs',
+        sellPlayerCooldown = 10,       -- seconds between sell attempts per player
+        declineChance      = 20,       -- % chance a ped refuses the offer
+        policeChance       = 10,       -- % chance a refusal alerts the police
+    },
+}
+```
+
+The rest of `Config.World` provides fallback assets, all editable per feature in the panel:
+
+* `NarcosModel` (`'g_m_y_salvaboss_01'`), `PusherModel` (`'s_m_y_dealer_01'`), `RobberModel` (`'g_m_y_mexgoon_01'`), `AuctionBrokerModel` (`'s_m_m_highsec_01'`), `AuctionVehicleModel` (`'burrito3'`)
+* `CustomerModels` — ped models used by corner selling and spawned NPC buyers
+* `PlantProps` — weed plant props for drug fields (`growing` / `grown`), and `PlantSpacing = 1.5` (minimum meters between plants)
+* `DealerModels` — ped models selectable for hired dealers
+* `Blips` — map blip sprite/color/scale per zone type (`harvest`, `field`, `lab`, `factory`, `territory`, `dealer`, `narcos`, `pusher`, `auction`, `hired`, `police`)
+
+## Police
+
+```lua
+Config.PoliceJobs    = { 'police', 'sheriff', 'fbi' } -- jobs treated as police (editable live from the panel)
+Config.PoliceBlipTime = 120                           -- seconds the alert blip stays on the map
+Config.PoliceAlert    = nil                           -- external dispatch hook
+```
+
+`Config.PoliceAlert` is called server-side when a refused sale alerts the police — wire your dispatch here:
+
+```lua
+Config.PoliceAlert = function(source, coords)
+    exports['ps-dispatch']:DrugSale(source)
+end
+```
